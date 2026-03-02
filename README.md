@@ -1,3 +1,11 @@
+# VidStream Pro – Frontend 🎬
+Frontend for VidStream Pro built with Next.js 16.  
+Related Links:  
+- Backend Repository: [VidStream Pro Backend](https://github.com/devraj894/VidStream-Pro-Backend)  
+- Live Backend API's: [VidStream Pro Backend API's](https://vidstream-pro-backend.onrender.com/)  
+
+------------------------------------------------------
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
