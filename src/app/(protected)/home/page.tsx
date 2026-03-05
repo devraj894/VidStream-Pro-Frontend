@@ -1,15 +1,24 @@
+import FeaturedSection from '@/components/home/FeaturedSection'
+import VideoRow from '@/components/home/VideoRow'
+import {
+  featuredVideo,
+  trendingVideos,
+  latestVideos,
+  subscriptionVideos,
+  recommendedVideos,
+} from '@/data/videos'
+
 export default function HomePage() {
   return (
-    <div className="px-6 space-y-16">
-      <div className="h-[70vh] bg-neutral-800 rounded-xl">Hero Section</div>
+    <div>
+      <FeaturedSection featuredVideo={featuredVideo} />
 
-      <div>Trending Section</div>
-
-      <div>Latest Section</div>
-
-      <div>Subscriptions Section</div>
-
-      <div>Recommended Section</div>
+      <div className="px-8 space-y-12 pt-4">
+        <VideoRow title="Trending Section" videos={trendingVideos} />
+        <VideoRow title="Latest Section" videos={latestVideos} />
+        <VideoRow title="Subscriptions Section" videos={subscriptionVideos} />
+        <VideoRow title="Recommended Section" videos={recommendedVideos} />
+      </div>
     </div>
   )
 }
