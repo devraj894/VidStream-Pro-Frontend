@@ -4,7 +4,13 @@ export default function AuthLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#8b0000] via-[#0a0a0f] to-[#140000]">
+    <div
+      className="min-h-screen flex items-center justify-center bg-cover bg-center"
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('/bg2.jpg')",
+      }}
+    >
       {children}
     </div>
   )

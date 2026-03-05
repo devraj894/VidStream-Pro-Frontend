@@ -61,7 +61,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <Card className="w-[500px] bg-[#111111]/90 backdrop-blur-md border border-red-900/40 shadow-2xl rounded-2xl p-2">
+    <Card className="w-[500px] bg-[#111111]/40 backdrop-blur-xl border border-red-900/40 shadow-2xl rounded-2xl p-2">
       <CardHeader>
         <CardTitle className="text-3xl font-semibold text-white text-center">
           Create Your Account
