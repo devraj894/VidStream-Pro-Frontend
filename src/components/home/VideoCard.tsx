@@ -8,11 +8,11 @@ interface VideoCardProps {
 
 export default function VideoCard({ video }: VideoCardProps) {
   return (
-    <div className="min-w-[260px] cursor-pointer group">
+    <div className="min-w-[260px] cursor-pointer">
       <div className="relative aspect-video rounded-lg overflow-hidden">
         <img
           src={video.thumbnail.url}
-          className="w-full h-full object-cover group-hover:scale-105 transition"
+          className="w-full h-full object-cover hover:scale-105 transition duration-200"
         />
 
         <span className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-0.5 rounded">
@@ -26,7 +26,7 @@ export default function VideoCard({ video }: VideoCardProps) {
         </h3>
 
         <p className="flex items-center text-xs text-neutral-400">
-          {video.owner} <Dot /> {video.views.toLocaleString()} views
+          {video.owner} <Dot /> {video.views.toLocaleString('en-IN')} views
         </p>
       </div>
     </div>

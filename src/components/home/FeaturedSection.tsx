@@ -21,7 +21,7 @@ export default function FeaturedSection({
         <div className="text-sm text-neutral-300 flex gap-1">
           <span>{formatDuration(featuredVideo.duration)}</span>
           <Dot />
-          <span>{featuredVideo.views.toLocaleString()} views</span>
+          <span>{featuredVideo.views.toLocaleString('en-IN')} views</span>
         </div>
 
         <p className="text-neutral-300 max-w-xl">{featuredVideo.description}</p>
