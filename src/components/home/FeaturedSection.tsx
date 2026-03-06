@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { featuredVideoType } from '@/types/videos'
 import { Dot, Play } from 'lucide-react'
-import { formatDuration } from '@/lib/constant'
+import { formatDuration, formatViews } from '@/lib/constant'
 
 export default function FeaturedSection({
   featuredVideo,
@@ -21,7 +21,7 @@ export default function FeaturedSection({
         <div className="text-sm text-neutral-300 flex gap-1">
           <span>{formatDuration(featuredVideo.duration)}</span>
           <Dot />
-          <span>{featuredVideo.views.toLocaleString('en-IN')} views</span>
+          <span>{formatViews(featuredVideo.views)} views</span>
         </div>
 
         <p className="text-neutral-300 max-w-xl">{featuredVideo.description}</p>

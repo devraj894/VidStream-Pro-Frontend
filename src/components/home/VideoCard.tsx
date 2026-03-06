@@ -1,5 +1,5 @@
 import { homeVideoType } from '@/types/videos'
-import { formatDuration } from '@/lib/constant'
+import { formatDuration, formatTimeAgo, formatViews } from '@/lib/constant'
 import { Dot } from 'lucide-react'
 
 interface VideoCardProps {
@@ -26,7 +26,8 @@ export default function VideoCard({ video }: VideoCardProps) {
         </h3>
 
         <p className="flex items-center text-xs text-neutral-400">
-          {video.owner} <Dot /> {video.views.toLocaleString('en-IN')} views
+          {video.owner} <Dot /> {formatViews(video.views)} views
+          <Dot /> {formatTimeAgo(video.createdAt)}
         </p>
       </div>
     </div>
