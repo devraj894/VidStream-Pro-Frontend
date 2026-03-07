@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 export default function TopNavbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -34,7 +35,9 @@ export default function TopNavbar() {
     >
       <div className="px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <div className="text-xl font-bold cursor-pointer">VidStream Pro</div>
+        <Link href="/home" className="text-xl font-bold cursor-pointer">
+          VidStream Pro
+        </Link>
 
         {/* Search */}
         <div className="w-1/3">
@@ -54,10 +57,12 @@ export default function TopNavbar() {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href={`/profile/${'test'}`}>Profile</Link>
+              </DropdownMenuItem>
               <DropdownMenuItem>Studio</DropdownMenuItem>
-              <DropdownMenuItem>Playlists</DropdownMenuItem>
-              <DropdownMenuItem>Subscriptions</DropdownMenuItem>
+              {/* <DropdownMenuItem>Playlists</DropdownMenuItem>
+              <DropdownMenuItem>Subscriptions</DropdownMenuItem> */}
               <DropdownMenuItem>Logout</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
