@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import VideoCard from './VideoCard'
+import VideoCard from '../video/VideoCard'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { homeVideoType } from '@/types/videos'
 
