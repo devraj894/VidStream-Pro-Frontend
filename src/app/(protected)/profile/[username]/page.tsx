@@ -1,15 +1,16 @@
 import ProfileCover from '@/components/profile/ProfileCover'
 import ProfileHeader from '@/components/profile/ProfileHeader'
 import ProfileTabs from '@/components/profile/ProfileTabs'
+import { videos } from '@/data/videos'
 
 export default function ProfilePage() {
   return (
-    <div className="pb-20">
+    <div>
       <ProfileCover />
 
       <ProfileHeader />
 
-      <ProfileTabs />
+      <ProfileTabs videos={videos} />
     </div>
   )
 }
