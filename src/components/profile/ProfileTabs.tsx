@@ -5,13 +5,19 @@ import TweetsTab from './tabs/TweetsTab'
 import SubscribedTab from './tabs/SubscribedTab'
 import { homeVideoType } from '@/types/videos'
 import { playlistType } from '@/types/playlist'
+import { tweetTypes } from '@/types/tweet'
 
 interface profileTabsProps {
   videos: homeVideoType[]
   playlists: playlistType[]
+  tweets: tweetTypes[]
 }
 
-export default function ProfileTabs({ videos, playlists }: profileTabsProps) {
+export default function ProfileTabs({
+  videos,
+  playlists,
+  tweets,
+}: profileTabsProps) {
   return (
     <Tabs defaultValue="videos" className="mt-6 px-8">
       <TabsList className="flex justify-center md:space-x-48 bg-[#654c7640]">
@@ -30,7 +36,7 @@ export default function ProfileTabs({ videos, playlists }: profileTabsProps) {
       </TabsContent>
 
       <TabsContent value="tweets">
-        <TweetsTab />
+        <TweetsTab tweets={tweets} />
       </TabsContent>
 
       <TabsContent value="subscribed">
