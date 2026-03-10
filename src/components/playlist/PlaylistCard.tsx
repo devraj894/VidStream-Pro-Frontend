@@ -20,7 +20,7 @@ export default function PlaylistCard({ playlist }: PlaylistCardProps) {
           />
 
           {/* Dark overlay */}
-          <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition" />
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0a1333] to-transparent" />
 
           {/* Play icon */}
           <div className="absolute left-3 bottom-3 flex items-center gap-2 text-white">

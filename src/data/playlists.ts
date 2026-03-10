@@ -75,8 +75,8 @@ export const playlistDetails: playlistDetailsTypes = {
     ],
     owner: {
         avatar: {
-                "url": "https://github.com/shadcn.png",
-                "public_id": "awh9dlcuxgxyjt67jdtm"
+                url: "https://github.com/shadcn.png",
+                public_id: "awh9dlcuxgxyjt67jdtm"
             },
         id: "698b0b94c8bb784de7591afd",
         username: "devraj_ad",

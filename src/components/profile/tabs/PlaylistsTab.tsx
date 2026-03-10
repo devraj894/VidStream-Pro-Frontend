@@ -7,13 +7,7 @@ interface PlaylistTabProps {
 
 export default function PlaylistTab({ playlists }: PlaylistTabProps) {
   return (
-    <div
-      className="grid gap-6 
-      grid-cols-1 
-      sm:grid-cols-2 
-      lg:grid-cols-3 
-      xl:grid-cols-4"
-    >
+    <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-5 py-2">
       {playlists.map((playlist) => (
         <PlaylistCard key={playlist.id} playlist={playlist} />
       ))}
