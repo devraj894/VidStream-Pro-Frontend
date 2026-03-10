@@ -6,17 +6,20 @@ import SubscribedTab from './tabs/SubscribedTab'
 import { homeVideoType } from '@/types/videos'
 import { playlistType } from '@/types/playlist'
 import { tweetTypes } from '@/types/tweet'
+import { subscribedChannelTypes } from '@/types/subscribedChannel'
 
 interface profileTabsProps {
   videos: homeVideoType[]
   playlists: playlistType[]
   tweets: tweetTypes[]
+  subscribedChannels: subscribedChannelTypes[]
 }
 
 export default function ProfileTabs({
   videos,
   playlists,
   tweets,
+  subscribedChannels,
 }: profileTabsProps) {
   return (
     <Tabs defaultValue="videos" className="mt-6 px-8">
@@ -40,7 +43,7 @@ export default function ProfileTabs({
       </TabsContent>
 
       <TabsContent value="subscribed">
-        <SubscribedTab />
+        <SubscribedTab subscribedChannels={subscribedChannels} />
       </TabsContent>
     </Tabs>
   )
