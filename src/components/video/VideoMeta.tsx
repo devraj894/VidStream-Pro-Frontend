@@ -18,9 +18,9 @@ export default function VideoMeta({ videoDetails }: VideoMetaProps) {
       </h1>
 
       {/* Channel + Actions */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
         {/* Channel Info */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 shrink-0">
           <Avatar className="h-10 w-10">
             <AvatarImage src={videoDetails.owner.avatar.url} />
             <AvatarFallback>YT</AvatarFallback>
@@ -41,7 +41,7 @@ export default function VideoMeta({ videoDetails }: VideoMetaProps) {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex gap-2 shrink-0">
           <Button variant="secondary" size="sm" className="gap-2">
             <ThumbsUp className="h-4 w-4" />
             {videoDetails.likes}
