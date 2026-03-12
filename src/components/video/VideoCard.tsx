@@ -5,13 +5,29 @@ import Link from 'next/link'
 
 interface VideoCardProps {
   video: homeVideoType
+  variant?: 'default' | 'compact'
 }
 
-export default function VideoCard({ video }: VideoCardProps) {
+export default function VideoCard({
+  video,
+  variant = 'default',
+}: VideoCardProps) {
   return (
-    <Link href={`/video/${video.id}`}>
-      <div className="min-w-[260px] cursor-pointer">
-        <div className="relative aspect-video rounded-lg overflow-hidden">
+    <Link href={`/video/${video.id}`} className="block">
+      <div
+        className={
+          variant === 'compact'
+            ? 'md:flex gap-3 cursor-pointer'
+            : 'min-w-[260px] cursor-pointer'
+        }
+      >
+        <div
+          className={
+            variant === 'compact'
+              ? 'relative md:w-40 aspect-video rounded-lg overflow-hidden'
+              : 'relative aspect-video rounded-lg overflow-hidden'
+          }
+        >
           <img
             src={video.thumbnail.url}
             className="w-full h-full object-cover hover:scale-105 transition duration-200"

@@ -1,9 +1,9 @@
 import CommentSection from '@/components/comments/CommentSection'
-import Suggestions from '@/components/video/Suggestions'
+import VideoCard from '@/components/video/VideoCard'
 import VideoMeta from '@/components/video/VideoMeta'
 import VideoPlayer from '@/components/video/VideoPlayer'
 import { comments } from '@/data/comments'
-import { videoDetails } from '@/data/videos'
+import { suggestedVideos, videoDetails } from '@/data/videos'
 
 export default function videoDetailsPage() {
   return (
@@ -17,8 +17,10 @@ export default function videoDetailsPage() {
         </div>
 
         {/* RIGHT SIDE */}
-        <div>
-          <Suggestions />
+        <div className="space-y-4">
+          {suggestedVideos.map((suggest) => (
+            <VideoCard key={suggest.id} video={suggest} variant="compact" />
+          ))}
         </div>
       </div>
     </div>
