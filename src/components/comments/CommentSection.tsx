@@ -2,8 +2,13 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import Comment from './Comment'
+import { commentsTypes } from '@/types/comments'
 
-export default function CommentSection() {
+interface CommentSectionProps {
+  comments: commentsTypes[]
+}
+
+export default function CommentSection({ comments }: CommentSectionProps) {
   return (
     <div className="space-y-6">
       <h2 className="font-semibold text-lg text-white">Comments (128)</h2>
@@ -24,9 +29,9 @@ export default function CommentSection() {
 
       {/* Comment List */}
       <div className="space-y-6">
-        <Comment />
-        <Comment />
-        <Comment />
+        {comments.map((comment) => (
+          <Comment key={comment.id} comment={comment} />
+        ))}
       </div>
     </div>
   )

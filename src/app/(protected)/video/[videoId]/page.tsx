@@ -2,6 +2,7 @@ import CommentSection from '@/components/comments/CommentSection'
 import Suggestions from '@/components/video/Suggestions'
 import VideoMeta from '@/components/video/VideoMeta'
 import VideoPlayer from '@/components/video/VideoPlayer'
+import { comments } from '@/data/comments'
 
 export default function videoDetails() {
   return (
@@ -11,7 +12,7 @@ export default function videoDetails() {
         <div className="lg:col-span-2 space-y-6">
           <VideoPlayer />
           <VideoMeta />
-          <CommentSection />
+          <CommentSection comments={comments} />
         </div>
 
         {/* RIGHT SIDE */}

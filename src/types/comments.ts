@@ -3,4 +3,6 @@ export interface commentsTypes{
     avatar: string
     username: string
     content: string
+    likes: number
+    createdAt: string
 }
