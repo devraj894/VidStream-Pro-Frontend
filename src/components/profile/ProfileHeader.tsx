@@ -5,7 +5,7 @@ import { Dot } from 'lucide-react'
 export default function ProfileHeader() {
   return (
     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 px-8 -mt-4">
-      <div className="flex">
+      <div className="flex gap-2">
         <Avatar className="w-28 h-28 border-4 border-black">
           <AvatarImage src="https://github.com/shadcn.png" />
           <AvatarFallback>DV</AvatarFallback>
