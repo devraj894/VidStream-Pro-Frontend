@@ -1,4 +1,4 @@
-import { featuredVideoType, homeVideoType } from "@/types/videos";
+import { featuredVideoType, homeVideoType, videoDetailsTypes } from "@/types/videos";
 
 export const featuredVideo: featuredVideoType = {
     id: "1",
@@ -326,3 +326,32 @@ export const videos: homeVideoType[] = [
         createdAt: "2023-03-15T12:00:00Z"
     }
 ]
+
+export const videoDetails: videoDetailsTypes = {
+    id: "1",
+    videoFile: {
+        url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        public_id: "1"
+    },
+    thumbnail: {
+        url: "https://data1.ibtimes.co.in/en/full/828473/o-romeo.jpg?w=689&h=387&l=50&t=40",
+        public_id: "1"
+    },
+    title: "O'romeo",
+    description: "This is an upcoming movie intro",
+    duration: 15.26525,
+    views: 11,
+    likes: 12,
+    isPublished: true,
+    owner: {
+        id: "1",
+        avatar: {
+            url: "https://github.com/shadcn.png",
+            public_id: "1"
+        },
+        username: "testing",
+        subscribers: 11
+    },
+    createdAt: "2023-03-15T12:00:00Z",
+    updatedAt: "2023-03-15T12:00:00Z"
+}

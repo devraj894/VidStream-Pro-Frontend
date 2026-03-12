@@ -11,7 +11,9 @@ interface CommentSectionProps {
 export default function CommentSection({ comments }: CommentSectionProps) {
   return (
     <div className="space-y-6">
-      <h2 className="font-semibold text-lg text-white">Comments (128)</h2>
+      <h2 className="font-semibold text-lg text-white">
+        Comments {comments.length}
+      </h2>
 
       {/* Add Comment */}
       <div className="flex gap-3">
