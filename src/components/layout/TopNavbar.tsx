@@ -60,7 +60,9 @@ export default function TopNavbar() {
               <DropdownMenuItem asChild>
                 <Link href={`/profile/${'test'}`}>Profile</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>Studio</DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href={`/studio`}>Studio</Link>
+              </DropdownMenuItem>
               {/* <DropdownMenuItem>Playlists</DropdownMenuItem>
               <DropdownMenuItem>Subscriptions</DropdownMenuItem> */}
               <DropdownMenuItem>Logout</DropdownMenuItem>
