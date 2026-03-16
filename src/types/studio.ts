@@ -16,3 +16,12 @@ export interface studioVideosTypes {
     likes: number
     createdAt: string
 }
+export interface studioPlaylistTypes {
+    id: string
+    thumbnail: thumbnailType
+    title: string
+    videos: number
+    views: number
+    likes: number
+    createdAt: string
+}

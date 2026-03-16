@@ -1,13 +1,15 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { Button } from '../ui/button'
 import StudioVideosTab from './tabs/StudioVideosTab'
-import { studioVideosTypes } from '@/types/studio'
+import { studioPlaylistTypes, studioVideosTypes } from '@/types/studio'
+import StudioPlaylistsTab from './tabs/StudioPlaylistsTab'
 
 interface StudioTabsProps {
   videos: studioVideosTypes[]
+  playlists: studioPlaylistTypes[]
 }
 
-export default function StudioTabs({ videos }: StudioTabsProps) {
+export default function StudioTabs({ videos, playlists }: StudioTabsProps) {
   return (
     <Tabs defaultValue="videos" className="mt-6 px-8">
       <div className="flex items-center justify-between bg-[#654c7640] rounded-lg">
@@ -26,7 +28,9 @@ export default function StudioTabs({ videos }: StudioTabsProps) {
         <StudioVideosTab videos={videos} />
       </TabsContent>
 
-      <TabsContent value="playlists"></TabsContent>
+      <TabsContent value="playlists">
+        <StudioPlaylistsTab playlists={playlists} />
+      </TabsContent>
 
       <TabsContent value="tweets"></TabsContent>
     </Tabs>
