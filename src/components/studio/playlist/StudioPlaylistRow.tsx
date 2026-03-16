@@ -2,6 +2,7 @@ import { formatTimeAgo, formatViews } from '@/lib/constant'
 import { Eye, Pencil, Trash } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { studioPlaylistTypes, studioVideosTypes } from '@/types/studio'
+import Link from 'next/link'
 
 interface StudioPlaylistRowProps {
   playlist: studioPlaylistTypes
@@ -63,9 +64,11 @@ export default function StudioPlaylistRow({
         <button className="p-2 rounded-md hover:bg-red-500/10 transition text-neutral-500 hover:text-red-500">
           <Trash size={16} className="text-red-500" />
         </button>
-        <button className="p-2 rounded-md hover:bg-red-500/10 transition text-neutral-500 hover:text-green-500">
-          <Eye size={16} className="text-green-500" />
-        </button>
+        <Link href={'/studio/playlists/1'}>
+          <button className="p-2 rounded-md hover:bg-red-500/10 transition text-neutral-500 hover:text-green-500">
+            <Eye size={16} className="text-green-500" />
+          </button>
+        </Link>
       </div>
     </div>
   )
