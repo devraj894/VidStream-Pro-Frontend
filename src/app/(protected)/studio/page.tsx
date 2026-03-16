@@ -1,19 +1,11 @@
-import ProfileTabs from '@/components/profile/ProfileTabs'
 import StudioLayout from '@/components/studio/StudioLayout'
-import { playlists } from '@/data/playlists'
-import { studioStats } from '@/data/studio'
-import { tweets } from '@/data/tweets'
-import { videos } from '@/data/videos'
+import StudioTabs from '@/components/studio/StudioTabs'
+import { studioStats, studioVideos } from '@/data/studio'
 
 export default function StudioPage() {
   return (
     <StudioLayout stats={studioStats}>
-      <ProfileTabs
-        mode="studio"
-        videos={videos}
-        playlists={playlists}
-        tweets={tweets}
-      />
+      <StudioTabs videos={studioVideos} />
     </StudioLayout>
   )
 }
