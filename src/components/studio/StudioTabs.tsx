@@ -3,13 +3,20 @@ import { Button } from '../ui/button'
 import StudioVideosTab from './tabs/StudioVideosTab'
 import { studioPlaylistTypes, studioVideosTypes } from '@/types/studio'
 import StudioPlaylistsTab from './tabs/StudioPlaylistsTab'
+import StudioTweetsTab from './tabs/StudioTweetsTab'
+import { tweetTypes } from '@/types/tweet'
 
 interface StudioTabsProps {
   videos: studioVideosTypes[]
   playlists: studioPlaylistTypes[]
+  tweets: tweetTypes[]
 }
 
-export default function StudioTabs({ videos, playlists }: StudioTabsProps) {
+export default function StudioTabs({
+  videos,
+  playlists,
+  tweets,
+}: StudioTabsProps) {
   return (
     <Tabs defaultValue="videos" className="mt-6 px-8">
       <div className="flex items-center justify-between bg-[#654c7640] rounded-lg">
@@ -32,7 +39,9 @@ export default function StudioTabs({ videos, playlists }: StudioTabsProps) {
         <StudioPlaylistsTab playlists={playlists} />
       </TabsContent>
 
-      <TabsContent value="tweets"></TabsContent>
+      <TabsContent value="tweets">
+        <StudioTweetsTab tweets={tweets} />
+      </TabsContent>
     </Tabs>
   )
 }
