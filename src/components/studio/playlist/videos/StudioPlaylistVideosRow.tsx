@@ -1,5 +1,5 @@
 import { formatTimeAgo, formatViews } from '@/lib/constant'
-import { Trash } from 'lucide-react'
+import { Eye, Trash } from 'lucide-react'
 import { homeVideoType } from '@/types/videos'
 
 interface StudioPlaylistVideosRowProps {
@@ -19,15 +19,21 @@ export default function StudioPlaylistVideosRow({
         />
 
         <div className="flex flex-col justify-center min-w-0">
-          <p className="font-medium text-sm md:text-base text-white line-clamp-2 leading-tight">
+          <p className="font-medium text-sm md:text-base text-white line-clamp-1 leading-tight">
             {video.title}
           </p>
 
+          {/* Spacer */}
+          <div className="flex-1 md:hidden" />
+
           {/* Mobile-only stats and Status Badge */}
-          <div className="flex flex-wrap items-center gap-2 mt-1.5 md:hidden">
-            <span className="text-[11px] text-neutral-400">
-              {formatViews(video.views)} • {formatTimeAgo(video.createdAt)}
-            </span>
+          <div className="md:hidden">
+            <div className="flex items-center gap-2 text-xs text-white">
+              <Eye className="h-4 w-4" />
+              <span className="text-xs font-semibold">
+                {formatViews(video.views)}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -43,10 +49,21 @@ export default function StudioPlaylistVideosRow({
       </span>
 
       {/* ACTIONS (Always visible, adjusted for mobile) */}
-      <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2">
-        <button className="p-2 rounded-md hover:bg-red-500/10 transition text-neutral-500 hover:text-red-500">
-          <Trash size={16} className="text-red-500" />
-        </button>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-1 md:gap-2">
+        {/* Buttons */}
+        <div className="flex items-center gap-4 self-end">
+          <button className="rounded-md hover:bg-red-500/10 transition text-neutral-500 hover:text-red-500">
+            <Trash size={18} className="text-red-500" />
+          </button>
+        </div>
+
+        {/* Spacer */}
+        <div className="flex-1 md:hidden" />
+
+        {/* Date */}
+        <span className="md:hidden text-[9px] text-neutral-400 self-end">
+          {formatTimeAgo(video.createdAt)}
+        </span>
       </div>
     </div>
   )
