@@ -1,5 +1,5 @@
 import { formatTimeAgo, formatViews } from '@/lib/constant'
-import { Pencil, Trash } from 'lucide-react'
+import { Eye, Pencil, ThumbsUp, Trash } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { studioVideosTypes } from '@/types/studio'
 
@@ -23,16 +23,28 @@ export default function StudioVideoRow({ video }: StudioVideoRowProps) {
           </p>
 
           {/* Mobile-only stats and Status Badge */}
-          <div className="flex flex-wrap items-center gap-2 mt-1.5 md:hidden">
+          <div className="md:hidden space-y-2">
             <Badge
               variant={video.status ? 'default' : 'secondary'}
               className="text-[10px] px-1.5 py-0"
             >
               {video.status ? 'Published' : 'Draft'}
             </Badge>
-            <span className="text-[11px] text-neutral-400">
-              {formatViews(video.views)} • {formatTimeAgo(video.createdAt)}
-            </span>
+            <div className="flex items-center gap-4 text-white">
+              <div className="flex items-center gap-2 text-xs">
+                <Eye className="h-4 w-4" />
+                <span className="text-xs font-semibold">
+                  {formatViews(video.views)}
+                </span>
+              </div>
+              <div className="flex items-center gap-2 text-xs">
+                <ThumbsUp className="h-4 w-4" />
+                <span className="text-xs font-semibold">{video.likes}</span>
+              </div>
+            </div>
+            {/* <span className="text-[11px] text-neutral-400">
+              {formatTimeAgo(video.createdAt)}
+            </span> */}
           </div>
         </div>
       </div>
@@ -40,7 +52,7 @@ export default function StudioVideoRow({ video }: StudioVideoRowProps) {
       {/* STATUS (Desktop Only) */}
       <div className="hidden md:block">
         <Badge variant={video.status ? 'default' : 'secondary'}>
-          {video.status ? 'Published' : 'Unpublished'}
+          {video.status ? 'Published' : 'Draft'}
         </Badge>
       </div>
 
@@ -60,13 +72,24 @@ export default function StudioVideoRow({ video }: StudioVideoRowProps) {
       </span>
 
       {/* ACTIONS (Always visible, adjusted for mobile) */}
-      <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-2">
-        <button className="p-2 rounded-md hover:bg-neutral-800 transition text-neutral-400 hover:text-white">
-          <Pencil size={16} className="text-blue-500" />
-        </button>
-        <button className="p-2 rounded-md hover:bg-red-500/10 transition text-neutral-500 hover:text-red-500">
-          <Trash size={16} className="text-red-500" />
-        </button>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-1 md:gap-2">
+        {/* Buttons */}
+        <div className="flex gap-4 self-end">
+          <button className="rounded-md hover:bg-neutral-800 transition text-neutral-400 hover:text-white">
+            <Pencil size={18} className="text-blue-500" />
+          </button>
+          <button className="rounded-md hover:bg-red-500/10 transition text-neutral-500 hover:text-red-500">
+            <Trash size={18} className="text-red-500" />
+          </button>
+        </div>
+
+        {/* Spacer */}
+        <div className="flex-1 md:hidden" />
+
+        {/* Date */}
+        <span className="md:hidden text-[9px] text-neutral-400 self-end">
+          {formatTimeAgo(video.createdAt)}
+        </span>
       </div>
     </div>
   )

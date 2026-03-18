@@ -15,7 +15,7 @@ export const studioVideos: studioVideosTypes[] = [
             public_id: "sample.jpg"
         },
         title: "O'romeo",
-        status: true,
+        status: false,
         views: 25,
         likes: 20,
         createdAt: "2023-03-15T12:00:00Z"
