@@ -3,8 +3,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { studioVideosTypes } from '@/types/studio'
 
-export default function VideoForm({ data }: { data?: any }) {
+interface VideoFormProps {
+  data?: studioVideosTypes
+}
+
+export default function VideoForm({ data }: VideoFormProps) {
   const isEdit = !!data
 
   const [title, setTitle] = useState(data?.title || '')

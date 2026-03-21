@@ -18,6 +18,7 @@ export const studioVideos: studioVideosTypes[] = [
         status: false,
         views: 25,
         likes: 20,
+        description: "This is my first video description.",
         createdAt: "2023-03-15T12:00:00Z"
     },
     {
@@ -30,6 +31,7 @@ export const studioVideos: studioVideosTypes[] = [
         status: true,
         views: 25,
         likes: 20,
+        description: "This is my second video description.",
         createdAt: "2023-03-15T12:00:00Z"
     },
     {
@@ -42,6 +44,7 @@ export const studioVideos: studioVideosTypes[] = [
         status: true,
         views: 25,
         likes: 20,
+        description: "This is my third video description.",
         createdAt: "2023-03-15T12:00:00Z"
     },
     {
@@ -54,6 +57,7 @@ export const studioVideos: studioVideosTypes[] = [
         status: true,
         views: 25,
         likes: 20,
+        description: "This is my fourth video description.",
         createdAt: "2023-03-15T12:00:00Z"
     },
     {
@@ -66,6 +70,7 @@ export const studioVideos: studioVideosTypes[] = [
         status: true,
         views: 25,
         likes: 20,
+        description: "This is my fifth video description.",
         createdAt: "2023-03-15T12:00:00Z"
     }
 ]

@@ -14,6 +14,7 @@ export interface studioVideosTypes {
     status: boolean
     views: number
     likes: number
+    description: string
     createdAt: string
 }
 export interface studioPlaylistTypes {
