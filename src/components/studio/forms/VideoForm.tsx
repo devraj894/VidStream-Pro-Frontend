@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { studioVideosTypes } from '@/types/studio'
+import { Textarea } from '@/components/ui/textarea'
 
 interface VideoFormProps {
   data?: studioVideosTypes
@@ -126,10 +127,11 @@ export default function VideoForm({ data }: VideoFormProps) {
       />
 
       {/* DESCRIPTION */}
-      <Input
+      <Textarea
         placeholder="Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+        className="min-h-[120px] resize-none"
       />
 
       <Button type="submit" className="w-full">

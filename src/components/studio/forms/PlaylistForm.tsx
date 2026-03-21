@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import { studioPlaylistTypes } from '@/types/studio'
 import { useEffect, useState } from 'react'
 
@@ -41,10 +42,11 @@ export default function PlaylistForm({ data }: PlaylistFormProps) {
       />
 
       {/* DESCRIPTION */}
-      <Input
+      <Textarea
         placeholder="Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+        className="min-h-[120px] resize-none"
       />
 
       <Button type="submit" className="w-full">
