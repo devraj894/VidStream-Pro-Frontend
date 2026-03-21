@@ -1,13 +1,18 @@
 import { formatTimeAgo, formatViews } from '@/lib/constant'
 import { Eye, Trash } from 'lucide-react'
 import { homeVideoType } from '@/types/videos'
+import { ModalType } from '@/types/modal'
 
 interface StudioPlaylistVideosRowProps {
+  setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
   video: homeVideoType
+  playlistId: string
 }
 
 export default function StudioPlaylistVideosRow({
+  setModal,
   video,
+  playlistId,
 }: StudioPlaylistVideosRowProps) {
   return (
     <div className="border-b border-neutral-800 py-3 px-2 md:px-0 flex gap-3 md:grid md:grid-cols-[3fr_1fr_1fr_0.5fr] md:items-center md:gap-4 hover:bg-neutral-900/50 transition">
@@ -51,7 +56,18 @@ export default function StudioPlaylistVideosRow({
       {/* ACTIONS (Always visible, adjusted for mobile) */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-1 md:gap-2">
         {/* Buttons */}
-        <div className="flex items-center gap-4 self-end">
+        <div
+          onClick={() =>
+            setModal({
+              type: 'remove-video-from-playlist',
+              data: {
+                playlistId: playlistId,
+                videoId: video.id,
+              },
+            })
+          }
+          className="flex items-center gap-4 self-end"
+        >
           <button className="rounded-md hover:bg-red-500/10 transition text-neutral-500 hover:text-red-500">
             <Trash size={18} className="text-red-500" />
           </button>

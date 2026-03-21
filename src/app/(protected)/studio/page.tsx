@@ -35,6 +35,8 @@ export default function StudioPage() {
     'upload-playlist': 'Create Playlist',
     'edit-playlist': 'Edit Playlist',
     'delete-playlist': 'Delete Playlist',
+    'add-video-to-playlist': 'Add Video',
+    'remove-video-from-playlist': 'Remove Video',
     'upload-tweet': 'Create Tweet',
     'edit-tweet': 'Edit Tweet',
     'delete-tweet': 'Delete Tweet',

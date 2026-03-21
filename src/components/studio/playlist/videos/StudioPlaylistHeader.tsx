@@ -1,12 +1,15 @@
 import { Dot, Play, Shuffle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { playlistDetailsTypes } from '@/types/playlist'
+import { ModalType } from '@/types/modal'
 
 interface StudioPlaylistVideoHeaderProps {
+  setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
   playlistDetails: playlistDetailsTypes
 }
 
 export default function StudioPlaylistVideoHeader({
+  setModal,
   playlistDetails,
 }: StudioPlaylistVideoHeaderProps) {
   return (
@@ -39,7 +42,15 @@ export default function StudioPlaylistVideoHeader({
           <Dot />
         </div>
 
-        <Button className="bg-blue-600 hover:bg-blue-700">
+        <Button
+          onClick={() =>
+            setModal({
+              type: 'add-video-to-playlist',
+              data: { playlistId: playlistDetails.id },
+            })
+          }
+          className="bg-blue-600 hover:bg-blue-700"
+        >
           <Play className="mr-2" size={16} /> Add Video
         </Button>
       </div>
