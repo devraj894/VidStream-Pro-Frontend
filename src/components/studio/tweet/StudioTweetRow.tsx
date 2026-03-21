@@ -1,12 +1,17 @@
 import { formatTimeAgo } from '@/lib/constant'
 import { Pencil, ThumbsUp, Trash } from 'lucide-react'
 import { tweetTypes } from '@/types/tweet'
+import { ModalType } from '@/types/modal'
 
 interface StudioTweetRowProps {
+  setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
   tweet: tweetTypes
 }
 
-export default function StudioTweetRow({ tweet }: StudioTweetRowProps) {
+export default function StudioTweetRow({
+  setModal,
+  tweet,
+}: StudioTweetRowProps) {
   return (
     <div className="border-b border-neutral-800 py-3 px-2 md:px-0 flex flex-col md:grid md:grid-cols-[2fr_1fr_1fr_0.5fr] md:items-center md:gap-4 hover:bg-neutral-900/50 transition">
       {/* TOP ROW (content + actions) */}
@@ -17,10 +22,16 @@ export default function StudioTweetRow({ tweet }: StudioTweetRowProps) {
 
         {/* Actions (mobile + desktop) */}
         <div className="md:hidden flex items-center gap-2 shrink-0">
-          <button className="p-2 rounded-md hover:bg-neutral-800 transition text-neutral-400 hover:text-white">
+          <button
+            onClick={() => setModal({ type: 'edit-tweet', data: tweet })}
+            className="p-2 rounded-md hover:bg-neutral-800 transition text-neutral-400 hover:text-white"
+          >
             <Pencil size={16} className="text-blue-500" />
           </button>
-          <button className="p-2 rounded-md hover:bg-red-500/10 transition text-neutral-500 hover:text-red-500">
+          <button
+            onClick={() => setModal({ type: 'delete-tweet', data: tweet })}
+            className="p-2 rounded-md hover:bg-red-500/10 transition text-neutral-500 hover:text-red-500"
+          >
             <Trash size={16} className="text-red-500" />
           </button>
         </div>
@@ -46,9 +57,16 @@ export default function StudioTweetRow({ tweet }: StudioTweetRowProps) {
 
       <div className="hidden md:flex justify-end items-center gap-2">
         <button className="p-2 rounded-md hover:bg-neutral-800 transition text-neutral-400 hover:text-white">
-          <Pencil size={16} className="text-blue-500" />
+          <Pencil
+            onClick={() => setModal({ type: 'edit-tweet', data: tweet })}
+            size={16}
+            className="text-blue-500"
+          />
         </button>
-        <button className="p-2 rounded-md hover:bg-red-500/10 transition text-neutral-500 hover:text-red-500">
+        <button
+          onClick={() => setModal({ type: 'delete-tweet', data: tweet })}
+          className="p-2 rounded-md hover:bg-red-500/10 transition text-neutral-500 hover:text-red-500"
+        >
           <Trash size={16} className="text-red-500" />
         </button>
       </div>

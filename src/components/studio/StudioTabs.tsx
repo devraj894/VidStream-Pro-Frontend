@@ -62,7 +62,7 @@ export default function StudioTabs({
       </TabsContent>
 
       <TabsContent value="tweets">
-        <StudioTweetsTab tweets={tweets} />
+        <StudioTweetsTab setModal={setModal} tweets={tweets} />
       </TabsContent>
     </Tabs>
   )

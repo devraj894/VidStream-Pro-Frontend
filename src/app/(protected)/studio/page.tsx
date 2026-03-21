@@ -3,6 +3,7 @@
 import ConfirmModal from '@/components/modals/ConfirmModal'
 import FormModal from '@/components/modals/FormModal'
 import PlaylistForm from '@/components/studio/forms/PlaylistForm'
+import TweetForm from '@/components/studio/forms/TweetForm'
 import VideoForm from '@/components/studio/forms/VideoForm'
 import StudioLayout from '@/components/studio/StudioLayout'
 import StudioTabs from '@/components/studio/StudioTabs'
@@ -22,11 +23,17 @@ export default function StudioPage() {
   const isPlaylistModal =
     modalType === 'upload-playlist' || modalType === 'edit-playlist'
 
+  const isTweetModal =
+    modalType === 'upload-tweet' || modalType === 'edit-tweet'
+
   const isDeleteVideoModal = modalType === 'delete-video'
 
   const isDeletePlaylistModal = modalType === 'delete-playlist'
 
-  const isDeleteModal = isDeleteVideoModal || isDeletePlaylistModal
+  const isDeleteTweetModal = modalType === 'delete-tweet'
+
+  const isDeleteModal =
+    isDeleteVideoModal || isDeletePlaylistModal || isDeleteTweetModal
 
   const modalTitleMap: Record<ModalType['type'], string> = {
     'upload-video': 'Upload Video',
@@ -49,7 +56,9 @@ export default function StudioPage() {
       ? 'Delete Video?'
       : modalType === 'delete-playlist'
         ? 'Delete Playlist?'
-        : ''
+        : modalType === 'delete-tweet'
+          ? 'Delete Tweet'
+          : ''
 
   const deleteDescription = 'This action cannot be undone'
 
@@ -63,6 +72,10 @@ export default function StudioPage() {
 
       case 'delete-playlist':
         console.log('delete playlist id:', modal.data.id)
+        break
+
+      case 'delete-tweet':
+        console.log('delete tweet id: ', modal.data.id)
         break
     }
 
@@ -78,7 +91,7 @@ export default function StudioPage() {
         setModal={setModal}
       />
       <FormModal
-        open={isVideoModal || isPlaylistModal}
+        open={isVideoModal || isPlaylistModal || isTweetModal}
         onClose={() => setModal(null)}
         title={title}
       >
@@ -91,6 +104,12 @@ export default function StudioPage() {
         {isPlaylistModal && (
           <PlaylistForm
             data={modalType === 'edit-playlist' ? modal?.data : undefined}
+          />
+        )}
+
+        {isTweetModal && (
+          <TweetForm
+            data={modalType === 'edit-tweet' ? modal?.data : undefined}
           />
         )}
       </FormModal>
