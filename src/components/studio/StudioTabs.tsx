@@ -58,7 +58,7 @@ export default function StudioTabs({
       </TabsContent>
 
       <TabsContent value="playlists">
-        <StudioPlaylistsTab playlists={playlists} />
+        <StudioPlaylistsTab setModal={setModal} playlists={playlists} />
       </TabsContent>
 
       <TabsContent value="tweets">

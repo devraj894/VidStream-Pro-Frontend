@@ -2,6 +2,7 @@
 
 import ConfirmModal from '@/components/modals/ConfirmModal'
 import FormModal from '@/components/modals/FormModal'
+import PlaylistForm from '@/components/studio/forms/PlaylistForm'
 import VideoForm from '@/components/studio/forms/VideoForm'
 import StudioLayout from '@/components/studio/StudioLayout'
 import StudioTabs from '@/components/studio/StudioTabs'
@@ -13,6 +14,59 @@ import { useState } from 'react'
 export default function StudioPage() {
   const [modal, setModal] = useState<ModalType | null>(null)
 
+  const modalType = modal?.type
+
+  const isVideoModal =
+    modalType === 'upload-video' || modalType === 'edit-video'
+
+  const isPlaylistModal =
+    modalType === 'upload-playlist' || modalType === 'edit-playlist'
+
+  const isDeleteVideoModal = modalType === 'delete-video'
+
+  const isDeletePlaylistModal = modalType === 'delete-playlist'
+
+  const isDeleteModal = isDeleteVideoModal || isDeletePlaylistModal
+
+  const modalTitleMap: Record<ModalType['type'], string> = {
+    'upload-video': 'Upload Video',
+    'edit-video': 'Edit Video',
+    'delete-video': 'Delete Video',
+    'upload-playlist': 'Create Playlist',
+    'edit-playlist': 'Edit Playlist',
+    'delete-playlist': 'Delete Playlist',
+    'upload-tweet': 'Create Tweet',
+    'edit-tweet': 'Edit Tweet',
+    'delete-tweet': 'Delete Tweet',
+  }
+
+  const title = modal ? modalTitleMap[modal.type] : ''
+
+  const deleteTitle =
+    modalType === 'delete-video'
+      ? 'Delete Video?'
+      : modalType === 'delete-playlist'
+        ? 'Delete Playlist?'
+        : ''
+
+  const deleteDescription = 'This action cannot be undone'
+
+  const handleDelete = () => {
+    if (!modal) return
+
+    switch (modal.type) {
+      case 'delete-video':
+        console.log('delete video id:', modal.data.id)
+        break
+
+      case 'delete-playlist':
+        console.log('delete playlist id:', modal.data.id)
+        break
+    }
+
+    setModal(null)
+  }
+
   return (
     <StudioLayout stats={studioStats}>
       <StudioTabs
@@ -22,28 +76,29 @@ export default function StudioPage() {
         setModal={setModal}
       />
       <FormModal
-        open={modal?.type === 'upload-video' || modal?.type === 'edit-video'}
+        open={isVideoModal || isPlaylistModal}
         onClose={() => setModal(null)}
-        title={modal?.type === 'edit-video' ? 'Edit Video' : 'Upload Video'}
+        title={title}
       >
-        {(modal?.type === 'upload-video' || modal?.type === 'edit-video') && (
+        {isVideoModal && (
           <VideoForm
-            data={modal.type === 'edit-video' ? modal.data : undefined}
+            data={modalType === 'edit-video' ? modal?.data : undefined}
+          />
+        )}
+
+        {isPlaylistModal && (
+          <PlaylistForm
+            data={modalType === 'edit-playlist' ? modal?.data : undefined}
           />
         )}
       </FormModal>
 
       <ConfirmModal
-        open={modal?.type === 'delete-video'}
+        open={isDeleteModal}
         onClose={() => setModal(null)}
-        title="Delete Video?"
-        description="This action cannot be undone"
-        onConfirm={() => {
-          if (modal?.type === 'delete-video') {
-            console.log('delete video id:', modal.data.id)
-          }
-          setModal(null)
-        }}
+        title={deleteTitle}
+        description={deleteDescription}
+        onConfirm={handleDelete}
       />
     </StudioLayout>
   )

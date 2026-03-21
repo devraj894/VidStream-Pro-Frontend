@@ -86,6 +86,7 @@ export const studioPlaylists: studioPlaylistTypes[] = [
         videos: 5,
         views: 25,
         likes: 20,
+        description: "This is my first playlist description.",
         createdAt: "2023-03-15T12:00:00Z"
     },
     {
@@ -98,6 +99,7 @@ export const studioPlaylists: studioPlaylistTypes[] = [
         videos: 1,
         views: 25,
         likes: 20,
+        description: "This is my second playlist description.",
         createdAt: "2023-03-15T12:00:00Z"
     },
     {
@@ -110,6 +112,7 @@ export const studioPlaylists: studioPlaylistTypes[] = [
         videos: 1,
         views: 25,
         likes: 20,
+        description: "This is my third playlist description.",
         createdAt: "2023-03-15T12:00:00Z"
     },
     {
@@ -122,6 +125,7 @@ export const studioPlaylists: studioPlaylistTypes[] = [
         videos: 1,
         views: 25,
         likes: 20,
+        description: "This is my fourth playlist description.",
         createdAt: "2023-03-15T12:00:00Z"
     },
     {
@@ -134,6 +138,7 @@ export const studioPlaylists: studioPlaylistTypes[] = [
         videos: 1,
         views: 25,
         likes: 20,
+        description: "This is my fifth playlist description.",
         createdAt: "2023-03-15T12:00:00Z"
     }
 ]

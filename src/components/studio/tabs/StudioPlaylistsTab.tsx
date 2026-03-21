@@ -1,12 +1,15 @@
 import { studioPlaylistTypes } from '@/types/studio'
 import StudioPlaylistHeader from '../playlist/StudioPlaylistHeader'
 import StudioPlaylistRow from '../playlist/StudioPlaylistRow'
+import { ModalType } from '@/types/modal'
 
 interface StudioPlaylistsTabProps {
+  setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
   playlists: studioPlaylistTypes[]
 }
 
 export default function StudioPlaylistsTab({
+  setModal,
   playlists,
 }: StudioPlaylistsTabProps) {
   return (
@@ -14,7 +17,11 @@ export default function StudioPlaylistsTab({
       <StudioPlaylistHeader />
 
       {playlists.map((playlist) => (
-        <StudioPlaylistRow key={playlist.id} playlist={playlist} />
+        <StudioPlaylistRow
+          key={playlist.id}
+          setModal={setModal}
+          playlist={playlist}
+        />
       ))}
     </div>
   )

@@ -24,5 +24,6 @@ export interface studioPlaylistTypes {
     videos: number
     views: number
     likes: number
+    description: string
     createdAt: string
 }

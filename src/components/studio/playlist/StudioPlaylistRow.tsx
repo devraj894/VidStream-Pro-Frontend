@@ -3,12 +3,15 @@ import { Eye, Pencil, Play, ThumbsUp, Trash } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { studioPlaylistTypes, studioVideosTypes } from '@/types/studio'
 import Link from 'next/link'
+import { ModalType } from '@/types/modal'
 
 interface StudioPlaylistRowProps {
+  setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
   playlist: studioPlaylistTypes
 }
 
 export default function StudioPlaylistRow({
+  setModal,
   playlist,
 }: StudioPlaylistRowProps) {
   return (
@@ -73,10 +76,18 @@ export default function StudioPlaylistRow({
       <div className="flex flex-col md:flex-row md:items-center md:justify-end gap-1 md:gap-2">
         {/* Buttons */}
         <div className="flex items-center gap-4 self-end">
-          <button className="rounded-md hover:bg-neutral-800 transition text-neutral-400 hover:text-white">
+          <button
+            onClick={() => setModal({ type: 'edit-playlist', data: playlist })}
+            className="rounded-md hover:bg-neutral-800 transition text-neutral-400 hover:text-white"
+          >
             <Pencil size={18} className="text-blue-500" />
           </button>
-          <button className="rounded-md hover:bg-red-500/10 transition text-neutral-500 hover:text-red-500">
+          <button
+            onClick={() =>
+              setModal({ type: 'delete-playlist', data: playlist })
+            }
+            className="rounded-md hover:bg-red-500/10 transition text-neutral-500 hover:text-red-500"
+          >
             <Trash size={18} className="text-red-500" />
           </button>
           <Link
