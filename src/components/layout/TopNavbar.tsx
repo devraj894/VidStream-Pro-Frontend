@@ -63,6 +63,9 @@ export default function TopNavbar() {
               <DropdownMenuItem asChild>
                 <Link href={`/studio`}>Studio</Link>
               </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link href="/settings">Settings</Link>
+              </DropdownMenuItem>
               {/* <DropdownMenuItem>Playlists</DropdownMenuItem>
               <DropdownMenuItem>Subscriptions</DropdownMenuItem> */}
               <DropdownMenuItem>Logout</DropdownMenuItem>
