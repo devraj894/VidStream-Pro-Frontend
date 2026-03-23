@@ -1,6 +1,8 @@
 'use client'
 
 import AccountForm from '@/components/settings/AccountForm'
+import AvatarUpload from '@/components/settings/AvatarUpload'
+import CoverUpload from '@/components/settings/CoverUpload'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function SettingsPage() {
@@ -13,6 +15,17 @@ export default function SettingsPage() {
         </CardHeader>
         <CardContent>
           <AccountForm />
+        </CardContent>
+      </Card>
+
+      {/* Profile Images */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Profile Images</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <AvatarUpload />
+          <CoverUpload />
         </CardContent>
       </Card>
     </div>
