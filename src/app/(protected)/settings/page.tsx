@@ -24,7 +24,7 @@ export default function SettingsPage() {
         <CardHeader>
           <CardTitle>Profile Images</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="grid gap-8 md:grid-cols-2">
           <AvatarUpload />
           <CoverUpload />
         </CardContent>
