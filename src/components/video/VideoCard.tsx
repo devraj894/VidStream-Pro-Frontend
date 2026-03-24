@@ -2,22 +2,27 @@ import { homeVideoType } from '@/types/videos'
 import { formatDuration, formatTimeAgo, formatViews } from '@/lib/constant'
 import { Dot } from 'lucide-react'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 interface VideoCardProps {
   video: homeVideoType
   variant?: 'default' | 'compact'
+  removable?: boolean
+  onRemove?: (id: string) => void
 }
 
 export default function VideoCard({
   video,
   variant = 'default',
+  removable,
+  onRemove,
 }: VideoCardProps) {
   return (
     <Link href={`/video/${video.id}`} className="block">
       <div
         className={
           variant === 'compact'
-            ? 'md:flex gap-3 cursor-pointer'
+            ? 'md:flex gap-3 cursor-pointer relative'
             : 'min-w-[260px] cursor-pointer'
         }
       >
@@ -32,6 +37,20 @@ export default function VideoCard({
             src={video.thumbnail.url}
             className="w-full h-full object-cover hover:scale-105 transition duration-200"
           />
+
+          {/* Remove button mobile overlay */}
+          {removable && onRemove && (
+            <Button
+              className="absolute top-2 right-2 md:hidden"
+              size="sm"
+              onClick={(e) => {
+                e.preventDefault()
+                onRemove(video.id)
+              }}
+            >
+              Remove
+            </Button>
+          )}
 
           <span className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-0.5 rounded">
             {formatDuration(video.duration)}
@@ -48,6 +67,21 @@ export default function VideoCard({
             <Dot /> {formatTimeAgo(video.createdAt)}
           </p>
         </div>
+
+        {/* Remove button desktop */}
+        {removable && onRemove && (
+          <Button
+            variant="secondary"
+            size="lg"
+            className="hidden md:block absolute top-1/2 right-0 -translate-y-1/2"
+            onClick={(e) => {
+              e.preventDefault()
+              onRemove(video.id)
+            }}
+          >
+            Remove
+          </Button>
+        )}
       </div>
     </Link>
   )

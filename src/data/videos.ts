@@ -514,3 +514,138 @@ export const suggestedVideos: homeVideoType[] = [
         createdAt: "2023-03-15T12:00:00Z"
     },
 ]
+
+export const historyVideos: homeVideoType[] = [
+    {
+        id: "1",
+        title: "History video 1",
+        thumbnail: {
+            url: "https://c.saavncdn.com/832/O-Romeo-Hindi-2026-20260213121003-500x500.jpg",
+            public_id: "sample.jpg"
+        },
+        duration: 5400,
+        views: 1204300,
+        owner: "John Doe",
+        createdAt: "2023-03-15T12:00:00Z"
+    },
+    {
+        id: "2",
+        title: "History video 2",
+        thumbnail: {
+            url: "https://c.saavncdn.com/832/O-Romeo-Hindi-2026-20260213121003-500x500.jpg",
+            public_id: "sample.jpg"
+        },
+        duration: 5400,
+        views: 1204300,
+        owner: "John Doe",
+        createdAt: "2023-03-15T12:00:00Z"
+    },
+    {
+        id: "3",
+        title: "History video 3",
+        thumbnail: {
+            url: "https://c.saavncdn.com/832/O-Romeo-Hindi-2026-20260213121003-500x500.jpg",
+            public_id: "sample.jpg"
+        },
+        duration: 5400,
+        views: 1204300,
+        owner: "John Doe",
+        createdAt: "2023-03-15T12:00:00Z"
+    },
+    {
+        id: "4",
+        title: "History video 4",
+        thumbnail: {
+            url: "https://c.saavncdn.com/832/O-Romeo-Hindi-2026-20260213121003-500x500.jpg",
+            public_id: "sample.jpg"
+        },
+        duration: 5400,
+        views: 1204300,
+        owner: "John Doe",
+        createdAt: "2023-03-15T12:00:00Z"
+    },
+    {
+        id: "5",
+        title: "History video 5",
+        thumbnail: {
+            url: "https://c.saavncdn.com/832/O-Romeo-Hindi-2026-20260213121003-500x500.jpg",
+            public_id: "sample.jpg"
+        },
+        duration: 5400,
+        views: 1204300,
+        owner: "John Doe",
+        createdAt: "2023-03-15T12:00:00Z"
+    },
+    {
+        id: "6",
+        title: "History video 6",
+        thumbnail: {
+            url: "https://c.saavncdn.com/832/O-Romeo-Hindi-2026-20260213121003-500x500.jpg",
+            public_id: "sample.jpg"
+        },
+        duration: 5400,
+        views: 1204300,
+        owner: "John Doe",
+        createdAt: "2023-03-15T12:00:00Z"
+    },
+    {
+        id: "7",
+        title: "History video 7",
+        thumbnail: {
+            url: "https://c.saavncdn.com/832/O-Romeo-Hindi-2026-20260213121003-500x500.jpg",
+            public_id: "sample.jpg"
+        },
+        duration: 5400,
+        views: 1204300,
+        owner: "John Doe",
+        createdAt: "2023-03-15T12:00:00Z"
+    },
+    {
+        id: "8",
+        title: "History video 7",
+        thumbnail: {
+            url: "https://c.saavncdn.com/832/O-Romeo-Hindi-2026-20260213121003-500x500.jpg",
+            public_id: "sample.jpg"
+        },
+        duration: 5400,
+        views: 1204300,
+        owner: "John Doe",
+        createdAt: "2023-03-15T12:00:00Z"
+    },
+    {
+        id: "9",
+        title: "History video 7",
+        thumbnail: {
+            url: "https://c.saavncdn.com/832/O-Romeo-Hindi-2026-20260213121003-500x500.jpg",
+            public_id: "sample.jpg"
+        },
+        duration: 5400,
+        views: 1204300,
+        owner: "John Doe",
+        createdAt: "2023-03-15T12:00:00Z"
+    },
+    {
+        id: "10",
+        title: "History video 7",
+        thumbnail: {
+            url: "https://c.saavncdn.com/832/O-Romeo-Hindi-2026-20260213121003-500x500.jpg",
+            public_id: "sample.jpg"
+        },
+        duration: 5400,
+        views: 1204300,
+        owner: "John Doe",
+        createdAt: "2023-03-15T12:00:00Z"
+    },
+    {
+        id: "11",
+        title: "History video 7",
+        thumbnail: {
+            url: "https://c.saavncdn.com/832/O-Romeo-Hindi-2026-20260213121003-500x500.jpg",
+            public_id: "sample.jpg"
+        },
+        duration: 5400,
+        views: 1204300,
+        owner: "John Doe",
+        createdAt: "2023-03-15T12:00:00Z"
+    },
+]
