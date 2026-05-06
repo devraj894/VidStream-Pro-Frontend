@@ -13,7 +13,7 @@ export default function historyPage() {
 
   return (
     <div className="pt-20 px-8">
-      <h1 className="text-2xl text-white">My History</h1>
+      <h1 className="text-4xl text-white font-bold">My History</h1>
       <div className="space-y-4 pt-7">
         {videos.map((video) => (
           <VideoCard
