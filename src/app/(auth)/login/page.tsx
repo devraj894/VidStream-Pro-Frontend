@@ -6,10 +6,18 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import { useState } from 'react'
+import { loginUser } from '@/services/auth'
+import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
+  const [formData, setFormData] = useState({
+    identifier: '',
+    password: '',
+  })
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -17,11 +25,18 @@ export default function LoginPage() {
     setError(null)
 
     try {
-      // fake API call to simulate form submission
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      console.log('Form submitted')
-    } catch (err) {
-      setError('Failed to submit form')
+      if(!formData.identifier || !formData.password) {
+        setError('Please fill in all fields')
+        return
+      }
+
+      const res = await loginUser(formData)
+      console.log('Login successful: ', res)
+
+      router.push('/home') 
+    } catch (err: any) {
+      console.log('Login error: ', err)
+      setError(err.response?.data?.message || 'An error occurred during login')
     } finally {
       setIsLoading(false)
     }
@@ -46,6 +61,8 @@ export default function LoginPage() {
           <div className="space-y-2">
             <Label className="text-neutral-300">Username / Email</Label>
             <Input
+              value={formData.identifier}
+              onChange={(e) => setFormData({ ...formData, identifier: e.target.value })}
               className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
               placeholder="Enter your username or email"
             />
@@ -63,6 +80,8 @@ export default function LoginPage() {
           <div className="space-y-2">
             <Label className="text-neutral-300">Password</Label>
             <Input
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value})}
               className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
               type="password"
               placeholder="Enter password"

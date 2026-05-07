@@ -10,3 +10,13 @@ export const registerUser = async (formData: FormData) => {
         throw err
     }
 }
+
+export const loginUser = async (data: { identifier: string, password: string }) => {
+    try {
+        const response = await api.post(API_ENDPOINTS.AUTH.LOGIN, data)
+        return response.data
+    } catch(err){
+        console.error("API Error: ", err)
+        throw err
+    }
+}
