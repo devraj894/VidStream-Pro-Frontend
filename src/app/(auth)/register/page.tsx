@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label'
 import Link from 'next/link'
 import { useRef, useState } from 'react'
 import { X } from 'lucide-react'
+import { registerUser } from '@/services/auth'
 
 export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false)
@@ -50,11 +51,23 @@ export default function RegisterPage() {
     setError(null)
 
     try {
-      // fake API call to simulate form submission
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      console.log('Form submitted')
-    } catch (err) {
-      setError('Failed to submit form')
+      const formData = new FormData(e.currentTarget)
+
+      if(avatarFile) {
+        formData.set('avatar', avatarFile)
+      }
+
+      if(coverFile) {
+        formData.set('coverImage', coverFile)
+      }
+
+      const res = await registerUser(formData)
+      console.log('Registration successful:', res)
+      window.location.href = '/login'
+    } catch (err: any) {
+      console.log('Registration error:', err)
+      console.log('Backend error: ', err?.response?.data)
+      setError(err?.response?.data?.message || 'Registration failed')
     } finally {
       setIsLoading(false)
     }
@@ -81,6 +94,7 @@ export default function RegisterPage() {
             <div className="space-y-2">
               <Label className="text-neutral-300">Full Name</Label>
               <Input
+                name='fullName'
                 className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
                 placeholder="Enter your name"
               />
@@ -89,6 +103,7 @@ export default function RegisterPage() {
             <div className="space-y-2">
               <Label className="text-neutral-300">Username</Label>
               <Input
+                name='username'
                 className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
                 placeholder="Enter your username"
               />
@@ -100,6 +115,7 @@ export default function RegisterPage() {
             <div className="space-y-2">
               <Label className="text-neutral-300">Email</Label>
               <Input
+                name='email'
                 className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
                 type="email"
                 placeholder="Enter your email"
@@ -109,6 +125,7 @@ export default function RegisterPage() {
             <div className="space-y-2">
               <Label className="text-neutral-300">Password</Label>
               <Input
+                name='password'
                 className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
                 type="password"
                 placeholder="Enter password"
@@ -120,6 +137,7 @@ export default function RegisterPage() {
           <div className="space-y-2">
             <Label className="text-neutral-300">Confirm Password</Label>
             <Input
+              name='confirmPassword'
               className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
               type="password"
               placeholder="Confirm password"
@@ -133,6 +151,7 @@ export default function RegisterPage() {
               <div className="relative">
                 <Input
                   ref={avatarRef}
+                  name='avatar'
                   type="file"
                   accept="image/*"
                   onChange={handleAvatarChange}
@@ -152,6 +171,7 @@ export default function RegisterPage() {
               <div className="relative">
                 <Input
                   ref={coverRef}
+                  name='coverImage'
                   type="file"
                   accept="image/*"
                   onChange={handleCoverChange}
