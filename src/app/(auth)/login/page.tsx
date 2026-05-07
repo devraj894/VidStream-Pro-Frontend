@@ -44,21 +44,21 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4 text-white">
           <div className="space-y-2">
-            <Label className="text-neutral-300">Username</Label>
+            <Label className="text-neutral-300">Username / Email</Label>
             <Input
               className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
-              placeholder="Enter your username"
+              placeholder="Enter your username or email"
             />
           </div>
 
-          <div className="space-y-2">
+          {/* <div className="space-y-2">
             <Label className="text-neutral-300">Email</Label>
             <Input
               className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
               type="email"
               placeholder="Enter your email"
             />
-          </div>
+          </div> */}
 
           <div className="space-y-2">
             <Label className="text-neutral-300">Password</Label>
