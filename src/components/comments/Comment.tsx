@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { commentsTypes } from '@/types/comments'
 import { Button } from '@/components/ui/button'
 import { ThumbsUp } from 'lucide-react'
-import { formatTimeAgo } from '@/lib/constant'
+import { formatTimeAgo } from '@/lib/utils'
 
 interface CommentProps {
   comment: commentsTypes

@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { featuredVideoType } from '@/types/videos'
 import { Dot, Play } from 'lucide-react'
-import { formatDuration, formatViews } from '@/lib/constant'
+import { formatDuration, formatViews } from '@/lib/utils'
 
 export default function FeaturedSection({
   featuredVideo,

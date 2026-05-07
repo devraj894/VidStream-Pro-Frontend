@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { formatTimeAgo } from '@/lib/constant'
+import { formatTimeAgo } from '@/lib/utils'
 import { videoDetailsTypes } from '@/types/videos'
 import { ThumbsUp, Share2, Download } from 'lucide-react'
 import Link from 'next/link'

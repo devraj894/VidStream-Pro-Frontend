@@ -1,4 +1,4 @@
-import { formatTimeAgo } from '@/lib/constant'
+import { formatTimeAgo } from '@/lib/utils'
 import { playlistType } from '@/types/playlist'
 import { Play } from 'lucide-react'
 import Link from 'next/link'

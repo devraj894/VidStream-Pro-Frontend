@@ -1,4 +1,4 @@
-import { formatTimeAgo, formatViews } from '@/lib/constant'
+import { formatTimeAgo, formatViews } from '@/lib/utils'
 import { Eye, Trash } from 'lucide-react'
 import { homeVideoType } from '@/types/videos'
 import { ModalType } from '@/types/modal'

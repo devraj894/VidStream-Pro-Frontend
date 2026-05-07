@@ -1,4 +1,4 @@
-import { formatTimeAgo } from '@/lib/constant'
+import { formatTimeAgo } from '@/lib/utils'
 import { Pencil, ThumbsUp, Trash } from 'lucide-react'
 import { tweetTypes } from '@/types/tweet'
 import { ModalType } from '@/types/modal'

@@ -1,5 +1,5 @@
 import { homeVideoType } from '@/types/videos'
-import { formatDuration, formatTimeAgo, formatViews } from '@/lib/constant'
+import { formatDuration, formatTimeAgo, formatViews } from '@/lib/utils'
 import { Dot } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'

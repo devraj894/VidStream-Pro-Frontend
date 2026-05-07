@@ -1,4 +1,4 @@
-import { formatTimeAgo, formatViews } from '@/lib/constant'
+import { formatTimeAgo, formatViews } from '@/lib/utils'
 import { Eye, Pencil, Play, ThumbsUp, Trash } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { studioPlaylistTypes, studioVideosTypes } from '@/types/studio'
