@@ -20,3 +20,13 @@ export const loginUser = async (data: { identifier: string, password: string }) 
         throw err
     }
 }
+
+export const fetchCurrentUser = async () => {
+    try {
+        const response = await api.get(API_ENDPOINTS.AUTH.CURRENT_USER)
+        return response.data
+    } catch(err){
+        console.error("API Error: ", err)
+        throw err
+    }
+}

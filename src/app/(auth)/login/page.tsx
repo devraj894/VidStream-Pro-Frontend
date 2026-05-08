@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { loginUser } from '@/services/auth'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '@/context/AuthContext'
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -18,6 +19,8 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null)
 
   const router = useRouter()
+
+  const { checkAuth } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -32,7 +35,7 @@ export default function LoginPage() {
 
       const res = await loginUser(formData)
       console.log('Login successful: ', res)
-
+      await checkAuth()
       router.push('/home') 
     } catch (err: any) {
       console.log('Login error: ', err)

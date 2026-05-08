@@ -1,5 +1,8 @@
+'use client'
+
 import FeaturedSection from '@/components/home/FeaturedSection'
 import VideoRow from '@/components/home/VideoRow'
+import { useAuth } from '@/context/AuthContext'
 import {
   featuredVideo,
   trendingVideos,
@@ -9,6 +12,10 @@ import {
 } from '@/data/videos'
 
 export default function HomePage() {
+  const { user, isLoading } = useAuth()
+  console.log("Loading status: ", isLoading)
+  console.log("Logged in user: ", user)
+  
   return (
     <div>
       <FeaturedSection featuredVideo={featuredVideo} />
