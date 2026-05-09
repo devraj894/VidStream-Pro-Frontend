@@ -1,32 +1,27 @@
-import { API_ENDPOINTS } from "@/constants/api-endpoints";
 import { api } from "@/lib/api";
 
 export const registerUser = async (formData: FormData) => {
-    try {
-        const response = await api.post(API_ENDPOINTS.AUTH.REGISTER, formData)
-        return response.data
-    } catch(err){
-        console.error("API Error: ", err)
-        throw err
-    }
+    const response = await api.post(
+        "/api/auth/register",
+        formData
+    )
+
+    return response.data
 }
 
 export const loginUser = async (data: { identifier: string, password: string }) => {
-    try {
-        const response = await api.post(API_ENDPOINTS.AUTH.LOGIN, data)
-        return response.data
-    } catch(err){
-        console.error("API Error: ", err)
-        throw err
-    }
+    const response = await api.post(
+        "/api/auth/login",
+        data
+    )
+
+    return response.data
 }
 
 export const fetchCurrentUser = async () => {
-    try {
-        const response = await api.get(API_ENDPOINTS.AUTH.CURRENT_USER)
-        return response.data
-    } catch(err){
-        console.error("API Error: ", err)
-        throw err
-    }
+    const response = await api.get(
+        "/api/auth/me"
+    )
+
+    return response.data
 }
