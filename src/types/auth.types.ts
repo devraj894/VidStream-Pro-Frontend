@@ -1,16 +1,12 @@
+import { Media } from "./common.types"
+
 export interface User {
     _id: string
     fullName: string
     username: string
     email: string
-    avatar: {
-        url: string
-        public_id: string
-    }
-    coverImage?: {
-        url: string
-        public_id: string
-    }
+    avatar: Media
+    coverImage?: Media
     watchHistory: string[]
 }
 
