@@ -1,12 +1,12 @@
 import { Button } from '@/components/ui/button'
-import { featuredVideoType } from '@/types/videos'
 import { Dot, Play } from 'lucide-react'
 import { formatDuration, formatViews } from '@/lib/utils'
+import { FeedVideo } from '@/types/feed.types'
 
 export default function FeaturedSection({
   featuredVideo,
 }: {
-  featuredVideo: featuredVideoType
+  featuredVideo: FeedVideo
 }) {
   return (
     <div className="relative w-full h-[480px] overflow-hidden">
