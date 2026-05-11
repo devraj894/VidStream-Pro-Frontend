@@ -3,12 +3,6 @@
 import FeaturedSection from '@/components/home/FeaturedSection'
 import VideoRow from '@/components/home/VideoRow'
 import { useAuth } from '@/context/AuthContext'
-import {
-  trendingVideos,
-  latestVideos,
-  subscriptionVideos,
-  recommendedVideos,
-} from '@/data/videos'
 import { fetchFeedData } from '@/services/videos'
 import { FeedData } from '@/types/feed.types'
 import { useEffect, useState } from 'react'
@@ -41,12 +35,11 @@ export default function HomePage() {
         <FeaturedSection featuredVideo={feedVideos.featured} />
       )}
 
-      <div className="px-8 space-y-12 pt-4">
-        <VideoRow title="Trending Section" videos={trendingVideos} />
-        <VideoRow title="Latest Section" videos={latestVideos} />
-        <VideoRow title="Subscriptions Section" videos={subscriptionVideos} />
-        <VideoRow title="Recommended Section" videos={recommendedVideos} />
-      </div>
+      {feedVideos?.sections.map((section, index) => (
+        <div key={index} className="px-8 space-y-12 pt-4">
+          <VideoRow title={section.title} videos={section.videos} />
+        </div>
+      ))}
     </div>
   )
 }

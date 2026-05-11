@@ -3,11 +3,11 @@
 import { useRef } from 'react'
 import VideoCard from '../video/VideoCard'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { homeVideoType } from '@/types/videos'
+import { FeedVideo } from '@/types/feed.types'
 
 interface VideoRowProps {
   title: string
-  videos?: homeVideoType[]
+  videos?: FeedVideo[]
 }
 
 export default function VideoRow({ title, videos }: VideoRowProps) {
@@ -46,7 +46,7 @@ export default function VideoRow({ title, videos }: VideoRowProps) {
           className="flex gap-4 overflow-x-auto no-scrollbar scroll-smooth"
         >
           {videos && videos.length > 0 ? (
-            videos.map((video) => <VideoCard key={video.id} video={video} />)
+            videos.map((video) => <VideoCard key={video._id} video={video} />)
           ) : (
             <p className="text-sm text-neutral-500">No videos available.</p>
           )}

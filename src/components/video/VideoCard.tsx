@@ -1,11 +1,11 @@
-import { homeVideoType } from '@/types/videos'
 import { formatDuration, formatTimeAgo, formatViews } from '@/lib/utils'
 import { Dot } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { FeedVideo } from '@/types/feed.types'
 
 interface VideoCardProps {
-  video: homeVideoType
+  video: FeedVideo
   variant?: 'default' | 'compact'
   removable?: boolean
   onRemove?: (id: string) => void
@@ -18,12 +18,12 @@ export default function VideoCard({
   onRemove,
 }: VideoCardProps) {
   return (
-    <Link href={`/video/${video.id}`} className="block">
+    <Link href={`/video/${video._id}`} className="block">
       <div
         className={
           variant === 'compact'
             ? 'md:flex gap-3 cursor-pointer relative'
-            : 'min-w-[260px] cursor-pointer'
+            : 'w-[260px] flex-shrink-0 cursor-pointer'
         }
       >
         <div
@@ -45,7 +45,7 @@ export default function VideoCard({
               size="sm"
               onClick={(e) => {
                 e.preventDefault()
-                onRemove(video.id)
+                onRemove(video._id)
               }}
             >
               Remove
@@ -63,7 +63,7 @@ export default function VideoCard({
           </h3>
 
           <p className="flex items-center text-xs text-neutral-400">
-            {video.owner} <Dot /> {formatViews(video.views)} views
+            {video.Owner.fullName} <Dot /> {formatViews(video.views)} views
             <Dot /> {formatTimeAgo(video.createdAt)}
           </p>
         </div>
@@ -76,7 +76,7 @@ export default function VideoCard({
             className="hidden md:block absolute top-1/2 right-0 -translate-y-1/2"
             onClick={(e) => {
               e.preventDefault()
-              onRemove(video.id)
+              onRemove(video._id)
             }}
           >
             Remove
