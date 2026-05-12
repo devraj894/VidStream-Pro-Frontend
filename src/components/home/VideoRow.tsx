@@ -3,11 +3,11 @@
 import { useRef } from 'react'
 import VideoCard from '../video/VideoCard'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { FeedVideo } from '@/types/feed.types'
+import { Video } from '@/types/videos.types'
 
 interface VideoRowProps {
   title: string
-  videos?: FeedVideo[]
+  videos?: Video[]
 }
 
 export default function VideoRow({ title, videos }: VideoRowProps) {

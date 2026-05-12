@@ -5,6 +5,7 @@ export const API_ENDPOINTS = {
         CURRENT_USER: '/users/current-user',
     },
     VIDEOS: {
-        FEED: '/feed'
+        FEED: '/feed',
+        USER_HISTORY: '/users/history'
     }
 }   

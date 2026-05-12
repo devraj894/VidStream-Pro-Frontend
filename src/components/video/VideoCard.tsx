@@ -2,10 +2,10 @@ import { formatDuration, formatTimeAgo, formatViews } from '@/lib/utils'
 import { Dot } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { FeedVideo } from '@/types/feed.types'
+import { Video } from '@/types/videos.types'
 
 interface VideoCardProps {
-  video: FeedVideo
+  video: Video
   variant?: 'default' | 'compact'
   removable?: boolean
   onRemove?: (id: string) => void
@@ -63,7 +63,7 @@ export default function VideoCard({
           </h3>
 
           <p className="flex items-center text-xs text-neutral-400">
-            {video.Owner.fullName} <Dot /> {formatViews(video.views)} views
+            {video.owner.fullName} <Dot /> {formatViews(video.views)} views
             <Dot /> {formatTimeAgo(video.createdAt)}
           </p>
         </div>

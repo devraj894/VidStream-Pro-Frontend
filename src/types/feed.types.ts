@@ -1,22 +1,11 @@
-import { Media, VideoOwner } from "./common.types"
-
-export interface FeedVideo {
-  _id: string
-  thumbnail: Media
-  title: string
-  description: string
-  duration: number
-  views: number
-  Owner: VideoOwner
-  createdAt: string
-}
+import { Video } from "./videos.types"
 
 export interface FeedSection {
   title: string
-  videos: FeedVideo[]
+  videos: Video[]
 }
 
 export interface FeedData {
-  featured: FeedVideo
+  featured: Video
   sections: FeedSection[]
 }

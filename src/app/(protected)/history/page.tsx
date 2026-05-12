@@ -1,14 +1,30 @@
 'use client'
 
 import VideoCard from '@/components/video/VideoCard'
-import { historyVideos } from '@/data/videos'
-import { useState } from 'react'
+import { fetchUserHistory } from '@/services/videos'
+import { Video } from '@/types/videos.types'
+import { useEffect, useState } from 'react'
 
 export default function historyPage() {
-  const [videos, setVideos] = useState(historyVideos)
+  const [videos, setVideos] = useState<Video[]>([]);
 
-  const handleRemove = (id: string) => {
-    setVideos((prev) => prev.filter((v) => v.id !== id))
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const response = await fetchUserHistory();
+        setVideos(response.data);     
+      } catch(err) {
+        console.error("Failed to fetch user history:", err);
+      }
+    }
+
+    fetchHistory();
+  }, [])
+
+  console.log("User history videos:", videos);
+
+  const handleRemove = (_id: string) => {
+    setVideos((prev) => prev.filter((v) => v._id !== _id))
   }
 
   return (
@@ -17,7 +33,7 @@ export default function historyPage() {
       <div className="space-y-4 pt-7">
         {videos.map((video) => (
           <VideoCard
-            key={video.id}
+            key={video._id}
             video={video}
             variant="compact"
             removable
