@@ -1,8 +1,10 @@
-export default function ProfileCover() {
+import { Media } from "@/types/common.types";
+
+export default function ProfileCover({ coverImage }: { coverImage: Media }) {
   return (
     <div className="w-full h-48 md:h-64 bg-neutral-800 relative">
       <img
-        src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+        src={coverImage.url}
         className="w-full h-full object-cover"
       />
     </div>

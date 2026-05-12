@@ -64,7 +64,7 @@ export default function TopNavbar() {
 
               <DropdownMenuContent align="end">
                 <DropdownMenuItem asChild>
-                  <Link href={`/profile/${user?._id}`}>Profile</Link>
+                  <Link href={`/profile/${user?.username}`}>Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href={`/studio`}>Studio</Link>

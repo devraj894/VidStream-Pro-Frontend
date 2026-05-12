@@ -7,5 +7,8 @@ export const API_ENDPOINTS = {
     VIDEOS: {
         FEED: '/feed',
         USER_HISTORY: '/users/history'
+    },
+    CHANNELS: {
+        PROFILE: (username: string) => `/users/c/${username}`,
     }
 }   
