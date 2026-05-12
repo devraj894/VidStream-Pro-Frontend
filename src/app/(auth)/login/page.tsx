@@ -30,6 +30,7 @@ export default function LoginPage() {
     try {
       if(!formData.identifier || !formData.password) {
         setError('Please fill in all fields')
+        setIsLoading(false)
         return
       }
 
@@ -66,6 +67,7 @@ export default function LoginPage() {
             <Input
               value={formData.identifier}
               onChange={(e) => setFormData({ ...formData, identifier: e.target.value })}
+              disabled={isLoading}
               className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
               placeholder="Enter your username or email"
             />
@@ -85,6 +87,7 @@ export default function LoginPage() {
             <Input
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value})}
+              disabled={isLoading}
               className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
               type="password"
               placeholder="Enter password"
