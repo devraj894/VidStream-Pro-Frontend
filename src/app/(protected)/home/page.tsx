@@ -2,6 +2,7 @@
 
 import FeaturedSection from '@/components/home/FeaturedSection'
 import VideoRow from '@/components/home/VideoRow'
+import { Spinner } from '@/components/ui/spinner'
 import { useAuth } from '@/context/AuthContext'
 import { fetchFeedData } from '@/services/videos'
 import { FeedData } from '@/types/feed.types'
@@ -28,6 +29,10 @@ export default function HomePage() {
   }, [])
 
   console.log("Feed Videos: ", feedVideos)
+
+  if (!feedVideos) {
+    return <Spinner />
+  }
   
   return (
     <div>
