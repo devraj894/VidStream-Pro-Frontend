@@ -2,13 +2,25 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import Comment from './Comment'
-import { commentsTypes } from '@/types/comments'
+import { Comment as CommentType } from '@/types/comments.types'
+import { Spinner } from '../ui/spinner'
 
 interface CommentSectionProps {
-  comments: commentsTypes[]
+  comments: CommentType[]
+  hasNextPage: boolean | undefined
+  onLoadMore: () => void
+  commentsLoading: boolean
+  loadingMoreComments?: boolean
 }
 
-export default function CommentSection({ comments }: CommentSectionProps) {
+export default function CommentSection({
+  comments, 
+  hasNextPage, 
+  onLoadMore, 
+  commentsLoading, 
+  loadingMoreComments 
+}: CommentSectionProps) {
+
   return (
     <div className="space-y-6">
       <h2 className="font-semibold text-lg text-white">
@@ -31,10 +43,39 @@ export default function CommentSection({ comments }: CommentSectionProps) {
 
       {/* Comment List */}
       <div className="space-y-6">
-        {comments.map((comment) => (
-          <Comment key={comment.id} comment={comment} />
+        {commentsLoading ? (
+          <div className="flex justify-center">
+            <Spinner />
+          </div>
+        ) : comments.length === 0 ? (
+
+          <div className="text-center py-10 text-muted-foreground">
+            No comments yet
+          </div>
+        ) : (
+         comments.map((comment) => (
+          <Comment key={comment._id} comment={comment} />
+         )
         ))}
       </div>
+
+       {/* LOAD MORE */}
+      {hasNextPage && (
+        <div className="flex justify-center">
+
+          <Button
+            variant="secondary"
+            onClick={onLoadMore}
+          >
+            {loadingMoreComments ? (
+              "Loading..."
+            ) : (
+              "Load More"
+            )}
+          </Button>
+
+        </div>
+      )}
     </div>
   )
 }

@@ -5,9 +5,11 @@ import { Skeleton } from '@/components/ui/skeleton'
 import VideoCard from '@/components/video/VideoCard'
 import VideoMeta from '@/components/video/VideoMeta'
 import VideoPlayer from '@/components/video/VideoPlayer'
-import { comments } from '@/data/comments'
 import { suggestedVideos } from '@/data/videos'
+import { fetchVideoComments } from '@/services/comments'
 import { fetchVideoDetails } from '@/services/videos'
+import { PaginatedResponse } from '@/types/api.types'
+import { Comment } from '@/types/comments.types'
 import { VideoDetails } from '@/types/videos.types'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -18,6 +20,10 @@ export default function videoDetailsPage() {
 
   const [videoDetails, setVideoDetails] = useState<VideoDetails | null>(null)
   const [videoDetailsLoading, setVideoDetailsLoading] = useState(true)
+
+  const [comments, setComments] = useState<PaginatedResponse<Comment> | null>(null)
+  const [commentsLoading, setCommentsLoading] = useState(true)
+  const [loadingMoreComments, setLoadingMoreComments] = useState(false)
 
   useEffect(() => {
     const loadVideoDetails = async () => {
@@ -31,8 +37,63 @@ export default function videoDetailsPage() {
       }
     }
 
+    const loadComments = async () => {
+      try {
+        const response = await fetchVideoComments(videoId, 1, 10);
+        setComments(response.data);
+      } catch(error) {
+        console.error('Error fetching comments:', error)
+      } finally {
+        setCommentsLoading(false)
+      }
+    }
+
     loadVideoDetails()
+    loadComments()
   }, [videoId])
+
+  console.log("Comments: ", comments)
+
+   // LOAD MORE COMMENTS
+  const loadMoreComments = async () => {
+
+    if (!comments?.hasNextPage) return
+
+    try {
+      setLoadingMoreComments(true)
+
+      const nextPage = comments.nextPage
+
+      if(!nextPage) return
+
+      const response = await fetchVideoComments(
+        videoId,
+        nextPage,
+        10
+      )
+
+      setComments((prev) => {
+        if (!prev) return response.data
+
+        return {
+          ...response.data,
+
+          docs: [
+            ...prev.docs,
+            ...response.data.docs,
+          ],
+        }
+      })
+
+    } catch (error) {
+      console.error(
+        'Error loading more comments:',
+        error
+      )
+    } finally {
+      setLoadingMoreComments(false)
+    }
+  }
 
   return (
     <div className="px-8 pt-14">
@@ -79,7 +140,13 @@ export default function videoDetailsPage() {
             </>
           )
           )}
-          <CommentSection comments={comments} />
+          <CommentSection
+           comments={comments?.docs || []}
+           hasNextPage={comments?.hasNextPage}
+           onLoadMore={loadMoreComments}
+           commentsLoading={commentsLoading}
+           loadingMoreComments={loadingMoreComments}
+          />
         </div>
 
         {/* RIGHT SIDE */}

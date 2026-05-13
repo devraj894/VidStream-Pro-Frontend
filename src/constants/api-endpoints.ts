@@ -11,5 +11,8 @@ export const API_ENDPOINTS = {
     },  
     CHANNELS: {
         PROFILE: (username: string) => `/users/c/${username}`,
+    },
+    COMMENTS: {
+        GET_COMMENTS: (videoId: string) => `/comments/${videoId}`,
     }
 }   
