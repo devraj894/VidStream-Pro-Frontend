@@ -14,3 +14,8 @@ export const fetchVideoDetails = async (videoId: string) => {
     const response = await api.get(`/api/videos/${videoId}`)
     return response.data
 }
+
+export const fetchSuggestedVideos = async (videoId: string) => {
+    const response = await api.get(`/api/videos/suggestions/${videoId}`)
+    return response.data
+}

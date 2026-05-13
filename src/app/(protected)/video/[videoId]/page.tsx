@@ -5,12 +5,11 @@ import { Skeleton } from '@/components/ui/skeleton'
 import VideoCard from '@/components/video/VideoCard'
 import VideoMeta from '@/components/video/VideoMeta'
 import VideoPlayer from '@/components/video/VideoPlayer'
-import { suggestedVideos } from '@/data/videos'
 import { fetchVideoComments } from '@/services/comments'
-import { fetchVideoDetails } from '@/services/videos'
+import { fetchSuggestedVideos, fetchVideoDetails } from '@/services/videos'
 import { PaginatedResponse } from '@/types/api.types'
 import { Comment } from '@/types/comments.types'
-import { VideoDetails } from '@/types/videos.types'
+import { Video, VideoDetails } from '@/types/videos.types'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -24,6 +23,9 @@ export default function videoDetailsPage() {
   const [comments, setComments] = useState<PaginatedResponse<Comment> | null>(null)
   const [commentsLoading, setCommentsLoading] = useState(true)
   const [loadingMoreComments, setLoadingMoreComments] = useState(false)
+
+  const [suggestedVideos, setSuggestedVideos] = useState<Video[]>([])
+  const [suggestedVideosLoading, setSuggestedVideosLoading] = useState(true)
 
   useEffect(() => {
     const loadVideoDetails = async () => {
@@ -48,9 +50,24 @@ export default function videoDetailsPage() {
       }
     }
 
+    const loadSuggestedVideos = async () => {
+      try {
+        const response = await fetchSuggestedVideos(videoId)
+        setSuggestedVideos(response.data)
+      } catch(error) {
+        console.error('Error fetching suggested videos:', error)
+      } finally {
+        setSuggestedVideosLoading(false)
+      }
+
+      }
+
     loadVideoDetails()
     loadComments()
+    loadSuggestedVideos()
   }, [videoId])
+
+  console.log("Suggested Videos: ", suggestedVideos)
 
   console.log("Comments: ", comments)
 
@@ -151,9 +168,27 @@ export default function videoDetailsPage() {
 
         {/* RIGHT SIDE */}
         <div className="space-y-4">
-          {suggestedVideos.map((suggest) => (
-            <VideoCard key={suggest.id} video={suggest} variant="compact" />
-          ))}
+          {suggestedVideosLoading ? (
+            <>
+              {[...Array(5)].map((_, index) => (
+                <div
+                  key={index}
+                  className="flex gap-3"
+                >
+                  <Skeleton className="w-40 h-24 rounded-xl shrink-0" />
+
+                  <div className="flex-1 space-y-2">
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
+                  </div>
+                </div>
+              ))}
+            </>
+          ) : (
+            suggestedVideos.map((suggest) => (
+              <VideoCard key={suggest._id} video={suggest} variant="compact" />
+            ))
+          )}
         </div>
       </div>
     </div>
