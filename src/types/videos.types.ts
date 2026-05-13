@@ -11,3 +11,10 @@ export interface Video {
     owner: VideoOwner
     createdAt: string
 }
+
+export interface VideoDetails extends Video {
+    likes: number
+    owner: VideoOwner & {
+        subscribers: number
+    }
+}

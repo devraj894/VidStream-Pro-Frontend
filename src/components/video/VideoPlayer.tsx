@@ -1,7 +1,7 @@
-import { videoFileType } from '@/types/videos'
+import { Media } from '@/types/common.types'
 
 interface VideoPlayerProps {
-  videoFile: videoFileType
+  videoFile: Media
 }
 
 export default function VideoPlayer({ videoFile }: VideoPlayerProps) {

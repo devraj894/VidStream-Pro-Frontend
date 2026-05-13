@@ -9,3 +9,8 @@ export const fetchUserHistory = async () => {
     const response = await api.get("/api/videos/history")
     return response.data
 }
+
+export const fetchVideoDetails = async (videoId: string) => {
+    const response = await api.get(`/api/videos/${videoId}`)
+    return response.data
+}

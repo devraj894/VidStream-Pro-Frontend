@@ -1,16 +1,20 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { useAuth } from '@/context/AuthContext'
 import { formatTimeAgo } from '@/lib/utils'
-import { videoDetailsTypes } from '@/types/videos'
+import { VideoDetails } from '@/types/videos.types'
 import { ThumbsUp, Share2, Download } from 'lucide-react'
 import Link from 'next/link'
 
 interface VideoMetaProps {
-  videoDetails: videoDetailsTypes
+  videoDetails: VideoDetails
 }
 
 export default function VideoMeta({ videoDetails }: VideoMetaProps) {
+  const { user } = useAuth();
+  const isOwner = user?._id === videoDetails.owner._id;
+
   return (
     <div className="space-y-4">
       {/* Title */}
@@ -22,7 +26,7 @@ export default function VideoMeta({ videoDetails }: VideoMetaProps) {
       <div className="flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
         {/* Channel Info */}
         <div className="flex items-center gap-3 shrink-0">
-          <Link href={`/profile/${videoDetails.owner.id}`}>
+          <Link href={`/profile/${videoDetails.owner._id}`}>
             <Avatar className="h-10 w-10">
               <AvatarImage src={videoDetails.owner.avatar.url} />
               <AvatarFallback>YT</AvatarFallback>
@@ -39,7 +43,7 @@ export default function VideoMeta({ videoDetails }: VideoMetaProps) {
           </div>
 
           <Button variant="secondary" className="ml-4 rounded-full">
-            Subscribe
+            {isOwner ? 'Manage Channel' : 'Subscribe'}
           </Button>
         </div>
 
