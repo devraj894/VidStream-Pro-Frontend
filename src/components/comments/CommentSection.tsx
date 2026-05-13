@@ -1,9 +1,10 @@
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import Comment from './Comment'
 import { Comment as CommentType } from '@/types/comments.types'
 import { Spinner } from '../ui/spinner'
+import { useAuth } from '@/context/AuthContext'
 
 interface CommentSectionProps {
   comments: CommentType[]
@@ -21,6 +22,8 @@ export default function CommentSection({
   loadingMoreComments 
 }: CommentSectionProps) {
 
+  const { user } = useAuth();
+
   return (
     <div className="space-y-6">
       <h2 className="font-semibold text-lg text-white">
@@ -30,6 +33,7 @@ export default function CommentSection({
       {/* Add Comment */}
       <div className="flex gap-3">
         <Avatar className="h-9 w-9">
+          <AvatarImage src={user?.avatar.url}/>
           <AvatarFallback>Y</AvatarFallback>
         </Avatar>
 
