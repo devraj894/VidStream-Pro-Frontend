@@ -17,7 +17,7 @@ import { formatTimeAgo } from '@/lib/utils'
 import { Comment as CommentType } from '@/types/comments.types'
 import { useAuth } from '@/context/AuthContext'
 import { useState } from 'react'
-import { updateComment } from '@/services/comments'
+import { deleteComment, updateComment } from '@/services/comments'
 
 interface CommentProps {
   comment: CommentType
@@ -35,6 +35,7 @@ export default function Comment({
   const [editedContent, setEditedContent] = useState(comment.content)
 
   const [updatingComment, setUpdatingComment] = useState(false)
+  const [deletingComment, setDeletingComment] = useState(false)
 
   const isOwner = user?._id === comment.ownerInfo._id
 
@@ -55,6 +56,22 @@ export default function Comment({
       
     } finally {
       setUpdatingComment(false)
+    }
+  }
+
+  const handleDeleteComment = async () => {
+    try {
+      setDeletingComment(true)
+
+      await deleteComment(comment._id)
+      
+      onCommentUpdated()
+
+    } catch(err) {
+      console.log("Error deleting comment", err)
+
+    } finally {
+      setDeletingComment(false)
     }
   }
 
@@ -104,10 +121,19 @@ export default function Comment({
                 </DropdownMenuItem>
 
                 <DropdownMenuItem
+                  onClick={handleDeleteComment}
                   className="text-red-500 focus:text-red-500"
                 >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Delete
+                  {
+                    deletingComment 
+                    ? 
+                      "Deleting" 
+                    : 
+                      <>
+                        <Trash2 className="mr-2 h-4 w-4" />
+                        Delete
+                      </>
+                  }
                 </DropdownMenuItem>
 
               </DropdownMenuContent>
@@ -147,7 +173,7 @@ export default function Comment({
                   onClick={handleUpdateComment}
                   disabled={updatingComment || !editedContent.trim()}
                 >
-                  {updatingComment ? "Saving" : "save"}
+                  {updatingComment ? "Saving" : "Save"}
                 </Button>
               </div>
             </div>

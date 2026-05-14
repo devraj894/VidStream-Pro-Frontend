@@ -44,3 +44,14 @@ export const updateComment = async (
 
   return response.data
 }
+
+export const deleteComment = async (
+  commentId: string
+) => {
+
+  const response = await api.delete(
+    `/api/comments/c/${commentId}`
+  )
+
+  return response.data
+}

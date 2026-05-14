@@ -46,3 +46,34 @@ export async function PATCH(
         return serverApiHandler(err);
     }
 }
+
+export async function DELETE(
+    request: NextRequest,
+    context: {params: Promise<{ commentId: string }>}
+) {
+    try{
+        const accessToken = request.cookies.get("accessToken")?.value;
+    
+        if(!accessToken){
+            return NextResponse.json(
+                { message: "Unauthorized" },
+                { status: 401 }
+            )
+        }
+
+        const { commentId } = await context.params;
+
+        const { data } = await backendApi.delete(
+            API_ENDPOINTS.COMMENTS.DELETE_COMMENT(commentId),
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+
+        return NextResponse.json(data)
+    } catch(err){
+        return serverApiHandler(err)
+    }
+}
