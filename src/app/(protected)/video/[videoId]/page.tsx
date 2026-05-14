@@ -39,17 +39,6 @@ export default function videoDetailsPage() {
       }
     }
 
-    const loadComments = async () => {
-      try {
-        const response = await fetchVideoComments(videoId, 1, 10);
-        setComments(response.data);
-      } catch(error) {
-        console.error('Error fetching comments:', error)
-      } finally {
-        setCommentsLoading(false)
-      }
-    }
-
     const loadSuggestedVideos = async () => {
       try {
         const response = await fetchSuggestedVideos(videoId)
@@ -59,13 +48,24 @@ export default function videoDetailsPage() {
       } finally {
         setSuggestedVideosLoading(false)
       }
-
-      }
-
+      
+    }
+    
     loadVideoDetails()
     loadComments()
     loadSuggestedVideos()
   }, [videoId])
+  
+  const loadComments = async () => {
+    try {
+      const response = await fetchVideoComments(videoId, 1, 10);
+      setComments(response.data);
+    } catch(error) {
+      console.error('Error fetching comments:', error)
+    } finally {
+      setCommentsLoading(false)
+    }
+  }
 
   console.log("Suggested Videos: ", suggestedVideos)
 
@@ -164,6 +164,8 @@ export default function videoDetailsPage() {
            onLoadMore={loadMoreComments}
            commentsLoading={commentsLoading}
            loadingMoreComments={loadingMoreComments}
+           videoId={videoId}
+           onCommentAdded={loadComments}
           />
         </div>
 

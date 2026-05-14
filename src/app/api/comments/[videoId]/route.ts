@@ -43,3 +43,46 @@ export async function GET(
     return serverApiHandler(err);
   }
 }
+
+export async function POST(
+  request: NextRequest,
+  context: { params: Promise<{ videoId: string }> }
+) {
+  try {
+    const accessToken = request.cookies.get("accessToken")?.value;
+
+    if (!accessToken) {
+      return NextResponse.json(
+        { message: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+    const { videoId } = await context.params;
+
+    const body = await request.json();
+    const { content } = body;
+
+    if (!content || content.trim() === "") {
+      return NextResponse.json(
+        { message: "Comment content cannot be empty" },
+        { status: 400 }
+      );
+    }
+
+    const { data } = await backendApi.post(
+      API_ENDPOINTS.COMMENTS.ADD_COMMENT(videoId),
+      { content },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        }
+      }
+    )
+
+    return NextResponse.json(data);
+
+  } catch(err) {
+    return serverApiHandler(err);
+  }
+}

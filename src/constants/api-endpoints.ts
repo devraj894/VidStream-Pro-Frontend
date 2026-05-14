@@ -15,5 +15,6 @@ export const API_ENDPOINTS = {
     },
     COMMENTS: {
         GET_COMMENTS: (videoId: string) => `/comments/${videoId}`,
+        ADD_COMMENT: (videoId: string) => `/comments/${videoId}`,
     }
 }   

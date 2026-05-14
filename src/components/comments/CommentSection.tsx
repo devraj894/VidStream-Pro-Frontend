@@ -5,6 +5,8 @@ import Comment from './Comment'
 import { Comment as CommentType } from '@/types/comments.types'
 import { Spinner } from '../ui/spinner'
 import { useAuth } from '@/context/AuthContext'
+import { useState } from 'react'
+import { addComment } from '@/services/comments'
 
 interface CommentSectionProps {
   comments: CommentType[]
@@ -13,6 +15,8 @@ interface CommentSectionProps {
   onLoadMore: () => void
   commentsLoading: boolean
   loadingMoreComments?: boolean
+  videoId: string
+  onCommentAdded: () => void
 }
 
 export default function CommentSection({
@@ -22,9 +26,31 @@ export default function CommentSection({
   onLoadMore, 
   commentsLoading, 
   loadingMoreComments,
+  videoId,
+  onCommentAdded,
 }: CommentSectionProps) {
 
+  const [content, setContent] = useState("");
+  const [addingComment, setAddingComment] = useState(false);
+
   const { user } = useAuth();
+
+  const handleAddComment = async () => {
+    if(!content.trim()) return;
+
+    try {
+      setAddingComment(true);
+
+      await addComment(videoId, content);
+      setContent("");
+      onCommentAdded();
+
+    } catch(err) {
+      console.error("Error adding comment:", err);
+    } finally {
+      setAddingComment(false);
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -40,9 +66,16 @@ export default function CommentSection({
         </Avatar>
 
         <div className="flex-1 space-y-2">
-          <Textarea placeholder="Add a comment..." />
+          <Textarea 
+            className='text-white' 
+            placeholder="Add a comment..." 
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
           <div className="flex justify-end">
-            <Button size="sm">Comment</Button>
+            <Button size="sm" onClick={handleAddComment} disabled={addingComment || !content.trim()}>
+              {addingComment ? "Adding..." : "Comment"}
+            </Button>
           </div>
         </div>
       </div>
