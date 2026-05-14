@@ -23,9 +23,24 @@ export const addComment = async (
   videoId: string,
   content: string
 ) => {
+
   const response = await api.post(
     `/api/comments/${videoId}`,
     { content }
   )
+
+  return response.data
+}
+
+export const updateComment = async (
+  commentId: string,
+  newContent: string
+) => {
+
+  const response = await api.patch(
+    `/api/comments/c/${commentId}`,
+    { newContent }
+  )
+
   return response.data
 }

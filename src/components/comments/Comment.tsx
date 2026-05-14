@@ -17,13 +17,16 @@ import { formatTimeAgo } from '@/lib/utils'
 import { Comment as CommentType } from '@/types/comments.types'
 import { useAuth } from '@/context/AuthContext'
 import { useState } from 'react'
+import { updateComment } from '@/services/comments'
 
 interface CommentProps {
   comment: CommentType
+  onCommentUpdated: () => void
 }
 
 export default function Comment({
   comment,
+  onCommentUpdated,
 }: CommentProps) {
 
   const { user } = useAuth()
@@ -31,7 +34,29 @@ export default function Comment({
   const [isEditing, setIsEditing] = useState(false)
   const [editedContent, setEditedContent] = useState(comment.content)
 
+  const [updatingComment, setUpdatingComment] = useState(false)
+
   const isOwner = user?._id === comment.ownerInfo._id
+
+  const handleUpdateComment = async () => {
+    if(!editedContent.trim()) return
+
+    try {
+      setUpdatingComment(true)
+      
+      await updateComment(comment._id, editedContent)
+
+      setIsEditing(false)
+
+      onCommentUpdated()
+
+    } catch(err) {
+      console.log("Error updating comment", err)
+      
+    } finally {
+      setUpdatingComment(false)
+    }
+  }
 
   return (
     <div className="flex gap-3">
@@ -117,8 +142,12 @@ export default function Comment({
                   Cancel
                 </Button>
 
-                <Button size="sm">
-                  Save
+                <Button 
+                  size="sm"
+                  onClick={handleUpdateComment}
+                  disabled={updatingComment || !editedContent.trim()}
+                >
+                  {updatingComment ? "Saving" : "save"}
                 </Button>
               </div>
             </div>

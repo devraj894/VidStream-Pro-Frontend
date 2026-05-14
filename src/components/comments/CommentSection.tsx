@@ -93,7 +93,11 @@ export default function CommentSection({
           </div>
         ) : (
          comments.map((comment) => (
-          <Comment key={comment._id} comment={comment} />
+          <Comment 
+            key={comment._id} 
+            comment={comment} 
+            onCommentUpdated={onCommentAdded}
+          />
          )
         ))}
       </div>
