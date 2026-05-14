@@ -43,7 +43,13 @@ export default function VideoMeta({ videoDetails }: VideoMetaProps) {
           </div>
 
           <Button variant="secondary" className="ml-4 rounded-full">
-            {isOwner ? 'Manage Channel' : 'Subscribe'}
+            {isOwner ? (
+              <Link href={`/studio`}>
+                Manage Channel
+              </Link>
+            ) : (
+              'Subscribe'
+            )}
           </Button>
         </div>
 

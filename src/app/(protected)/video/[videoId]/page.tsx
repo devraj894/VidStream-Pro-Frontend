@@ -159,6 +159,7 @@ export default function videoDetailsPage() {
           )}
           <CommentSection
            comments={comments?.docs || []}
+           totalComments={comments?.totalDocs}
            hasNextPage={comments?.hasNextPage}
            onLoadMore={loadMoreComments}
            commentsLoading={commentsLoading}

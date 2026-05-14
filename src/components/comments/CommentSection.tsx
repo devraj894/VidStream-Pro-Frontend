@@ -8,6 +8,7 @@ import { useAuth } from '@/context/AuthContext'
 
 interface CommentSectionProps {
   comments: CommentType[]
+  totalComments?: number
   hasNextPage: boolean | undefined
   onLoadMore: () => void
   commentsLoading: boolean
@@ -16,10 +17,11 @@ interface CommentSectionProps {
 
 export default function CommentSection({
   comments, 
+  totalComments,
   hasNextPage, 
   onLoadMore, 
   commentsLoading, 
-  loadingMoreComments 
+  loadingMoreComments,
 }: CommentSectionProps) {
 
   const { user } = useAuth();
@@ -27,7 +29,7 @@ export default function CommentSection({
   return (
     <div className="space-y-6">
       <h2 className="font-semibold text-lg text-white">
-        Comments {comments.length}
+        Comments {totalComments}
       </h2>
 
       {/* Add Comment */}
