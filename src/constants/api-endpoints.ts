@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
         USER_HISTORY: '/users/history',
         GET_VIDEO: (videoId: string) => `/videos/${videoId}`,
         GET_SUGGESTED_VIDEOS: (videoId: string) => `/videos/suggested/${videoId}`,
+        SEARCH_VIDEOS: '/videos'
     },  
     CHANNELS: {
         PROFILE: (username: string) => `/users/c/${username}`,

@@ -19,3 +19,31 @@ export const fetchSuggestedVideos = async (videoId: string) => {
     const response = await api.get(`/api/videos/suggestions/${videoId}`)
     return response.data
 }
+
+export const searchVideos = async ({
+  page = 1,
+  limit = 10,
+  query = "",
+  sortBy = "views",
+  sortType = "desc",
+}: {
+  page?: number;
+  limit?: number;
+  query?: string;
+  sortBy?: string;
+  sortType?: "asc" | "desc";
+}) => {
+  const response = await api.get("/api/videos/search",
+    {
+      params: {
+        page,
+        limit,
+        query,
+        sortBy,
+        sortType,
+      },
+    }
+  );
+
+  return response.data;
+};

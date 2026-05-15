@@ -12,9 +12,14 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useAuth } from '@/context/AuthContext'
+import { useRouter } from 'next/navigation'
 
 export default function TopNavbar() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+
+  const router = useRouter();
+
   const { user, isLoading } = useAuth();
   console.log('User in TopNavbar:', user);
 
@@ -30,6 +35,14 @@ export default function TopNavbar() {
     }
   }, [])
 
+  const handleSearch = () => {
+    const trimmedQuery = searchQuery.trim()
+
+    if(!trimmedQuery) return
+
+    router.push(`/search?q=${encodeURIComponent(trimmedQuery)}`)
+  }
+
   return (
     <header
       className={`fixed top-0 z-50 w-full text-white transition-all duration-200 ${
@@ -44,7 +57,16 @@ export default function TopNavbar() {
 
         {/* Search */}
         <div className="w-1/3">
-          <Input placeholder="Search videos..." />
+          <Input 
+            placeholder="Search videos..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if(e.key === 'Enter') {
+                handleSearch()
+              }
+            }}
+          />
         </div>
 
         {/* Right Side */}
