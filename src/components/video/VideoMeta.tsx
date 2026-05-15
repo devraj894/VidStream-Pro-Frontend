@@ -26,7 +26,7 @@ export default function VideoMeta({ videoDetails }: VideoMetaProps) {
       <div className="flex items-center justify-between gap-4 overflow-x-auto no-scrollbar">
         {/* Channel Info */}
         <div className="flex items-center gap-3 shrink-0">
-          <Link href={`/profile/${videoDetails.owner._id}`}>
+          <Link href={`/profile/${videoDetails.owner.username}`}>
             <Avatar className="h-10 w-10">
               <AvatarImage src={videoDetails.owner.avatar.url} />
               <AvatarFallback>YT</AvatarFallback>
