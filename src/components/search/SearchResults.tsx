@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react'
 import VideoCard from '../video/VideoCard'
 import { Video } from '@/types/videos.types'
 import { Spinner } from '../ui/spinner'
+import { PaginatedResponse } from '@/types/api.types'
+import { Button } from '../ui/button'
 
 interface SearchResultsProps {
   query: string
@@ -13,8 +15,9 @@ interface SearchResultsProps {
 export default function SearchResults({
   query,
 }: SearchResultsProps) {
-  const [videos, setVideos] = useState<Video[]>([])
+  const [videos, setVideos] = useState<PaginatedResponse<Video>>()
   const [loading, setLoading] = useState(true)
+  const [loadingMoreSearchVideos, setLoadingMoreSearchVideos] = useState(false);
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -25,7 +28,7 @@ export default function SearchResults({
           query,
         })
 
-        setVideos(response.data.docs)
+        setVideos(response.data)
       } catch (error) {
         console.log(error)
       } finally {
@@ -37,6 +40,42 @@ export default function SearchResults({
       fetchResults()
     }
   }, [query])
+
+  const loadMoreSeachVideos = async () => {
+    if(!videos?.hasNextPage) return
+
+    try {
+      setLoadingMoreSearchVideos(true)
+
+      const nextPage = videos.nextPage;
+
+      if(!nextPage) return;
+
+      const response = await searchVideos({
+        page: nextPage,
+        limit: 10,
+        query
+      })
+
+      setVideos((prev) => {
+        if(!prev) return response.data;
+
+        return {
+          ...response.data,
+
+          docs: [
+            ...prev.docs,
+            ...response.data.docs
+          ],
+        }
+      })
+    } catch(err) {
+      console.log("Error loading more search videos", err);
+
+    } finally {
+      setLoadingMoreSearchVideos(false)
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -55,7 +94,7 @@ export default function SearchResults({
             <div className="flex justify-center py-20">
                 <Spinner />
             </div>
-        ) : !videos.length ? (
+        ) : !videos?.docs.length ? (
             /* Empty State */
             <div className="flex flex-col items-center justify-center py-20 text-center">
                 <h2 className="text-xl font-medium text-zinc-300">
@@ -69,7 +108,7 @@ export default function SearchResults({
         ) : (
             /* Videos Grid */
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {videos.map((video) => (
+                {videos.docs.map((video) => (
                     <VideoCard
                       key={video._id}
                       video={video}
@@ -77,6 +116,18 @@ export default function SearchResults({
                 ))}
             </div>
         )}
+
+        {/* Load More */}
+          {videos?.hasNextPage && (
+            <div className="flex justify-center pt-4">
+              <Button 
+                onClick={loadMoreSeachVideos}
+                disabled={loadingMoreSearchVideos}
+                >
+                  {loadingMoreSearchVideos ? "Loading..." : "Load More"}
+              </Button>
+            </div>
+          )}
     </div>
   )
 }
