@@ -6,10 +6,10 @@ interface VideosTabProps {
   videos: Video[]
   hasNextPage: boolean | undefined
   onLoadMore: () => void
-  loadingMoreComments?: boolean
+  loadingMoreVideos?: boolean
 }
 
-export default function VideosTab({ videos, hasNextPage, onLoadMore, loadingMoreComments }: VideosTabProps) {
+export default function VideosTab({ videos, hasNextPage, onLoadMore, loadingMoreVideos }: VideosTabProps) {
 
   if (videos.length === 0) {
     return (
@@ -42,7 +42,7 @@ export default function VideosTab({ videos, hasNextPage, onLoadMore, loadingMore
           variant="secondary"
           onClick={onLoadMore}
         >
-          {loadingMoreComments ? (
+          {loadingMoreVideos ? (
             "Loading..."
           ) : (
             "Load More"

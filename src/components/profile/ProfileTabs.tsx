@@ -53,7 +53,7 @@ export default function ProfileTabs({
           videos={videos} 
           hasNextPage={hasNextPageVideos}
           onLoadMore={onLoadMoreVideos}
-          loadingMoreComments={loadingMoreVideos}
+          loadingMoreVideos={loadingMoreVideos}
         />
       </TabsContent>
 
