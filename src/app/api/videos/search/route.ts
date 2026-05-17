@@ -21,6 +21,7 @@ export async function GET(request: NextRequest) {
     const query = searchParams.get("query") || "";
     const sortBy = searchParams.get("sortBy") || "views";
     const sortType = searchParams.get("sortType") || "desc";
+    const userId = searchParams.get("userId") || "";
 
     const { data } = await backendApi.get(
       API_ENDPOINTS.VIDEOS.SEARCH_VIDEOS,
@@ -31,6 +32,7 @@ export async function GET(request: NextRequest) {
           query,
           sortBy,
           sortType,
+          userId
         },
 
         headers: {

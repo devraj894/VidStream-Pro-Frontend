@@ -26,12 +26,14 @@ export const searchVideos = async ({
   query = "",
   sortBy = "views",
   sortType = "desc",
+  userId
 }: {
   page?: number;
   limit?: number;
   query?: string;
   sortBy?: string;
   sortType?: "asc" | "desc";
+  userId?: string
 }) => {
   const response = await api.get("/api/videos/search",
     {
@@ -41,6 +43,7 @@ export const searchVideos = async ({
         query,
         sortBy,
         sortType,
+        userId
       },
     }
   );
