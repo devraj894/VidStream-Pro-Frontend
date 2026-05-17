@@ -3,19 +3,25 @@ import VideosTab from './tabs/VideosTab'
 import PlaylistsTab from './tabs/PlaylistsTab'
 import TweetsTab from './tabs/TweetsTab'
 import SubscribedTab from './tabs/SubscribedTab'
-import { playlistType } from '@/types/playlist'
 import { tweetTypes } from '@/types/tweet'
 import { subscribedChannelTypes } from '@/types/subscribedChannel'
 import { Video } from '@/types/videos.types'
+import { Playlist } from '@/types/playlist.types'
 
 interface profileTabsProps {
   videos: Video[]
-  playlists: playlistType[]
+  playlists: Playlist[]
   tweets: tweetTypes[]
   subscribedChannels: subscribedChannelTypes[]
+
   hasNextPageVideos?: boolean
+  hasNextPagePlaylists?: boolean
+
   onLoadMoreVideos: () => void
+  onLoadMorePlaylists: () => void
+
   loadingMoreVideos?: boolean
+  loadingMorePlaylists?: boolean
 }
 
 export default function ProfileTabs({
@@ -23,9 +29,15 @@ export default function ProfileTabs({
   playlists,
   tweets,
   subscribedChannels,
+
   hasNextPageVideos,
+  hasNextPagePlaylists,
+
   onLoadMoreVideos,
-  loadingMoreVideos
+  onLoadMorePlaylists,
+
+  loadingMoreVideos,
+  loadingMorePlaylists
 }: profileTabsProps) {
   return (
     <Tabs defaultValue="videos" className="mt-6 px-8">
@@ -46,7 +58,12 @@ export default function ProfileTabs({
       </TabsContent>
 
       <TabsContent value="playlists">
-        <PlaylistsTab playlists={playlists} />
+        <PlaylistsTab 
+          playlists={playlists}
+          hasNextPage={hasNextPagePlaylists} 
+          onLoadMore={onLoadMorePlaylists}
+          loadingMorePlaylists={loadingMorePlaylists}
+        />
       </TabsContent>
 
       <TabsContent value="tweets">

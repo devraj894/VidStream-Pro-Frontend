@@ -4,7 +4,6 @@ import ProfileCover from '@/components/profile/ProfileCover'
 import ProfileHeader from '@/components/profile/ProfileHeader'
 import ProfileTabs from '@/components/profile/ProfileTabs'
 import { Spinner } from '@/components/ui/spinner'
-import { playlists } from '@/data/playlists'
 import { subscribedChannels } from '@/data/subscribedChannels'
 import { tweets } from '@/data/tweets'
 import { fetchChannel } from '@/services/channel'
@@ -14,6 +13,8 @@ import { Channel } from '@/types/channel.types'
 import { PaginatedResponse } from '@/types/api.types'
 import { Video } from '@/types/videos.types'
 import { searchVideos } from '@/services/videos'
+import { Playlist } from '@/types/playlist.types'
+import { getUserPlaylists } from '@/services/playlists'
 
 export default function ProfilePage() {
   const params = useParams();
@@ -24,6 +25,9 @@ export default function ProfilePage() {
 
   const [channelVideos, setChannelVideos] = useState<PaginatedResponse<Video>>();
   const [loadingMoreChannelVideos, setLoadingMoreChannelVideos] = useState(false);
+
+  const [channelPlaylists, setChannelPlaylists] = useState<PaginatedResponse<Playlist>>()
+  const [loadingMoreChannelPlaylists, setLoadingMoreChannelPlaylists] = useState(false)
 
   useEffect(() => {
     const loadChannel = async () => {
@@ -39,6 +43,11 @@ export default function ProfilePage() {
         console.log("VIDEOS RESPONSE:", videosResponse)
 
         setChannelVideos(videosResponse.data)
+
+        console.log("Channel id", channelData._id)
+
+        const playlistsResponse = await getUserPlaylists({userId: channelData._id})
+        setChannelPlaylists(playlistsResponse.data)
       } catch(err) {
         console.error("Error fetching channel:", err)
       } finally {
@@ -47,6 +56,8 @@ export default function ProfilePage() {
     }
     loadChannel()
   }, [username])
+
+  console.log("Channel Playlists", channelPlaylists)
 
   console.log("Channel data:", channel)
   console.log("Channel Videos : ", channelVideos)
@@ -87,6 +98,42 @@ export default function ProfilePage() {
     }
   }
 
+  const loadMoreChannelPlaylists = async () => {
+    if(!channelPlaylists?.hasNextPage) return
+
+    try {
+      setLoadingMoreChannelPlaylists(true)
+
+      const nextPage = channelPlaylists.nextPage;
+
+      if(!nextPage) return;
+
+      const response = await getUserPlaylists({
+        page: nextPage,
+        limit: 10,
+        userId: channel?._id
+      })
+
+      setChannelPlaylists((prev) => {
+        if(!prev) return response.data;
+
+        return {
+          ...response.data,
+
+          docs: [
+            ...prev.docs,
+            ...response.data.docs
+          ],
+        }
+      })
+    } catch(err) {
+      console.log("Error loading more playlists", err);
+
+    } finally {
+      setLoadingMoreChannelPlaylists(false)
+    }
+  }
+
    if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -111,12 +158,18 @@ export default function ProfilePage() {
 
       <ProfileTabs
         videos={channelVideos?.docs || []}
-        playlists={playlists}
+        playlists={channelPlaylists?.docs || []}
         tweets={tweets}
         subscribedChannels={subscribedChannels}
+
         hasNextPageVideos={channelVideos?.hasNextPage}
+        hasNextPagePlaylists={channelPlaylists?.hasNextPage}
+
         onLoadMoreVideos={loadMoreChannelVideos}
+        onLoadMorePlaylists={loadMoreChannelPlaylists}
+
         loadingMoreVideos={loadingMoreChannelVideos}
+        loadingMorePlaylists={loadingMoreChannelPlaylists}
       />
     </div>
   )

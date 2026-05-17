@@ -1,16 +1,16 @@
 import { formatTimeAgo } from '@/lib/utils'
-import { playlistType } from '@/types/playlist'
+import { Playlist } from '@/types/playlist.types'
 import { Play } from 'lucide-react'
 import Link from 'next/link'
 
 interface PlaylistCardProps {
-  playlist: playlistType
+  playlist: Playlist
 }
 
 export default function PlaylistCard({ playlist }: PlaylistCardProps) {
   console.log('playlist data inside playlist card', playlist)
   return (
-    <Link href={`/playlists/${playlist.id}`}>
+    <Link href={`/playlists/${playlist._id}`}>
       <div className="group cursor-pointer space-y-2">
         {/* Thumbnail */}
         <div className="relative aspect-video rounded-xl overflow-hidden">
