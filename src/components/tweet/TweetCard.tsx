@@ -5,13 +5,38 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Heart } from 'lucide-react'
 import { Tweet } from '@/types/tweets.types'
+import { useState } from 'react'
+import { toggleTweetLike } from '@/services/likes'
 
 interface TweetCardProps {
   tweet: Tweet
 }
 
 export default function TweetCard({ tweet }: TweetCardProps) {
-  console.log("Tweet data inside tweetCard : ", tweet)
+  const [isLiked, setIsLiked] = useState(tweet.isLiked)
+  const [likesCount, setLikesCount] = useState(tweet.likesCount)
+  const [loading, setLoading] = useState(false)
+
+  const handleToggleLike = async () => {
+    if(loading) return
+
+    try {
+      setLoading(true);
+
+      setIsLiked((prev) => !prev)
+
+      setLikesCount((prev) => isLiked ? prev - 1 : prev + 1)
+
+      await toggleTweetLike(tweet._id);
+
+    } catch(err) {
+      setIsLiked(tweet.isLiked)
+      setLikesCount(tweet.likesCount)
+
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <Card className="bg-neutral-900/70 border-neutral-800 hover:bg-neutral-900 transition-colors">
@@ -44,15 +69,17 @@ export default function TweetCard({ tweet }: TweetCardProps) {
           variant="ghost"
           size="sm"
           className="gap-2 text-xs text-blue-500"
+          onClick={handleToggleLike}
+          disabled={loading}
         >
           <Heart
             className={`h-4 w-4 ${
-              tweet.isLiked
+              isLiked
                 ? 'fill-red-500 text-red-500'
                 : ''
             }`} 
           />
-          <span>{tweet.likesCount}</span>
+          <span>{likesCount}</span>
         </Button>
       </CardFooter>
     </Card>
