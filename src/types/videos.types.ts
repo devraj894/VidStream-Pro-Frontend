@@ -1,4 +1,4 @@
-import { Media, VideoOwner } from "./common.types"
+import { Media, UserBasicInfo } from "./common.types"
 
 export interface Video {
     _id: string
@@ -8,13 +8,13 @@ export interface Video {
     description: string
     duration: number
     views: number
-    owner: VideoOwner
+    owner: UserBasicInfo
     createdAt: string
 }
 
 export interface VideoDetails extends Video {
     likes: number
-    owner: VideoOwner & {
+    owner: UserBasicInfo & {
         subscribers: number
     }
 }

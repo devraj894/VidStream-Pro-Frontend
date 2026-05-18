@@ -3,7 +3,7 @@ export interface Media {
   public_id: string
 }
 
-export interface VideoOwner {
+export interface UserBasicInfo {
   _id: string
   fullName: string
   username: string
