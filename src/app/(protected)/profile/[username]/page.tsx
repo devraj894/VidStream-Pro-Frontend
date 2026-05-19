@@ -16,7 +16,7 @@ import { getUserPlaylists } from '@/services/playlists'
 import { Tweet } from '@/types/tweets.types'
 import { getUserTweets } from '@/services/tweets'
 import { UserListItem } from '@/types/user.types'
-import { getUserSubscribers } from '@/services/subscriptions'
+import { getUserSubscribers, getUserSubscriptions } from '@/services/subscriptions'
 
 export default function ProfilePage() {
   const params = useParams();
@@ -36,6 +36,9 @@ export default function ProfilePage() {
 
   const [channelSubscribers, setChannelSubscribers] = useState<PaginatedResponse<UserListItem>>()
   const [loadingMoreChannelSubscribers, setLoadingMoreChannelSubscribers] = useState(false)
+
+  const [channelSubscriptions, setChannelSubscriptions] = useState<PaginatedResponse<UserListItem>>()
+  const [loadingMoreChannelSubscriptions, setLoadingMoreChannelSubscriptions] = useState(false)
 
   useEffect(() => {
     const loadChannel = async () => {
@@ -62,6 +65,9 @@ export default function ProfilePage() {
 
         const subscribersResponse = await getUserSubscribers({channelId: channelData._id})
         setChannelSubscribers(subscribersResponse.data)
+
+        const subscriptionsResponse = await getUserSubscriptions({subscriberId: channelData._id})
+        setChannelSubscriptions(subscriptionsResponse.data)
       } catch(err) {
         console.error("Error fetching channel:", err)
       } finally {
@@ -70,6 +76,8 @@ export default function ProfilePage() {
     }
     loadChannel()
   }, [username])
+
+  console.log("channel subscriptions", channelSubscriptions)
 
   console.log("channel subscribers", channelSubscribers)
 
@@ -224,6 +232,42 @@ export default function ProfilePage() {
     }
   }
 
+  const loadMoreChannelSubscriptions = async () => {
+    if(!channelSubscriptions?.hasNextPage) return
+
+    try {
+      setLoadingMoreChannelSubscriptions(true)
+
+      const nextPage = channelSubscriptions.nextPage;
+
+      if(!nextPage) return;
+
+      const response = await getUserSubscriptions({
+        page: nextPage,
+        limit: 10,
+        subscriberId: channel?._id
+      })
+
+      setChannelSubscriptions((prev) => {
+        if(!prev) return response.data;
+
+        return {
+          ...response.data,
+
+          docs: [
+            ...prev.docs,
+            ...response.data.docs
+          ],
+        }
+      })
+    } catch(err) {
+      console.log("Error loading more subscriptions", err);
+
+    } finally {
+      setLoadingMoreChannelSubscriptions(false)
+    }
+  }
+
    if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -251,21 +295,25 @@ export default function ProfilePage() {
         playlists={channelPlaylists?.docs || []}
         tweets={channelTweets?.docs || []}
         subscribers={channelSubscribers?.docs || []}
+        subscriptions={channelSubscriptions?.docs || []}
 
         hasNextPageVideos={channelVideos?.hasNextPage}
         hasNextPagePlaylists={channelPlaylists?.hasNextPage}
         hasNextPageTweets={channelTweets?.hasNextPage}
         hasNextPageSubscribers={channelSubscribers?.hasNextPage}
+        hasNextPageSubscriptions={channelSubscriptions?.hasNextPage}
 
         onLoadMoreVideos={loadMoreChannelVideos}
         onLoadMorePlaylists={loadMoreChannelPlaylists}
         onLoadMoreTweets={loadMoreChannelTweets}
         onLoadMoreSubscribers={loadMoreChannelSubscribers}
+        onLoadMoreSubscriptions={loadMoreChannelSubscriptions}
 
         loadingMoreVideos={loadingMoreChannelVideos}
         loadingMorePlaylists={loadingMoreChannelPlaylists}
         loadingMoreTweets={loadingMoreChannelTweets}
         loadingMoreSubscribers={loadingMoreChannelSubscribers}
+        loadingMoreSubscriptions={loadingMoreChannelSubscriptions}
       />
     </div>
   )

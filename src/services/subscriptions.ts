@@ -20,3 +20,24 @@ export const getUserSubscribers = async ({
     
     return response.data;
 }
+
+export const getUserSubscriptions = async ({
+    page = 1, 
+    limit = 10, 
+    subscriberId
+} : {
+    page?: number;
+    limit?: number;
+    subscriberId?: string
+}) => {
+    const response = await api.get(`/api/subscriptions/u/${subscriberId}`,
+        {
+            params: {
+                page,
+                limit,
+            },
+        }
+    )
+
+    return response.data;
+}

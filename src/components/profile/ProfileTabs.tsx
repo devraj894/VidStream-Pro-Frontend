@@ -13,21 +13,25 @@ interface profileTabsProps {
   playlists: Playlist[]
   tweets: Tweet[]
   subscribers: UserListItem[]
+  subscriptions: UserListItem[]
 
   hasNextPageVideos?: boolean
   hasNextPagePlaylists?: boolean
   hasNextPageTweets?: boolean
   hasNextPageSubscribers?: boolean
+  hasNextPageSubscriptions?: boolean
 
   onLoadMoreVideos: () => void
   onLoadMorePlaylists: () => void
   onLoadMoreTweets: () => void
   onLoadMoreSubscribers: () => void
+  onLoadMoreSubscriptions: () => void
 
   loadingMoreVideos?: boolean
   loadingMorePlaylists?: boolean
   loadingMoreTweets?: boolean
   loadingMoreSubscribers?: boolean
+  loadingMoreSubscriptions?: boolean
 }
 
 export default function ProfileTabs({
@@ -35,21 +39,25 @@ export default function ProfileTabs({
   playlists,
   tweets,
   subscribers,
+  subscriptions,
 
   hasNextPageVideos,
   hasNextPagePlaylists,
   hasNextPageTweets,
   hasNextPageSubscribers,
+  hasNextPageSubscriptions,
 
   onLoadMoreVideos,
   onLoadMorePlaylists,
   onLoadMoreTweets,
   onLoadMoreSubscribers,
+  onLoadMoreSubscriptions,
 
   loadingMoreVideos,
   loadingMorePlaylists,
   loadingMoreTweets,
-  loadingMoreSubscribers
+  loadingMoreSubscribers,
+  loadingMoreSubscriptions
 }: profileTabsProps) {
   return (
     <Tabs defaultValue="videos" className="mt-6 px-8">
@@ -90,6 +98,7 @@ export default function ProfileTabs({
 
        <TabsContent value="subscribers">
         <UserListTab 
+          type="subscribers"
           users={subscribers} 
           hasNextPage={hasNextPageSubscribers}
           onLoadMore={onLoadMoreSubscribers}
@@ -97,9 +106,15 @@ export default function ProfileTabs({
         />
       </TabsContent>
 
-      {/* <TabsContent value="subscriptions">
-        <UserListTab users={subscribedChannels} />
-      </TabsContent> */}
+      <TabsContent value="subscriptions">
+        <UserListTab 
+          type="subscriptions"
+          users={subscriptions} 
+          hasNextPage={hasNextPageSubscriptions}
+          onLoadMore={onLoadMoreSubscriptions}
+          loadingMore={loadingMoreSubscriptions}
+        />
+      </TabsContent>
     </Tabs>
   )
 }

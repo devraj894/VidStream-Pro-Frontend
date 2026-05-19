@@ -3,6 +3,7 @@ import UserListItem from '@/components/users/UserListItem'
 import { UserListItem as UserLIstItemTypes } from '@/types/user.types'
 
 interface UserListTabProps {
+  type: "subscribers" | "subscriptions"
   users: UserLIstItemTypes[]
   hasNextPage?: boolean
   onLoadMore: () => void
@@ -10,6 +11,7 @@ interface UserListTabProps {
 }
 
 export default function UserListTab({
+  type,
   users,
   hasNextPage,
   onLoadMore,
@@ -19,13 +21,17 @@ export default function UserListTab({
     return (
       <div className="flex flex-col items-center justify-center py-24 text-center">
         <h2 className="text-2xl font-semibold text-zinc-200">
-          No subscribers yet
+          {type === "subscribers"
+            ? "No subscribers yet"
+            : "Not subscribed to anyone yet"}
         </h2>
 
         <p className="mt-2 text-sm text-zinc-400">
-          This channel doesn't have any subscribers.
+          {type === "subscribers"
+            ? "This channel doesn't have any subscribers."
+            : "This user hasn't subscribed to any channels yet."}
         </p>
-      </div>
+    </div>
     )
   }
 
