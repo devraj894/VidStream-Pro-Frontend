@@ -1,17 +1,17 @@
-import SubscribedChannelsCard from '@/components/subscribed/SubscribedChannelsCard'
+import UserListItem from '@/components/users/UserListItem'
 import { subscribedChannelTypes } from '@/types/subscribedChannel'
 
-interface SubscribedTabProps {
+interface UserListTabProps {
   subscribedChannels: subscribedChannelTypes[]
 }
 
-export default function SubscribedTab({
+export default function UserListTab({
   subscribedChannels,
-}: SubscribedTabProps) {
+}: UserListTabProps) {
   return (
     <div className="py-2 space-y-4">
       {subscribedChannels.map((subscribedChannel) => (
-        <SubscribedChannelsCard
+        <UserListItem
           key={subscribedChannel.id}
           channel={subscribedChannel}
         />
