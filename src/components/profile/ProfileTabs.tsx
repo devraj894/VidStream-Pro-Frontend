@@ -2,48 +2,54 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import VideosTab from './tabs/VideosTab'
 import PlaylistsTab from './tabs/PlaylistsTab'
 import TweetsTab from './tabs/TweetsTab'
-import { subscribedChannelTypes } from '@/types/subscribedChannel'
 import { Video } from '@/types/videos.types'
 import { Playlist } from '@/types/playlist.types'
 import { Tweet } from '@/types/tweets.types'
 import UserListTab from './tabs/UserListTab'
+import { UserListItem } from '@/types/user.types'
 
 interface profileTabsProps {
   videos: Video[]
   playlists: Playlist[]
   tweets: Tweet[]
-  subscribedChannels: subscribedChannelTypes[]
+  subscribers: UserListItem[]
 
   hasNextPageVideos?: boolean
   hasNextPagePlaylists?: boolean
   hasNextPageTweets?: boolean
+  hasNextPageSubscribers?: boolean
 
   onLoadMoreVideos: () => void
   onLoadMorePlaylists: () => void
   onLoadMoreTweets: () => void
+  onLoadMoreSubscribers: () => void
 
   loadingMoreVideos?: boolean
   loadingMorePlaylists?: boolean
   loadingMoreTweets?: boolean
+  loadingMoreSubscribers?: boolean
 }
 
 export default function ProfileTabs({
   videos,
   playlists,
   tweets,
-  subscribedChannels,
+  subscribers,
 
   hasNextPageVideos,
   hasNextPagePlaylists,
   hasNextPageTweets,
+  hasNextPageSubscribers,
 
   onLoadMoreVideos,
   onLoadMorePlaylists,
   onLoadMoreTweets,
+  onLoadMoreSubscribers,
 
   loadingMoreVideos,
   loadingMorePlaylists,
-  loadingMoreTweets
+  loadingMoreTweets,
+  loadingMoreSubscribers
 }: profileTabsProps) {
   return (
     <Tabs defaultValue="videos" className="mt-6 px-8">
@@ -83,12 +89,17 @@ export default function ProfileTabs({
       </TabsContent>
 
        <TabsContent value="subscribers">
-        <UserListTab subscribedChannels={subscribedChannels} />
+        <UserListTab 
+          users={subscribers} 
+          hasNextPage={hasNextPageSubscribers}
+          onLoadMore={onLoadMoreSubscribers}
+          loadingMore={loadingMoreSubscribers}
+        />
       </TabsContent>
 
-      <TabsContent value="subscriptions">
-        <UserListTab subscribedChannels={subscribedChannels} />
-      </TabsContent>
+      {/* <TabsContent value="subscriptions">
+        <UserListTab users={subscribedChannels} />
+      </TabsContent> */}
     </Tabs>
   )
 }

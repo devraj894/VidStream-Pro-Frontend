@@ -4,7 +4,6 @@ import ProfileCover from '@/components/profile/ProfileCover'
 import ProfileHeader from '@/components/profile/ProfileHeader'
 import ProfileTabs from '@/components/profile/ProfileTabs'
 import { Spinner } from '@/components/ui/spinner'
-import { subscribedChannels } from '@/data/subscribedChannels'
 import { fetchChannel } from '@/services/channel'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -16,6 +15,8 @@ import { Playlist } from '@/types/playlist.types'
 import { getUserPlaylists } from '@/services/playlists'
 import { Tweet } from '@/types/tweets.types'
 import { getUserTweets } from '@/services/tweets'
+import { UserListItem } from '@/types/user.types'
+import { getUserSubscribers } from '@/services/subscriptions'
 
 export default function ProfilePage() {
   const params = useParams();
@@ -32,6 +33,9 @@ export default function ProfilePage() {
 
   const [channelTweets, setChannelTweets] = useState<PaginatedResponse<Tweet>>()
   const [loadingMoreChannelTweets, setLoadingMoreChanneltweets] = useState(false)
+
+  const [channelSubscribers, setChannelSubscribers] = useState<PaginatedResponse<UserListItem>>()
+  const [loadingMoreChannelSubscribers, setLoadingMoreChannelSubscribers] = useState(false)
 
   useEffect(() => {
     const loadChannel = async () => {
@@ -55,6 +59,9 @@ export default function ProfilePage() {
 
         const tweetsResponse = await getUserTweets({userId: channelData._id})
         setChannelTweets(tweetsResponse.data)
+
+        const subscribersResponse = await getUserSubscribers({channelId: channelData._id})
+        setChannelSubscribers(subscribersResponse.data)
       } catch(err) {
         console.error("Error fetching channel:", err)
       } finally {
@@ -63,6 +70,8 @@ export default function ProfilePage() {
     }
     loadChannel()
   }, [username])
+
+  console.log("channel subscribers", channelSubscribers)
 
   console.log("Channel tweets", channelTweets)
 
@@ -143,7 +152,7 @@ export default function ProfilePage() {
     }
   }
 
-   const loadMoreChannelTweets = async () => {
+  const loadMoreChannelTweets = async () => {
     if(!channelTweets?.hasNextPage) return
 
     try {
@@ -179,6 +188,42 @@ export default function ProfilePage() {
     }
   }
 
+  const loadMoreChannelSubscribers = async () => {
+    if(!channelSubscribers?.hasNextPage) return
+
+    try {
+      setLoadingMoreChannelSubscribers(true)
+
+      const nextPage = channelSubscribers.nextPage;
+
+      if(!nextPage) return;
+
+      const response = await getUserSubscribers({
+        page: nextPage,
+        limit: 10,
+        channelId: channel?._id
+      })
+
+      setChannelSubscribers((prev) => {
+        if(!prev) return response.data;
+
+        return {
+          ...response.data,
+
+          docs: [
+            ...prev.docs,
+            ...response.data.docs
+          ],
+        }
+      })
+    } catch(err) {
+      console.log("Error loading more subscribers", err);
+
+    } finally {
+      setLoadingMoreChannelSubscribers(false)
+    }
+  }
+
    if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
@@ -205,19 +250,22 @@ export default function ProfilePage() {
         videos={channelVideos?.docs || []}
         playlists={channelPlaylists?.docs || []}
         tweets={channelTweets?.docs || []}
-        subscribedChannels={subscribedChannels}
+        subscribers={channelSubscribers?.docs || []}
 
         hasNextPageVideos={channelVideos?.hasNextPage}
         hasNextPagePlaylists={channelPlaylists?.hasNextPage}
         hasNextPageTweets={channelTweets?.hasNextPage}
+        hasNextPageSubscribers={channelSubscribers?.hasNextPage}
 
         onLoadMoreVideos={loadMoreChannelVideos}
         onLoadMorePlaylists={loadMoreChannelPlaylists}
         onLoadMoreTweets={loadMoreChannelTweets}
+        onLoadMoreSubscribers={loadMoreChannelSubscribers}
 
         loadingMoreVideos={loadingMoreChannelVideos}
         loadingMorePlaylists={loadingMoreChannelPlaylists}
         loadingMoreTweets={loadingMoreChannelTweets}
+        loadingMoreSubscribers={loadingMoreChannelSubscribers}
       />
     </div>
   )

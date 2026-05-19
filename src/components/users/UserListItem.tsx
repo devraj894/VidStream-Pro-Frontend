@@ -1,16 +1,16 @@
 'use client'
 
-import { subscribedChannelTypes } from '@/types/subscribedChannel'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { UserListItem as UserListItemTypes } from '@/types/user.types'
 
 interface UserListItemProps {
-  channel: subscribedChannelTypes
+  user: UserListItemTypes
 }
 
 export default function UserListItem({
-  channel,
+  user,
 }: UserListItemProps) {
   return (
     <Card className="bg-neutral-900/70 border-neutral-800 hover:bg-neutral-900 transition-colors cursor-pointer">
@@ -20,10 +20,10 @@ export default function UserListItem({
           
           {/* Avatar */}
           <Avatar className="h-12 w-12">
-            <AvatarImage src={channel.avatar?.url} />
+            <AvatarImage src={user.avatar?.url} />
 
             <AvatarFallback>
-              {channel.fullName
+              {user.fullName
                 ?.split(' ')
                 .map((n) => n[0])
                 .join('')
@@ -34,11 +34,11 @@ export default function UserListItem({
           {/* Info (minimal identity only) */}
           <div className="space-y-1">
             <h4 className="text-white font-semibold text-sm">
-              {channel.fullName}
+              {user.fullName}
             </h4>
 
             <p className="text-xs text-neutral-500">
-              @{channel.username}
+              @{user.username}
             </p>
           </div>
         </div>
@@ -48,7 +48,7 @@ export default function UserListItem({
           variant="secondary"
           className="bg-neutral-800 hover:bg-neutral-700 text-white"
         >
-          Subscribed
+          {user.isSubscribed ?  "Subscribed" : "Subscribe"}
         </Button>
       </CardContent>
     </Card>

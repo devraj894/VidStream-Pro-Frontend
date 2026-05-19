@@ -28,5 +28,8 @@ export const API_ENDPOINTS = {
     },
     LIKES: {
         TOGGLE_TWEET_LIKE: (tweetId: string) => `/likes/toggle/t/${tweetId}`
+    },
+    SUBSCRIPTIONS: {
+        GET_USER_SUBSCRIBERS: (channelId: string) => `subscriptions/c/${channelId}`
     }
 }   
