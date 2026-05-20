@@ -9,7 +9,6 @@ import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Channel } from '@/types/channel.types'
 import { PaginatedResponse } from '@/types/api.types'
-import { Video } from '@/types/videos.types'
 import { searchVideos } from '@/services/videos'
 import { Playlist } from '@/types/playlist.types'
 import { getUserPlaylists } from '@/services/playlists'
@@ -24,9 +23,6 @@ export default function ProfilePage() {
 
   const [channel, setChannel] = useState<Channel | null>(null)
   const [loading, setLoading] = useState(true)
-
-  const [channelVideos, setChannelVideos] = useState<PaginatedResponse<Video>>();
-  const [loadingMoreChannelVideos, setLoadingMoreChannelVideos] = useState(false);
 
   const [channelPlaylists, setChannelPlaylists] = useState<PaginatedResponse<Playlist>>()
   const [loadingMoreChannelPlaylists, setLoadingMoreChannelPlaylists] = useState(false)
@@ -47,15 +43,6 @@ export default function ProfilePage() {
         const channelData = response.data
 
         setChannel(channelData)
-
-        const videosResponse = await searchVideos({
-          userId: channelData._id
-        })
-        console.log("VIDEOS RESPONSE:", videosResponse)
-
-        setChannelVideos(videosResponse.data)
-
-        console.log("Channel id", channelData._id)
 
         const playlistsResponse = await getUserPlaylists({userId: channelData._id})
         setChannelPlaylists(playlistsResponse.data)
@@ -86,43 +73,6 @@ export default function ProfilePage() {
   console.log("Channel Playlists", channelPlaylists)
 
   console.log("Channel data:", channel)
-  console.log("Channel Videos : ", channelVideos)
-
-  const loadMoreChannelVideos = async () => {
-    if(!channelVideos?.hasNextPage) return
-
-    try {
-      setLoadingMoreChannelVideos(true)
-
-      const nextPage = channelVideos.nextPage;
-
-      if(!nextPage) return;
-
-      const response = await searchVideos({
-        page: nextPage,
-        limit: 10,
-        userId: channel?._id
-      })
-
-      setChannelVideos((prev) => {
-        if(!prev) return response.data;
-
-        return {
-          ...response.data,
-
-          docs: [
-            ...prev.docs,
-            ...response.data.docs
-          ],
-        }
-      })
-    } catch(err) {
-      console.log("Error loading more search videos", err);
-
-    } finally {
-      setLoadingMoreChannelVideos(false)
-    }
-  }
 
   const loadMoreChannelPlaylists = async () => {
     if(!channelPlaylists?.hasNextPage) return
@@ -291,25 +241,22 @@ export default function ProfilePage() {
       <ProfileHeader channel={channel} />
 
       <ProfileTabs
-        videos={channelVideos?.docs || []}
+        channelId = {channel._id}
         playlists={channelPlaylists?.docs || []}
         tweets={channelTweets?.docs || []}
         subscribers={channelSubscribers?.docs || []}
         subscriptions={channelSubscriptions?.docs || []}
 
-        hasNextPageVideos={channelVideos?.hasNextPage}
         hasNextPagePlaylists={channelPlaylists?.hasNextPage}
         hasNextPageTweets={channelTweets?.hasNextPage}
         hasNextPageSubscribers={channelSubscribers?.hasNextPage}
         hasNextPageSubscriptions={channelSubscriptions?.hasNextPage}
 
-        onLoadMoreVideos={loadMoreChannelVideos}
         onLoadMorePlaylists={loadMoreChannelPlaylists}
         onLoadMoreTweets={loadMoreChannelTweets}
         onLoadMoreSubscribers={loadMoreChannelSubscribers}
         onLoadMoreSubscriptions={loadMoreChannelSubscriptions}
 
-        loadingMoreVideos={loadingMoreChannelVideos}
         loadingMorePlaylists={loadingMoreChannelPlaylists}
         loadingMoreTweets={loadingMoreChannelTweets}
         loadingMoreSubscribers={loadingMoreChannelSubscribers}

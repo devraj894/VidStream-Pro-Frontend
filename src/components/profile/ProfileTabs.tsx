@@ -9,25 +9,23 @@ import UserListTab from './tabs/UserListTab'
 import { UserListItem } from '@/types/user.types'
 
 interface profileTabsProps {
-  videos: Video[]
+  channelId: string
+
   playlists: Playlist[]
   tweets: Tweet[]
   subscribers: UserListItem[]
   subscriptions: UserListItem[]
 
-  hasNextPageVideos?: boolean
   hasNextPagePlaylists?: boolean
   hasNextPageTweets?: boolean
   hasNextPageSubscribers?: boolean
   hasNextPageSubscriptions?: boolean
 
-  onLoadMoreVideos: () => void
   onLoadMorePlaylists: () => void
   onLoadMoreTweets: () => void
   onLoadMoreSubscribers: () => void
   onLoadMoreSubscriptions: () => void
 
-  loadingMoreVideos?: boolean
   loadingMorePlaylists?: boolean
   loadingMoreTweets?: boolean
   loadingMoreSubscribers?: boolean
@@ -35,25 +33,23 @@ interface profileTabsProps {
 }
 
 export default function ProfileTabs({
-  videos,
+  channelId,
+
   playlists,
   tweets,
   subscribers,
   subscriptions,
 
-  hasNextPageVideos,
   hasNextPagePlaylists,
   hasNextPageTweets,
   hasNextPageSubscribers,
   hasNextPageSubscriptions,
 
-  onLoadMoreVideos,
   onLoadMorePlaylists,
   onLoadMoreTweets,
   onLoadMoreSubscribers,
   onLoadMoreSubscriptions,
 
-  loadingMoreVideos,
   loadingMorePlaylists,
   loadingMoreTweets,
   loadingMoreSubscribers,
@@ -71,10 +67,7 @@ export default function ProfileTabs({
 
       <TabsContent value="videos">
         <VideosTab 
-          videos={videos} 
-          hasNextPage={hasNextPageVideos}
-          onLoadMore={onLoadMoreVideos}
-          loadingMoreVideos={loadingMoreVideos}
+          channelId={channelId}
         />
       </TabsContent>
 
