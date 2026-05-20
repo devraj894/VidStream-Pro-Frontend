@@ -41,3 +41,8 @@ export const getUserSubscriptions = async ({
 
     return response.data;
 }
+
+export const toggleSubscriptions = async (channelId: string) => {
+    const response = await api.post(`/api/subscriptions/c/${channelId}`);
+    return response.data;
+}

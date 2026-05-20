@@ -4,6 +4,8 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { UserListItem as UserListItemTypes } from '@/types/user.types'
+import { useState } from 'react'
+import { toggleSubscriptions } from '@/services/subscriptions'
 
 interface UserListItemProps {
   user: UserListItemTypes
@@ -12,6 +14,26 @@ interface UserListItemProps {
 export default function UserListItem({
   user,
 }: UserListItemProps) {
+  const [isSubscribed, setIsSubscribed] = useState(user.isSubscribed)
+  const [loading, setLoading] = useState(false)
+
+  const handleToggleSubscription = async () => {
+    try {
+      setLoading(true)
+
+      setIsSubscribed((prev) => !prev)
+
+      await toggleSubscriptions(user._id)
+
+    } catch(err) {
+      setIsSubscribed((prev) => !prev)
+      console.log("Error while toggle subscription", err)
+
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <Card className="bg-neutral-900/70 border-neutral-800 hover:bg-neutral-900 transition-colors cursor-pointer">
       <CardContent className="p-4 flex items-center justify-between">
@@ -46,9 +68,11 @@ export default function UserListItem({
         {/* Right */}
         <Button
           variant="secondary"
+          onClick={handleToggleSubscription}
+          disabled={loading}
           className="bg-neutral-800 hover:bg-neutral-700 text-white"
         >
-          {user.isSubscribed ?  "Subscribed" : "Subscribe"}
+          {isSubscribed ?  "Subscribed" : "Subscribe"}
         </Button>
       </CardContent>
     </Card>

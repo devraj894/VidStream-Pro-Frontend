@@ -44,3 +44,36 @@ export async function GET(
         return serverApiHandler(err)
     }
 }
+
+export async function POST(
+  request: NextRequest,
+  context: { params: Promise<{ channelId: string }> }
+) {
+  try {
+    const accessToken = request.cookies.get("accessToken")?.value;
+
+    if (!accessToken) {
+      return NextResponse.json(
+        { message: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
+    const { channelId } = await context.params;
+
+    const { data } = await backendApi.post(
+      API_ENDPOINTS.SUBSCRIPTIONS.TOGGLE_SUBSCRIPTIONS(channelId),
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        }
+      }
+    )
+
+    return NextResponse.json(data);
+
+  } catch(err) {
+    return serverApiHandler(err);
+  }
+}
