@@ -8,9 +8,6 @@ import { fetchChannel } from '@/services/channel'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { Channel } from '@/types/channel.types'
-import { PaginatedResponse } from '@/types/api.types'
-import { UserListItem } from '@/types/user.types'
-import { getUserSubscribers, getUserSubscriptions } from '@/services/subscriptions'
 
 export default function ProfilePage() {
   const params = useParams();
@@ -19,25 +16,12 @@ export default function ProfilePage() {
   const [channel, setChannel] = useState<Channel | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const [channelSubscribers, setChannelSubscribers] = useState<PaginatedResponse<UserListItem>>()
-  const [loadingMoreChannelSubscribers, setLoadingMoreChannelSubscribers] = useState(false)
-
-  const [channelSubscriptions, setChannelSubscriptions] = useState<PaginatedResponse<UserListItem>>()
-  const [loadingMoreChannelSubscriptions, setLoadingMoreChannelSubscriptions] = useState(false)
-
   useEffect(() => {
     const loadChannel = async () => {
       try {
         const response = await fetchChannel(username)
-        const channelData = response.data
+        setChannel(response.data)
 
-        setChannel(channelData)
-
-        const subscribersResponse = await getUserSubscribers({channelId: channelData._id})
-        setChannelSubscribers(subscribersResponse.data)
-
-        const subscriptionsResponse = await getUserSubscriptions({subscriberId: channelData._id})
-        setChannelSubscriptions(subscriptionsResponse.data)
       } catch(err) {
         console.error("Error fetching channel:", err)
       } finally {
@@ -47,86 +31,7 @@ export default function ProfilePage() {
     loadChannel()
   }, [username])
 
-  console.log("channel subscriptions", channelSubscriptions)
-
-  console.log("channel subscribers", channelSubscribers)
-
-
-  console.log("Channel data:", channel)
-
-  const loadMoreChannelSubscribers = async () => {
-    if(!channelSubscribers?.hasNextPage) return
-
-    try {
-      setLoadingMoreChannelSubscribers(true)
-
-      const nextPage = channelSubscribers.nextPage;
-
-      if(!nextPage) return;
-
-      const response = await getUserSubscribers({
-        page: nextPage,
-        limit: 10,
-        channelId: channel?._id
-      })
-
-      setChannelSubscribers((prev) => {
-        if(!prev) return response.data;
-
-        return {
-          ...response.data,
-
-          docs: [
-            ...prev.docs,
-            ...response.data.docs
-          ],
-        }
-      })
-    } catch(err) {
-      console.log("Error loading more subscribers", err);
-
-    } finally {
-      setLoadingMoreChannelSubscribers(false)
-    }
-  }
-
-  const loadMoreChannelSubscriptions = async () => {
-    if(!channelSubscriptions?.hasNextPage) return
-
-    try {
-      setLoadingMoreChannelSubscriptions(true)
-
-      const nextPage = channelSubscriptions.nextPage;
-
-      if(!nextPage) return;
-
-      const response = await getUserSubscriptions({
-        page: nextPage,
-        limit: 10,
-        subscriberId: channel?._id
-      })
-
-      setChannelSubscriptions((prev) => {
-        if(!prev) return response.data;
-
-        return {
-          ...response.data,
-
-          docs: [
-            ...prev.docs,
-            ...response.data.docs
-          ],
-        }
-      })
-    } catch(err) {
-      console.log("Error loading more subscriptions", err);
-
-    } finally {
-      setLoadingMoreChannelSubscriptions(false)
-    }
-  }
-
-   if (loading) {
+  if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <Spinner />
@@ -145,24 +50,8 @@ export default function ProfilePage() {
   return (
     <div>
       <ProfileCover coverImage={channel.coverImage} />
-
       <ProfileHeader channel={channel} />
-
-      <ProfileTabs
-        channelId = {channel._id}
-
-        subscribers={channelSubscribers?.docs || []}
-        subscriptions={channelSubscriptions?.docs || []}
-
-        hasNextPageSubscribers={channelSubscribers?.hasNextPage}
-        hasNextPageSubscriptions={channelSubscriptions?.hasNextPage}
-
-        onLoadMoreSubscribers={loadMoreChannelSubscribers}
-        onLoadMoreSubscriptions={loadMoreChannelSubscriptions}
-
-        loadingMoreSubscribers={loadingMoreChannelSubscribers}
-        loadingMoreSubscriptions={loadingMoreChannelSubscriptions}
-      />
+      <ProfileTabs channelId = {channel._id} />
     </div>
   )
 }

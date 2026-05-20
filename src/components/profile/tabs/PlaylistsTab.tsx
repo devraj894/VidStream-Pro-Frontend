@@ -17,7 +17,7 @@ export default function PlaylistTab({ channelId }: PlaylistTabProps) {
 
   useEffect(() => {
     const loadPlaylists = async () => {
-      if(!loadingPlaylists) return
+      setLoadingPlaylists(true)
 
       try {
         const playlistsResponse = await getUserPlaylists({userId: channelId})
@@ -35,11 +35,11 @@ export default function PlaylistTab({ channelId }: PlaylistTabProps) {
   }, [channelId])
 
   const loadMorePlaylists = async () => {
+    if(loadingMorePlaylists) return;
     if(!channelPlaylists?.hasNextPage) return
 
     try {
-      setLoadingMorePlaylists(true)
-
+      setLoadingMorePlaylists(true)      
       const nextPage = channelPlaylists.nextPage;
 
       if(!nextPage) return;
@@ -101,6 +101,7 @@ export default function PlaylistTab({ channelId }: PlaylistTabProps) {
           <Button
             variant="secondary"
             onClick={loadMorePlaylists}
+            disabled={loadingMorePlaylists}
           >
             {loadingMorePlaylists ? (
               "Loading..."

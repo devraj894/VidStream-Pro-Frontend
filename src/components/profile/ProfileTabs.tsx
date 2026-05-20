@@ -3,38 +3,13 @@ import VideosTab from './tabs/VideosTab'
 import PlaylistsTab from './tabs/PlaylistsTab'
 import TweetsTab from './tabs/TweetsTab'
 import UserListTab from './tabs/UserListTab'
-import { UserListItem } from '@/types/user.types'
 
 interface profileTabsProps {
   channelId: string
-
-  subscribers: UserListItem[]
-  subscriptions: UserListItem[]
-
-  hasNextPageSubscribers?: boolean
-  hasNextPageSubscriptions?: boolean
-
-  onLoadMoreSubscribers: () => void
-  onLoadMoreSubscriptions: () => void
-
-  loadingMoreSubscribers?: boolean
-  loadingMoreSubscriptions?: boolean
 }
 
 export default function ProfileTabs({
   channelId,
-
-  subscribers,
-  subscriptions,
-
-  hasNextPageSubscribers,
-  hasNextPageSubscriptions,
-
-  onLoadMoreSubscribers,
-  onLoadMoreSubscriptions,
-
-  loadingMoreSubscribers,
-  loadingMoreSubscriptions
 }: profileTabsProps) {
   return (
     <Tabs defaultValue="videos" className="mt-6 px-8">
@@ -64,23 +39,17 @@ export default function ProfileTabs({
         />
       </TabsContent>
 
-       <TabsContent value="subscribers">
+      <TabsContent value="subscribers">
         <UserListTab 
           type="subscribers"
-          users={subscribers} 
-          hasNextPage={hasNextPageSubscribers}
-          onLoadMore={onLoadMoreSubscribers}
-          loadingMore={loadingMoreSubscribers}
+          channelId={channelId}
         />
       </TabsContent>
 
       <TabsContent value="subscriptions">
         <UserListTab 
           type="subscriptions"
-          users={subscriptions} 
-          hasNextPage={hasNextPageSubscriptions}
-          onLoadMore={onLoadMoreSubscriptions}
-          loadingMore={loadingMoreSubscriptions}
+          channelId={channelId}
         />
       </TabsContent>
     </Tabs>

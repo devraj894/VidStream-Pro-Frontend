@@ -17,7 +17,7 @@ export default function VideosTab({channelId}: VideosTabProps) {
 
   useEffect(() => {
     const loadVideos = async () => {
-      if(!loadingVideos) return
+      setLoadingVideos(true)
 
       try {
         const videosResponse = await searchVideos({
@@ -38,6 +38,7 @@ export default function VideosTab({channelId}: VideosTabProps) {
   }, [channelId])
 
   const loadMoreVideos = async () => {
+    if (loadingMoreVideos) return
     if(!channelVideos?.hasNextPage) return
 
     try {
@@ -105,6 +106,7 @@ export default function VideosTab({channelId}: VideosTabProps) {
         <Button
           variant="secondary"
           onClick={loadMoreVideos}
+          disabled={loadingMoreVideos}
         >
           {loadingMoreVideos ? (
             "Loading..."

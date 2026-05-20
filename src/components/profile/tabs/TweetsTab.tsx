@@ -17,7 +17,7 @@ export default function TweetsTab({ channelId }: tweetsTabProps) {
 
   useEffect(() => {
       const loadTweets = async () => {
-        if(!loadingTweets) return
+        setLoadingTweets(true)
   
         try {
           const tweetsResponse = await getUserTweets({userId: channelId})
@@ -35,6 +35,7 @@ export default function TweetsTab({ channelId }: tweetsTabProps) {
   }, [channelId])
 
   const loadMoreTweets = async () => {
+    if(loadingMoreTweets) return
     if(!channelTweets?.hasNextPage) return
 
     try {
@@ -101,6 +102,7 @@ export default function TweetsTab({ channelId }: tweetsTabProps) {
           <Button
             variant="secondary"
             onClick={loadMoreTweets}
+            disabled={loadingMoreTweets}
           >
             {loadingMoreTweets ? (
               "Loading..."
