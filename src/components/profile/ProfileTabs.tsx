@@ -2,28 +2,21 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import VideosTab from './tabs/VideosTab'
 import PlaylistsTab from './tabs/PlaylistsTab'
 import TweetsTab from './tabs/TweetsTab'
-import { Video } from '@/types/videos.types'
-import { Playlist } from '@/types/playlist.types'
-import { Tweet } from '@/types/tweets.types'
 import UserListTab from './tabs/UserListTab'
 import { UserListItem } from '@/types/user.types'
 
 interface profileTabsProps {
   channelId: string
 
-  tweets: Tweet[]
   subscribers: UserListItem[]
   subscriptions: UserListItem[]
 
-  hasNextPageTweets?: boolean
   hasNextPageSubscribers?: boolean
   hasNextPageSubscriptions?: boolean
 
-  onLoadMoreTweets: () => void
   onLoadMoreSubscribers: () => void
   onLoadMoreSubscriptions: () => void
 
-  loadingMoreTweets?: boolean
   loadingMoreSubscribers?: boolean
   loadingMoreSubscriptions?: boolean
 }
@@ -31,19 +24,15 @@ interface profileTabsProps {
 export default function ProfileTabs({
   channelId,
 
-  tweets,
   subscribers,
   subscriptions,
 
-  hasNextPageTweets,
   hasNextPageSubscribers,
   hasNextPageSubscriptions,
 
-  onLoadMoreTweets,
   onLoadMoreSubscribers,
   onLoadMoreSubscriptions,
 
-  loadingMoreTweets,
   loadingMoreSubscribers,
   loadingMoreSubscriptions
 }: profileTabsProps) {
@@ -71,10 +60,7 @@ export default function ProfileTabs({
 
       <TabsContent value="tweets">
         <TweetsTab 
-          tweets={tweets} 
-          hasNextPage={hasNextPageTweets}
-          onLoadMore={onLoadMoreTweets}
-          loadingMorePlaylists={loadingMoreTweets}
+          channelId={channelId}
         />
       </TabsContent>
 
