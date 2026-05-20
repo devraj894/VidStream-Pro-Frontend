@@ -11,22 +11,18 @@ import { UserListItem } from '@/types/user.types'
 interface profileTabsProps {
   channelId: string
 
-  playlists: Playlist[]
   tweets: Tweet[]
   subscribers: UserListItem[]
   subscriptions: UserListItem[]
 
-  hasNextPagePlaylists?: boolean
   hasNextPageTweets?: boolean
   hasNextPageSubscribers?: boolean
   hasNextPageSubscriptions?: boolean
 
-  onLoadMorePlaylists: () => void
   onLoadMoreTweets: () => void
   onLoadMoreSubscribers: () => void
   onLoadMoreSubscriptions: () => void
 
-  loadingMorePlaylists?: boolean
   loadingMoreTweets?: boolean
   loadingMoreSubscribers?: boolean
   loadingMoreSubscriptions?: boolean
@@ -35,22 +31,18 @@ interface profileTabsProps {
 export default function ProfileTabs({
   channelId,
 
-  playlists,
   tweets,
   subscribers,
   subscriptions,
 
-  hasNextPagePlaylists,
   hasNextPageTweets,
   hasNextPageSubscribers,
   hasNextPageSubscriptions,
 
-  onLoadMorePlaylists,
   onLoadMoreTweets,
   onLoadMoreSubscribers,
   onLoadMoreSubscriptions,
 
-  loadingMorePlaylists,
   loadingMoreTweets,
   loadingMoreSubscribers,
   loadingMoreSubscriptions
@@ -73,10 +65,7 @@ export default function ProfileTabs({
 
       <TabsContent value="playlists">
         <PlaylistsTab 
-          playlists={playlists}
-          hasNextPage={hasNextPagePlaylists} 
-          onLoadMore={onLoadMorePlaylists}
-          loadingMorePlaylists={loadingMorePlaylists}
+          channelId={channelId}
         />
       </TabsContent>
 
