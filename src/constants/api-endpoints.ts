@@ -28,6 +28,7 @@ export const API_ENDPOINTS = {
         GET_USER_TWEETS: (userId: string) => `/tweets/user/${userId}`
     },
     LIKES: {
+        TOGGLE_VIDEO_LIKE: (videoId: string) => `/likes/toggle/v/${videoId}`,
         TOGGLE_TWEET_LIKE: (tweetId: string) => `/likes/toggle/t/${tweetId}`,
         GET_LIKED_VIDEOS: '/likes/videos'
     },

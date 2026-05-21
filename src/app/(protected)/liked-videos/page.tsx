@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { Spinner } from '@/components/ui/spinner'
 import VideoCard from '@/components/video/VideoCard'
-import { getLikedVideos } from '@/services/likes'
+import { getLikedVideos, toggleVideoLike } from '@/services/likes'
 import { PaginatedResponse } from '@/types/api.types'
 import { Video } from '@/types/videos.types'
 import { useEffect, useState } from 'react'
@@ -63,8 +63,23 @@ export default function likedVideosPage() {
       }
     }
 
-  const handleUnlike = (videoId: string) => {
-    console.log("video id: ", videoId)
+  const handleUnlike = async (videoId: string) => {
+    try {
+        await toggleVideoLike(videoId)
+
+        setVideos((prev) => {
+            if(!prev) return prev;
+
+            return {
+                ...prev,
+                docs: prev.docs.filter((video) => video._id !== videoId),
+            };
+        });
+
+    } catch(err) {
+        console.log("Failed to toggle like", err)
+
+    } 
   }
 
   return (

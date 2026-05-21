@@ -1,5 +1,10 @@
 import { api } from "@/lib/api"
 
+export const toggleVideoLike = async (videoId: string) => {
+    const response = await api.post(`/api/likes/toggle/v/${videoId}`)
+    return response.data
+}
+
 export const toggleTweetLike = async (tweetId: string) => {
     const response = await api.post(`/api/likes/toggle/t/${tweetId}`)
     return response.data
