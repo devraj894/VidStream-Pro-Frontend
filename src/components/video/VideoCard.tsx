@@ -1,10 +1,11 @@
 import { formatDuration, formatTimeAgo, formatViews } from '@/lib/utils'
-import { Dot } from 'lucide-react'
+import { Dot, Heart, Trash2 } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Video } from '@/types/videos.types'
 
 interface VideoCardProps {
+  actionType?: 'remove' | 'like'
   video: Video
   variant?: 'default' | 'compact'
   removable?: boolean
@@ -12,6 +13,7 @@ interface VideoCardProps {
 }
 
 export default function VideoCard({
+  actionType,
   video,
   variant = 'default',
   removable,
@@ -48,7 +50,11 @@ export default function VideoCard({
                 onRemove(video._id)
               }}
             >
-              Remove
+              {actionType === 'like' ? (
+                <Heart className="fill-red-500 text-red-500" size={18} />
+              ) : (
+                <Trash2 size={18} />
+              )}
             </Button>
           )}
 
@@ -79,7 +85,11 @@ export default function VideoCard({
               onRemove(video._id)
             }}
           >
-            Remove
+            {actionType === 'like' ? (
+              <Heart className="fill-red-500 text-red-500" size={18} />
+            ) : (
+              <Trash2 size={18} />
+            )}
           </Button>
         )}
       </div>

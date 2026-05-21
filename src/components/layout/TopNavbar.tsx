@@ -95,6 +95,9 @@ export default function TopNavbar() {
                   <Link href={`/history`}>History</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
+                  <Link href="/liked-videos">Liked Videos</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Link href="/settings">Settings</Link>
                 </DropdownMenuItem>
                 {/* <DropdownMenuItem>Playlists</DropdownMenuItem>
