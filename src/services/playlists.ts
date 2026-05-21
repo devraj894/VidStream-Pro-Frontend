@@ -20,3 +20,8 @@ export const getUserPlaylists = async ({
 
     return response.data
 }
+
+export const getPlaylistDetails = async (playlistId: string) => {
+    const response = await api.get(`/api/playlists/playlist/${playlistId}`)
+    return response.data
+}

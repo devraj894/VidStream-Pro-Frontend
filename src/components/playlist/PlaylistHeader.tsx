@@ -1,9 +1,9 @@
 import { Dot, Play, Shuffle } from 'lucide-react'
 import { Button } from '../ui/button'
-import { playlistDetailsTypes } from '@/types/playlist'
+import { PlaylistDetails } from '@/types/playlist.types'
 
 interface PlaylistHeaderProps {
-  playlistDetails: playlistDetailsTypes
+  playlistDetails: PlaylistDetails
 }
 
 export default function PlaylistHeader({
@@ -12,11 +12,19 @@ export default function PlaylistHeader({
   return (
     <div className="relative">
       {/* Cover */}
-      <div className="h-[280px] w-full overflow-hidden">
-        <img
-          src={playlistDetails.videos[0].thumbnail.url}
-          className="w-full h-full object-cover"
-        />
+      <div className="h-[280px] w-full overflow-hidden relative">
+        {playlistDetails.videos.length > 0 ? (
+          <img
+            src={playlistDetails.videos[0].thumbnail.url}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full bg-neutral-900 flex items-center justify-center">
+            <p className="text-neutral-300 text-lg font-medium">
+              Empty Playlist
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Overlay */}

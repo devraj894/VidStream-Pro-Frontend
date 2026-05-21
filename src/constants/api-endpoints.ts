@@ -21,7 +21,8 @@ export const API_ENDPOINTS = {
         DELETE_COMMENT: (commentId: string) => `/comments/c/${commentId}`
     },
     PLAYLISTS: {
-        GET_USER_PLAYLISTS: (userId: string) => `/playlist/user/${userId}`
+        GET_USER_PLAYLISTS: (userId: string) => `/playlist/user/${userId}`,
+        GET_PLAYLIST: (playlistId: string) => `/playlist/${playlistId}`
     },
     TWEETS: {
         GET_USER_TWEETS: (userId: string) => `/tweets/user/${userId}`
