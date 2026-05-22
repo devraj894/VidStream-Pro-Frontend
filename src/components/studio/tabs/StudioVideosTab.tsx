@@ -2,24 +2,20 @@ import StudioVideoHeader from '../video/StudioVideoHeader'
 import StudioVideoRow from '../video/StudioVideoRow'
 import { ModalType } from '@/types/modal'
 import { useEffect, useState } from 'react'
-import { Video } from '@/types/videos.types'
-import { User } from '@/types/auth.types'
-import { searchVideos } from '@/services/videos'
+import { StudioVideo } from '@/types/videos.types'
 import { PaginatedResponse } from '@/types/api.types'
 import { Spinner } from '@/components/ui/spinner'
 import { Button } from '@/components/ui/button'
+import { getChannelVideos } from '@/services/dashboard'
 
 interface StudioVideosProps {
-  user: User | null
   setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
 }
 
 export default function StudioVideosTab({
-  user,
   setModal,
 }: StudioVideosProps) {
-  console.log("user inside studio", user)
-  const [videos, setVideos] = useState<PaginatedResponse<Video>>()
+  const [videos, setVideos] = useState<PaginatedResponse<StudioVideo>>()
   const [loading, setLoading] = useState(true)
   const [loadingMore, setLoadingMore] = useState(false)
 
@@ -28,10 +24,7 @@ export default function StudioVideosTab({
       setLoading(true)
 
       try {
-        const videosResponse = await searchVideos({
-            userId: user?._id
-        })
-
+        const videosResponse = await getChannelVideos()
         setVideos(videosResponse.data)
 
       } catch (err) {
@@ -43,7 +36,7 @@ export default function StudioVideosTab({
     }
 
     loadVideos();
-  }, [user?._id]);
+  }, []);
   
   const loadMoreVideos = async () => {
     if (loadingMore) return
@@ -56,11 +49,10 @@ export default function StudioVideosTab({
 
       if(!nextPage) return;
 
-      const response = await searchVideos({
-        page: nextPage,
-        limit: 10,
-        userId: user?._id
-      })
+      const response = await getChannelVideos(
+        nextPage,
+        10,
+      )
 
       setVideos((prev) => {
         if(!prev) return response.data;

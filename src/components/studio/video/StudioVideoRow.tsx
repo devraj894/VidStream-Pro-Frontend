@@ -1,19 +1,19 @@
 import { formatTimeAgo, formatViews } from '@/lib/utils'
 import { Eye, Pencil, ThumbsUp, Trash } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { studioVideosTypes } from '@/types/studio'
 import { ModalType } from '@/types/modal'
-import { Video } from '@/types/videos.types'
+import { StudioVideo } from '@/types/videos.types'
 
 interface StudioVideoRowProps {
   setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
-  video: Video
+  video: StudioVideo
 }
 
 export default function StudioVideoRow({
   setModal,
   video,
 }: StudioVideoRowProps) {
+  console.log("studio videos data inside studio row", video)
   return (
     <div className="border-b border-neutral-800 py-3 px-2 md:px-0 flex gap-3 md:grid md:grid-cols-[2fr_1fr_1fr_1fr_1fr_0.5fr] md:items-center md:gap-4 hover:bg-neutral-900/50 transition">
       {/* VIDEO & INFO (Main Section) */}
@@ -43,10 +43,10 @@ export default function StudioVideoRow({
                   {formatViews(video.views)}
                 </span>
               </div>
-              {/* <div className="flex items-center gap-2 text-xs">
+              <div className="flex items-center gap-2 text-xs">
                 <ThumbsUp className="h-4 w-4" />
                 <span className="text-xs font-semibold">{video.likes}</span>
-              </div> */}
+              </div>
             </div>
             {/* <span className="text-[11px] text-neutral-400">
               {formatTimeAgo(video.createdAt)}
@@ -68,9 +68,9 @@ export default function StudioVideoRow({
       </span>
 
       {/* LIKES (Desktop Only) */}
-      {/* <span className="hidden md:block text-sm text-neutral-300">
+      <span className="hidden md:block text-sm text-neutral-300">
         {video.likes}
-      </span> */}
+      </span>
 
       {/* DATE (Desktop Only) */}
       <span className="hidden md:block text-sm text-neutral-400">

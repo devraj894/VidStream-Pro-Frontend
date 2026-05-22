@@ -4,7 +4,7 @@ export default function StudioVideoHeader() {
       <span>Video</span>
       <span>Status</span>
       <span>Views</span>
-      {/* <span>Likes</span> */}
+      <span>Likes</span>
       <span>Date uploaded</span>
       <span className="text-right">Actions</span>
     </div>

@@ -38,6 +38,7 @@ export const API_ENDPOINTS = {
         TOGGLE_SUBSCRIPTIONS: (channelId: string) => `/subscriptions/c/${channelId}`
     },
     DASHBOARD: {
-        CHANNEL_STATS: '/dashboard/stats'
+        CHANNEL_STATS: '/dashboard/stats',
+        VIDEOS: '/dashboard/videos'
     }
 }   

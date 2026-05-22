@@ -55,7 +55,7 @@ export default function StudioTabs({
       </div>
 
       <TabsContent value="videos">
-        <StudioVideosTab user={user} setModal={setModal} />
+        <StudioVideosTab setModal={setModal} />
       </TabsContent>
 
       <TabsContent value="playlists">

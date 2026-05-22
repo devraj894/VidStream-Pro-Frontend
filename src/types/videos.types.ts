@@ -19,3 +19,18 @@ export interface VideoDetails extends Video {
         subscribers: number
     }
 }
+
+export interface StudioVideo extends Pick<
+   Video,
+    | "_id"
+    | "thumbnail"
+    | "title"
+    | "description"
+    | "duration"
+    | "views"
+    | "isPublished"
+    | "createdAt"
+> {
+    updatedAt: string
+    likes: number
+}

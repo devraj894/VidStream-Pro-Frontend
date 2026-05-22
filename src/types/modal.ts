@@ -1,12 +1,12 @@
 import { studioPlaylistTypes } from "./studio";
 import { tweetTypes } from "./tweet";
-import { Video } from "./videos.types";
+import { StudioVideo } from "./videos.types";
 
 export type ModalType =
   // VIDEO
   | { type: 'upload-video' }
-  | { type: 'edit-video'; data: Video }
-  | { type: 'delete-video'; data: Video }
+  | { type: 'edit-video'; data: StudioVideo }
+  | { type: 'delete-video'; data: StudioVideo }
 
   // PLAYLIST
   | { type: 'upload-playlist' }
