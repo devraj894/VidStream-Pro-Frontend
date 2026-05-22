@@ -8,6 +8,7 @@ export interface Video {
     description: string
     duration: number
     views: number
+    isPublished: boolean
     owner: UserBasicInfo
     createdAt: string
 }

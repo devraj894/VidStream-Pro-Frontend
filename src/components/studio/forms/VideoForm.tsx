@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { studioVideosTypes } from '@/types/studio'
 import { Textarea } from '@/components/ui/textarea'
+import { Video } from '@/types/videos.types'
 
 interface VideoFormProps {
-  data?: studioVideosTypes
+  data?: Video
 }
 
 export default function VideoForm({ data }: VideoFormProps) {

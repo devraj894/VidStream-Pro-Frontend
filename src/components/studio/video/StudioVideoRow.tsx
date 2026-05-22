@@ -3,10 +3,11 @@ import { Eye, Pencil, ThumbsUp, Trash } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { studioVideosTypes } from '@/types/studio'
 import { ModalType } from '@/types/modal'
+import { Video } from '@/types/videos.types'
 
 interface StudioVideoRowProps {
   setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
-  video: studioVideosTypes
+  video: Video
 }
 
 export default function StudioVideoRow({
@@ -30,10 +31,10 @@ export default function StudioVideoRow({
           {/* Mobile-only stats and Status Badge */}
           <div className="md:hidden space-y-2">
             <Badge
-              variant={video.status ? 'default' : 'secondary'}
+              variant={video.isPublished ? 'default' : 'secondary'}
               className="text-[10px] px-1.5 py-0"
             >
-              {video.status ? 'Published' : 'Draft'}
+              {video.isPublished ? 'Published' : 'Draft'}
             </Badge>
             <div className="flex items-center gap-4 text-white">
               <div className="flex items-center gap-2 text-xs">
@@ -42,10 +43,10 @@ export default function StudioVideoRow({
                   {formatViews(video.views)}
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-xs">
+              {/* <div className="flex items-center gap-2 text-xs">
                 <ThumbsUp className="h-4 w-4" />
                 <span className="text-xs font-semibold">{video.likes}</span>
-              </div>
+              </div> */}
             </div>
             {/* <span className="text-[11px] text-neutral-400">
               {formatTimeAgo(video.createdAt)}
@@ -56,8 +57,8 @@ export default function StudioVideoRow({
 
       {/* STATUS (Desktop Only) */}
       <div className="hidden md:block">
-        <Badge variant={video.status ? 'default' : 'secondary'}>
-          {video.status ? 'Published' : 'Draft'}
+        <Badge variant={video.isPublished ? 'default' : 'secondary'}>
+          {video.isPublished ? 'Published' : 'Draft'}
         </Badge>
       </div>
 
@@ -67,9 +68,9 @@ export default function StudioVideoRow({
       </span>
 
       {/* LIKES (Desktop Only) */}
-      <span className="hidden md:block text-sm text-neutral-300">
+      {/* <span className="hidden md:block text-sm text-neutral-300">
         {video.likes}
-      </span>
+      </span> */}
 
       {/* DATE (Desktop Only) */}
       <span className="hidden md:block text-sm text-neutral-400">

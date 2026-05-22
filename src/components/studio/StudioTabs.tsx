@@ -1,22 +1,23 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { Button } from '../ui/button'
 import StudioVideosTab from './tabs/StudioVideosTab'
-import { studioPlaylistTypes, studioVideosTypes } from '@/types/studio'
+import { studioPlaylistTypes } from '@/types/studio'
 import StudioPlaylistsTab from './tabs/StudioPlaylistsTab'
 import StudioTweetsTab from './tabs/StudioTweetsTab'
 import { tweetTypes } from '@/types/tweet'
 import { useState } from 'react'
 import { ModalType } from '@/types/modal'
+import { User } from '@/types/auth.types'
 
 interface StudioTabsProps {
-  videos: studioVideosTypes[]
+  user: User | null
   playlists: studioPlaylistTypes[]
   tweets: tweetTypes[]
   setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
 }
 
 export default function StudioTabs({
-  videos,
+  user,
   playlists,
   tweets,
   setModal,
@@ -54,7 +55,7 @@ export default function StudioTabs({
       </div>
 
       <TabsContent value="videos">
-        <StudioVideosTab setModal={setModal} videos={videos} />
+        <StudioVideosTab user={user} setModal={setModal} />
       </TabsContent>
 
       <TabsContent value="playlists">
