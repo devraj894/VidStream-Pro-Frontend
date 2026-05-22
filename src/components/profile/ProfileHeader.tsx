@@ -21,7 +21,7 @@ export default function ProfileHeader({ channel }: { channel: Channel }) {
           <h1 className="text-2xl font-bold text-white">{channel.fullName}</h1>
           <h2 className="text-sm text-neutral-400">@{channel.username}</h2>
           <p className="flex items-center text-xs text-neutral-400">
-            {channel.subcribersCount.toLocaleString()} subscribers <Dot size={15} /> {channel.channelsSubscribedToCount.toLocaleString()} subscribed
+            {channel.subscribersCount.toLocaleString()} subscribers <Dot size={15} /> {channel.channelsSubscribedToCount.toLocaleString()} subscribed
           </p>
         </div>
       </div>
