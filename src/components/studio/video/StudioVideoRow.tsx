@@ -3,6 +3,8 @@ import { Eye, Pencil, ThumbsUp, Trash } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { ModalType } from '@/types/modal'
 import { StudioVideo } from '@/types/videos.types'
+import { useState } from 'react'
+import { togglePublishStatus } from '@/services/videos'
 
 interface StudioVideoRowProps {
   setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
@@ -13,6 +15,26 @@ export default function StudioVideoRow({
   setModal,
   video,
 }: StudioVideoRowProps) {
+  const [publishStatus, setPublishStatus] = useState(video.isPublished);
+  const [loadingStatus, setLoadingStatus] = useState(false);
+  
+  const handleToggleStatus = async (videoId: string) => {
+    setLoadingStatus(true);
+    
+    try {
+      setPublishStatus((prev) => !prev);
+
+      await togglePublishStatus(videoId);
+
+    } catch(err) {
+      setPublishStatus((prev) => !prev)
+      console.log("Failed to toggle video status", err)
+
+    } finally {
+      setLoadingStatus(false);
+    }
+  }
+
   console.log("studio videos data inside studio row", video)
   return (
     <div className="border-b border-neutral-800 py-3 px-2 md:px-0 flex gap-3 md:grid md:grid-cols-[2fr_1fr_1fr_1fr_1fr_0.5fr] md:items-center md:gap-4 hover:bg-neutral-900/50 transition">
@@ -30,12 +52,15 @@ export default function StudioVideoRow({
 
           {/* Mobile-only stats and Status Badge */}
           <div className="md:hidden space-y-2">
-            <Badge
-              variant={video.isPublished ? 'default' : 'secondary'}
-              className="text-[10px] px-1.5 py-0"
+            <button
+              onClick={() => handleToggleStatus(video._id)}
+              disabled={loadingStatus}
+              className="cursor-pointer"
             >
-              {video.isPublished ? 'Published' : 'Draft'}
-            </Badge>
+              <Badge variant={publishStatus ? 'default' : 'secondary'}>
+                {publishStatus ? 'Published' : 'Draft'}
+              </Badge>
+            </button>
             <div className="flex items-center gap-4 text-white">
               <div className="flex items-center gap-2 text-xs">
                 <Eye className="h-4 w-4" />
@@ -57,9 +82,15 @@ export default function StudioVideoRow({
 
       {/* STATUS (Desktop Only) */}
       <div className="hidden md:block">
-        <Badge variant={video.isPublished ? 'default' : 'secondary'}>
-          {video.isPublished ? 'Published' : 'Draft'}
-        </Badge>
+        <button
+          onClick={() => handleToggleStatus(video._id)}
+          disabled={loadingStatus}
+          className="cursor-pointer"
+        >
+          <Badge variant={publishStatus ? 'default' : 'secondary'}>
+            {publishStatus ? 'Published' : 'Draft'}
+          </Badge>
+        </button>
       </div>
 
       {/* VIEWS (Desktop Only) */}
