@@ -14,6 +14,7 @@ interface StudioTabsProps {
   playlists: studioPlaylistTypes[]
   tweets: tweetTypes[]
   setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
+  refreshVideos: number
 }
 
 export default function StudioTabs({
@@ -21,6 +22,7 @@ export default function StudioTabs({
   playlists,
   tweets,
   setModal,
+  refreshVideos
 }: StudioTabsProps) {
   const [activeTab, setActiveTab] = useState('videos')
 
@@ -55,7 +57,10 @@ export default function StudioTabs({
       </div>
 
       <TabsContent value="videos">
-        <StudioVideosTab setModal={setModal} />
+        <StudioVideosTab 
+          setModal={setModal} 
+          refreshVideos={refreshVideos}
+        />
       </TabsContent>
 
       <TabsContent value="playlists">

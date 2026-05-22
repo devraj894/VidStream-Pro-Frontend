@@ -10,10 +10,12 @@ import { getChannelVideos } from '@/services/dashboard'
 
 interface StudioVideosProps {
   setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
+  refreshVideos: number
 }
 
 export default function StudioVideosTab({
   setModal,
+  refreshVideos
 }: StudioVideosProps) {
   const [videos, setVideos] = useState<PaginatedResponse<StudioVideo>>()
   const [loading, setLoading] = useState(true)
@@ -36,7 +38,7 @@ export default function StudioVideosTab({
     }
 
     loadVideos();
-  }, []);
+  }, [refreshVideos]);
   
   const loadMoreVideos = async () => {
     if (loadingMore) return

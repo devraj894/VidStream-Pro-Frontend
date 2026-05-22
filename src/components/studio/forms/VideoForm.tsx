@@ -9,9 +9,10 @@ import { createVideo } from '@/services/videos'
 
 interface VideoFormProps {
   data?: StudioVideo
+  onSuccess?: () => void
 }
 
-export default function VideoForm({ data }: VideoFormProps) {
+export default function VideoForm({ data, onSuccess }: VideoFormProps) {
   const isEdit = !!data
 
   const [title, setTitle] = useState(data?.title || '')
@@ -70,6 +71,8 @@ export default function VideoForm({ data }: VideoFormProps) {
       }
 
       const response = await createVideo(formData)
+
+      onSuccess?.()
 
       console.log('Uploaded video:', response)
 

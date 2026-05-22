@@ -14,6 +14,7 @@ import { ModalType } from '@/types/modal'
 import { useState } from 'react'
 
 export default function StudioPage() {
+  const [refreshVideos, setRefreshVideos] = useState(0)
   const [modal, setModal] = useState<ModalType | null>(null)
 
   const { user } = useAuth();
@@ -92,6 +93,7 @@ export default function StudioPage() {
         playlists={studioPlaylists}
         tweets={tweets}
         setModal={setModal}
+        refreshVideos={refreshVideos}
       />
       <FormModal
         open={isVideoModal || isPlaylistModal || isTweetModal}
@@ -101,6 +103,10 @@ export default function StudioPage() {
         {isVideoModal && (
           <VideoForm
             data={modalType === 'edit-video' ? modal?.data : undefined}
+            onSuccess={() => {
+              setModal(null)
+              setRefreshVideos((prev) => prev + 1)
+            }}
           />
         )}
 
