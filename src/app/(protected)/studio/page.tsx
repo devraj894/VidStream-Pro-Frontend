@@ -7,7 +7,7 @@ import TweetForm from '@/components/studio/forms/TweetForm'
 import VideoForm from '@/components/studio/forms/VideoForm'
 import StudioLayout from '@/components/studio/StudioLayout'
 import StudioTabs from '@/components/studio/StudioTabs'
-import { studioPlaylists, studioStats, studioVideos } from '@/data/studio'
+import { studioPlaylists, studioVideos } from '@/data/studio'
 import { tweets } from '@/data/tweets'
 import { ModalType } from '@/types/modal'
 import { useState } from 'react'
@@ -83,7 +83,7 @@ export default function StudioPage() {
   }
 
   return (
-    <StudioLayout stats={studioStats}>
+    <StudioLayout>
       <StudioTabs
         videos={studioVideos}
         playlists={studioPlaylists}

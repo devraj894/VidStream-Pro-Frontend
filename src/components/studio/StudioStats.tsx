@@ -1,8 +1,8 @@
-import { studioStatsTypes } from '@/types/studio'
 import StudioStatCard from './StudioStatCard'
+import { ChannelStats } from '@/types/dashboard.types'
 
 interface StudioStatsProps {
-  stats: studioStatsTypes
+  stats: ChannelStats
 }
 
 export default function StudioStats({ stats }: StudioStatsProps) {
@@ -13,7 +13,7 @@ export default function StudioStats({ stats }: StudioStatsProps) {
         title="Total subscribers"
         value={stats.totalSubscribers}
       />
-      <StudioStatCard title="Total likes" value={stats.totalLiks} />
+      <StudioStatCard title="Total likes" value={stats.totalLikes} />
     </div>
   )
 }

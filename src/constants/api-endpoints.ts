@@ -36,5 +36,8 @@ export const API_ENDPOINTS = {
         GET_USER_SUBSCRIBERS: (channelId: string) => `subscriptions/c/${channelId}`,
         GET_USER_SUBSCRIPTIONS: (subscriberId: string) => `/subscriptions/u/${subscriberId}`,
         TOGGLE_SUBSCRIPTIONS: (channelId: string) => `/subscriptions/c/${channelId}`
+    },
+    DASHBOARD: {
+        CHANNEL_STATS: '/dashboard/stats'
     }
 }   
