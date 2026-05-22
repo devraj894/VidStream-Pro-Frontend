@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { StudioVideo } from '@/types/videos.types'
+import { createVideo } from '@/services/videos'
 
 interface VideoFormProps {
   data?: StudioVideo
@@ -17,6 +18,9 @@ export default function VideoForm({ data }: VideoFormProps) {
   const [description, setDescription] = useState(data?.description || '')
   const [thumbnail, setThumbnail] = useState<File | null>(null)
   const [videoFile, setVideoFile] = useState<File | null>(null)
+
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
   console.log('data inside video form : ', data)
 
@@ -45,26 +49,47 @@ export default function VideoForm({ data }: VideoFormProps) {
     if (file) setVideoFile(file)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const formData = new FormData()
-    formData.append('title', title)
-    formData.append('description', description)
+    try {
+      setLoading(true)
+      setError('')
 
-    if (thumbnail) formData.append('thumbnail', thumbnail)
-    if (!isEdit && videoFile) formData.append('videoFile', videoFile)
+      const formData = new FormData()
 
-    console.log('FORM DATA:', {
-      title,
-      description,
-      thumbnail,
-      videoFile,
-    })
+      formData.append('title', title)
+      formData.append('description', description)
+
+      if (thumbnail) {
+        formData.append('thumbnail', thumbnail)
+      }
+
+      if (!isEdit && videoFile) {
+        formData.append('videoFile', videoFile)
+      }
+
+      const response = await createVideo(formData)
+
+      console.log('Uploaded video:', response)
+
+    } catch (err: any) {
+      console.log(err)
+      setError(err?.response?.data?.message || 'Upload failed')
+
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {error && (
+        <p className="text-sm text-red-500 font-medium">
+          {error}
+        </p>
+      )}
+
       {/* VIDEO DROP */}
       {!isEdit && (
         <div
@@ -134,8 +159,14 @@ export default function VideoForm({ data }: VideoFormProps) {
         className="min-h-[120px] resize-none"
       />
 
-      <Button type="submit" className="w-full">
-        {isEdit ? 'Update Video' : 'Upload Video'}
+      <Button type="submit" className="w-full" disabled={loading}>
+        {loading
+          ? isEdit
+            ? 'Updating...'
+            : 'Uploading...'
+          : isEdit
+            ? 'Update Video'
+            : 'Upload Video'}
       </Button>
     </form>
   )

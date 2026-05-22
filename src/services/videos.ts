@@ -50,3 +50,8 @@ export const searchVideos = async ({
 
   return response.data;
 };
+
+export const createVideo = async (formData: FormData) => {
+  const response = await api.post('/api/videos', formData);
+  return response.data
+}
