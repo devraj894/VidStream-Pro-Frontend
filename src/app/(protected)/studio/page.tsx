@@ -10,12 +10,15 @@ import StudioTabs from '@/components/studio/StudioTabs'
 import { useAuth } from '@/context/AuthContext'
 import { studioPlaylists } from '@/data/studio'
 import { tweets } from '@/data/tweets'
+import { deleteVideo } from '@/services/videos'
 import { ModalType } from '@/types/modal'
 import { useState } from 'react'
 
 export default function StudioPage() {
   const [refreshVideos, setRefreshVideos] = useState(0)
   const [modal, setModal] = useState<ModalType | null>(null)
+
+  const [deleting, setDeleteing] = useState(false)
 
   const { user } = useAuth();
 
@@ -66,24 +69,34 @@ export default function StudioPage() {
 
   const deleteDescription = 'This action cannot be undone'
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (!modal) return
 
-    switch (modal.type) {
-      case 'delete-video':
-        console.log('delete video id:', modal.data._id)
-        break
+    try {
+      setDeleteing(true)
+      switch (modal.type) {
+        case 'delete-video':
+          await deleteVideo(modal.data._id)
+          setRefreshVideos((prev) => prev + 1)
+          break
+  
+        case 'delete-playlist':
+          console.log('delete playlist id:', modal.data.id)
+          break
+  
+        case 'delete-tweet':
+          console.log('delete tweet id: ', modal.data.id)
+          break
+      }
+  
+      setModal(null)
 
-      case 'delete-playlist':
-        console.log('delete playlist id:', modal.data.id)
-        break
+      } catch(err) {
+        console.log("Failed to delete", err)
 
-      case 'delete-tweet':
-        console.log('delete tweet id: ', modal.data.id)
-        break
-    }
-
-    setModal(null)
+      } finally {
+        setDeleteing(false)
+      }
   }
 
   return (
@@ -129,6 +142,7 @@ export default function StudioPage() {
         title={deleteTitle}
         description={deleteDescription}
         onConfirm={handleDelete}
+        loading={deleting}
       />
     </StudioLayout>
   )

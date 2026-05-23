@@ -12,7 +12,8 @@ export const API_ENDPOINTS = {
         SEARCH_VIDEOS: '/videos',
         CREATE_VIDEO: '/videos',
         TOGGLE_PUBLISH_STATUS: (videoId: string) => `/videos/toggle/publish/${videoId}`,
-        UPDATE_VIDEO: (videoId: string) => `/videos/${videoId}`
+        UPDATE_VIDEO: (videoId: string) => `/videos/${videoId}`,
+        DELETE_VIDEO: (videoId: string) => `/videos/${videoId}`
     },  
     CHANNELS: {
         PROFILE: (username: string) => `/users/c/${username}`,

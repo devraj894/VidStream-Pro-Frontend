@@ -65,3 +65,8 @@ export const updateVideo = async (videoId: string, formData: FormData) => {
   const response = await api.patch(`/api/videos/${videoId}`, formData)
   return response.data
 }
+
+export const deleteVideo = async (videoId: string) => {
+  const response = await api.delete(`/api/videos/${videoId}`)
+  return response.data
+}

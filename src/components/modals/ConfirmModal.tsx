@@ -15,6 +15,7 @@ interface ConfirmModalProps {
   title: string
   description?: string
   onConfirm: () => void
+  loading: boolean
 }
 
 export default function ConfirmModal({
@@ -23,6 +24,7 @@ export default function ConfirmModal({
   title,
   description,
   onConfirm,
+  loading
 }: ConfirmModalProps) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -40,8 +42,8 @@ export default function ConfirmModal({
             Cancel
           </Button>
 
-          <Button variant="destructive" onClick={onConfirm}>
-            Confirm
+          <Button variant="destructive" onClick={onConfirm} disabled={loading}>
+            {loading ? "Deleting..." : "Confirm"}
           </Button>
         </DialogFooter>
       </DialogContent>
