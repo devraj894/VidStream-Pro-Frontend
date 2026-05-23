@@ -4,12 +4,14 @@ import { useEffect, useState } from 'react'
 import { ChannelStats } from '@/types/dashboard.types'
 import { getChannelStats } from '@/services/dashboard'
 import { Spinner } from '../ui/spinner'
+import { User } from '@/types/auth.types'
 
 interface StudioLayoutProps {
+  user: User | null
   children: React.ReactNode
 }
 
-export default function StudioLayout({ children }: StudioLayoutProps) {
+export default function StudioLayout({ user, children }: StudioLayoutProps) {
   const [channelStats, setChannelStats] = useState<ChannelStats>();
   const [loadingStats, setLoadingStats] = useState(true);
 
@@ -36,7 +38,7 @@ export default function StudioLayout({ children }: StudioLayoutProps) {
 
   return (
     <div className="space-y-6 pt-14">
-      <StudioHeader />
+      <StudioHeader fullName={user?.fullName}/>
       {channelStats && (
         <StudioStats stats={channelStats}/>
       )}

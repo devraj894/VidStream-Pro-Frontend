@@ -87,7 +87,7 @@ export default function StudioPage() {
   }
 
   return (
-    <StudioLayout>
+    <StudioLayout user={user}>
       <StudioTabs
         user={user}
         playlists={studioPlaylists}
