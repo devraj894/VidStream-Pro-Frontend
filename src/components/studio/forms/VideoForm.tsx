@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { StudioVideo } from '@/types/videos.types'
-import { createVideo } from '@/services/videos'
+import { createVideo, updateVideo } from '@/services/videos'
 
 interface VideoFormProps {
   data?: StudioVideo
@@ -70,15 +70,28 @@ export default function VideoForm({ data, onSuccess }: VideoFormProps) {
         formData.append('videoFile', videoFile)
       }
 
-      const response = await createVideo(formData)
+      let response;
+
+      if(isEdit && data._id) {
+        response = await updateVideo(data._id, formData)
+      } else {
+        response = await createVideo(formData)
+      }
 
       onSuccess?.()
 
-      console.log('Uploaded video:', response)
+      console.log(
+        isEdit ? 'Updated video:' : 'Uploaded video:',
+        response
+      )
+
 
     } catch (err: any) {
       console.log(err)
-      setError(err?.response?.data?.message || 'Upload failed')
+      setError(
+        err?.response?.data?.message ||
+        (isEdit ? 'Update failed' : 'Upload failed')
+      )
 
     } finally {
       setLoading(false)
@@ -127,13 +140,11 @@ export default function VideoForm({ data, onSuccess }: VideoFormProps) {
       )}
 
       {/* THUMBNAIL */}
-      {!isEdit && (
-        <Input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setThumbnail(e.target.files?.[0] || null)}
-        />
-      )}
+      <Input
+        type="file"
+        accept="image/*"
+        onChange={(e) => setThumbnail(e.target.files?.[0] || null)}
+      />
 
       {data?.thumbnail?.url && !thumbnail && (
         <div>

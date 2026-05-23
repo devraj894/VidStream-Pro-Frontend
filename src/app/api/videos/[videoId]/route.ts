@@ -33,3 +33,37 @@ export async function GET(
         return serverApiHandler(err);
     }
 }
+
+export async function PATCH(
+    request: NextRequest,
+    context: { params: Promise<{ videoId: string }> }
+) {
+    try {
+        const accessToken = request.cookies.get("accessToken")?.value;
+
+        if (!accessToken) {
+            return NextResponse.json(
+                { message: "Unauthorized" },
+                { status: 401 }
+            );
+        }
+
+        const { videoId } = await context.params;
+
+        const formData = await request.formData();
+
+        const { data } = await backendApi.patch(
+            API_ENDPOINTS.VIDEOS.UPDATE_VIDEO(videoId),
+            formData,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+
+        return NextResponse.json(data);
+    } catch (err) {
+        return serverApiHandler(err);
+    }
+}

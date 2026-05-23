@@ -60,3 +60,8 @@ export const togglePublishStatus = async (videoId: string) => {
   const response = await api.patch(`/api/videos/toggle/publish/${videoId}`)
   return response.data
 }
+
+export const updateVideo = async (videoId: string, formData: FormData) => {
+  const response = await api.patch(`/api/videos/${videoId}`, formData)
+  return response.data
+}
