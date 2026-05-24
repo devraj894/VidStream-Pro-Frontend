@@ -133,6 +133,10 @@ export default function StudioPage() {
         {isTweetModal && (
           <TweetForm
             data={modalType === 'edit-tweet' ? modal?.data : undefined}
+            onSuccess={() => {
+              setModal(null)
+              setRefreshTweets((prev) => prev + 1)
+            }}
           />
         )}
       </FormModal>

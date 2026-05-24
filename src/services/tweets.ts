@@ -20,3 +20,8 @@ export const getUserTweets = async ({
 
     return response.data
 }
+
+export const createTweet = async ({ content }: { content: string }) => {
+    const response = await api.post('/api/tweets', { content })
+    return response.data
+}
