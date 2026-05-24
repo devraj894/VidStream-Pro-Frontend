@@ -10,6 +10,7 @@ import StudioTabs from '@/components/studio/StudioTabs'
 import { useAuth } from '@/context/AuthContext'
 import { studioPlaylists } from '@/data/studio'
 import { deleteVideo } from '@/services/videos'
+import { deleteTweet } from '@/services/tweets'
 import { ModalType } from '@/types/modal'
 import { useState } from 'react'
 
@@ -86,7 +87,8 @@ export default function StudioPage() {
           break
   
         case 'delete-tweet':
-          console.log('delete tweet id: ', modal.data._id)
+          await deleteTweet(modal.data._id)
+          setRefreshTweets((prev) => prev + 1)
           break
       }
   

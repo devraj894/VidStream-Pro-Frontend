@@ -36,3 +36,8 @@ export const updateTweet = async ({
     const response = await api.patch(`/api/tweets/${tweetId}`, { newContent })
     return response.data
 }
+
+export const deleteTweet = async (tweetId: string) => {
+    const response = await api.delete(`/api/tweets/${tweetId}`)
+    return response.data
+}
