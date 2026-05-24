@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
-import { createTweet } from '@/services/tweets'
+import { createTweet, updateTweet } from '@/services/tweets'
 import { Tweet } from '@/types/tweets.types'
 import { useEffect, useState } from 'react'
 
@@ -29,7 +29,11 @@ export default function TweetForm({ data, onSuccess }: TweetFormProps) {
       setLoading(true)
       setError('')
 
-      await createTweet({content: content})
+      if(isEdit && data?._id) {
+        await updateTweet({ tweetId: data._id, newContent: content })
+      } else {
+        await createTweet({content: content})
+      }
 
       onSuccess?.()
 
@@ -39,7 +43,6 @@ export default function TweetForm({ data, onSuccess }: TweetFormProps) {
         err?.response?.data?.message ||
         (isEdit ? 'Update failed' : 'Upload failed')
       )
-
 
     } finally {
       setLoading(false)
