@@ -10,7 +10,7 @@ import { ModalType } from '@/types/modal'
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import { PlaylistDetails } from '@/types/playlist.types'
-import { getPlaylistDetails } from '@/services/playlists'
+import { getPlaylistDetails, removeVideoFromPlaylist } from '@/services/playlists'
 import { Spinner } from '@/components/ui/spinner'
 
 export default function PlaylistDetailPage() {
@@ -21,6 +21,8 @@ export default function PlaylistDetailPage() {
   const [loading, setLoading] = useState(true)
 
   const [modal, setModal] = useState<ModalType | null>(null)
+
+  const [removeLoading, setRemoveLoading] = useState(false)
 
   const modalType = modal?.type
 
@@ -45,6 +47,31 @@ export default function PlaylistDetailPage() {
   useEffect(() => {
     loadPlaylistDetails()
   }, [playlistId])
+
+  const handleRemoveVideo = async () => {
+    if (
+      modal?.type !== 'remove-video-from-playlist'
+    ) return
+
+    try {
+      setRemoveLoading(true)
+
+      await removeVideoFromPlaylist({
+        videoId: modal.data.videoId,
+        playlistId: modal.data.playlistId
+      })
+
+      setModal(null)
+
+      await loadPlaylistDetails()
+
+    } catch(err) {
+      console.log("Failed to remove video", err)
+
+    } finally {
+      setRemoveLoading(false)
+    }
+  }
 
   if(loading) return <Spinner />
 
@@ -103,13 +130,8 @@ export default function PlaylistDetailPage() {
         onClose={() => setModal(null)}
         title="Remove Video from Playlist"
         description="Are you sure you want to remove this video from the playlist?"
-        onConfirm={() => {
-          if (modal?.type === 'remove-video-from-playlist') {
-            console.log('delete video id:', modal.data.videoId)
-          }
-          setModal(null)
-        }}
-        loading={false}
+        onConfirm={handleRemoveVideo}
+        loading={removeLoading}
       />
     </div>
   )
