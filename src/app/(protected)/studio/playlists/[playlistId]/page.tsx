@@ -6,7 +6,6 @@ import AddVideoToPlaylistModal from '@/components/studio/modals/AddVideoToPlayli
 import StudioPlaylistVideoHeader from '@/components/studio/playlist/videos/StudioPlaylistHeader'
 import StudioPlaylistVideosRow from '@/components/studio/playlist/videos/StudioPlaylistVideosRow'
 import StudioPlaylistVideosTableHeader from '@/components/studio/playlist/videos/StudioPlaylistVideosTableHeader'
-import { videos } from '@/data/videos'
 import { ModalType } from '@/types/modal'
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
@@ -29,23 +28,22 @@ export default function PlaylistDetailPage() {
 
   const isRemoveVideoModal = modalType === 'remove-video-from-playlist'
 
-  useEffect(() => {
-    const loadPlaylistDetails = async () => {
-      try {
-        setLoading(true)
+  const loadPlaylistDetails = async () => {
+    try {
+      setLoading(true)
 
-        const response = await getPlaylistDetails(playlistId)
-        setPlaylistDetails(response.data)
-      } catch(err) {
-        console.log("Failed to load playlist details", err)
+      const response = await getPlaylistDetails(playlistId)
+      setPlaylistDetails(response.data)
+    } catch(err) {
+      console.log("Failed to load playlist details", err)
 
-      } finally {
-        setLoading(false)
-      }
+    } finally {
+      setLoading(false)
     }
+  }
 
+  useEffect(() => {
     loadPlaylistDetails()
-
   }, [playlistId])
 
   if(loading) return <Spinner />
@@ -89,7 +87,13 @@ export default function PlaylistDetailPage() {
         {isAddVideoModal && (
           <AddVideoToPlaylistModal
             playlistId={modal.data.playlistId}
-            videos={videos}
+            onSuccess={() => {
+              setModal(null)
+              loadPlaylistDetails()
+            }}
+            existingVideoIds={
+              playlistDetails?.videos.map((video) => video._id) || []
+            }
           />
         )}
       </FormModal>

@@ -36,3 +36,17 @@ export const createPlaylist = async ({
     const response = await api.post(`/api/playlists/playlist`, { name, description })
     return response.data
 }
+
+export const addVideoToPlaylist = async ({
+  videoId,
+  playlistId,
+}: {
+  videoId: string
+  playlistId: string
+}) => {
+  const response = await api.patch(
+    `/api/playlists/playlist/add/${videoId}/${playlistId}`
+  )
+
+  return response.data
+}

@@ -28,6 +28,7 @@ export const API_ENDPOINTS = {
         GET_USER_PLAYLISTS: (userId: string) => `/playlist/user/${userId}`,
         GET_PLAYLIST: (playlistId: string) => `/playlist/${playlistId}`,
         CREATE_PLAYLIST: '/playlist',
+        ADD_VIDEO_TO_PLAYLIST: (videoId: string, playlistId: string) => `/playlist/add/${videoId}/${playlistId}`
     },
     TWEETS: {
         GET_USER_TWEETS: (userId: string) => `/tweets/user/${userId}`,
