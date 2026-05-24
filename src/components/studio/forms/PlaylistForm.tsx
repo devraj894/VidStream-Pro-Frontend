@@ -1,23 +1,23 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { studioPlaylistTypes } from '@/types/studio'
+import { Playlist } from '@/types/playlist.types'
 import { useEffect, useState } from 'react'
 
 interface PlaylistFormProps {
-  data?: studioPlaylistTypes
+  data?: Playlist
 }
 
 export default function PlaylistForm({ data }: PlaylistFormProps) {
   const isEdit = !!data
 
-  const [title, setTitle] = useState(data?.title || '')
+  const [title, setTitle] = useState(data?.name || '')
   const [description, setDescription] = useState(data?.description || '')
 
   useEffect(() => {
     if (!data) return
 
-    setTitle(data.title)
+    setTitle(data.name)
     setDescription(data.description)
   }, [data])
 
@@ -25,7 +25,7 @@ export default function PlaylistForm({ data }: PlaylistFormProps) {
     e.preventDefault()
 
     const payload = {
-      title,
+      name: title,
       description,
     }
 

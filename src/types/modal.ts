@@ -1,4 +1,4 @@
-import { studioPlaylistTypes } from "./studio";
+import { Playlist } from "./playlist.types";
 import { Tweet } from "./tweets.types";
 import { StudioVideo } from "./videos.types";
 
@@ -10,8 +10,8 @@ export type ModalType =
 
   // PLAYLIST
   | { type: 'upload-playlist' }
-  | { type: 'edit-playlist'; data: studioPlaylistTypes }
-  | { type: 'delete-playlist'; data: studioPlaylistTypes }
+  | { type: 'edit-playlist'; data: Playlist }
+  | { type: 'delete-playlist'; data: Playlist }
 
   // PLAYLIST VIDEOS
   | { type: 'add-video-to-playlist'; data: { playlistId: string } }

@@ -4,7 +4,10 @@ import { Video } from "./videos.types"
 export interface Playlist {
     _id: string
     name: string
+    description: string
     totalVideos: number
+    totalViews: number
+    totalLikes: number
     previewThumbnail: string
     createdAt: string
 }

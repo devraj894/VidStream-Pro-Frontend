@@ -1,13 +1,12 @@
 import { formatTimeAgo, formatViews } from '@/lib/utils'
 import { Eye, Pencil, Play, ThumbsUp, Trash } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { studioPlaylistTypes, studioVideosTypes } from '@/types/studio'
 import Link from 'next/link'
 import { ModalType } from '@/types/modal'
+import { Playlist } from '@/types/playlist.types'
 
 interface StudioPlaylistRowProps {
   setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
-  playlist: studioPlaylistTypes
+  playlist: Playlist
 }
 
 export default function StudioPlaylistRow({
@@ -19,30 +18,30 @@ export default function StudioPlaylistRow({
       {/* VIDEO & INFO (Main Section) */}
       <div className="flex gap-3 flex-1 min-w-0">
         <img
-          src={playlist.thumbnail.url}
+          src={playlist.previewThumbnail}
           className="w-24 md:w-28 aspect-video rounded-md object-cover flex-shrink-0"
         />
 
         <div className="flex flex-col justify-center min-w-0">
           <p className="font-medium text-sm md:text-base text-white line-clamp-2 leading-tight">
-            {playlist.title}
+            {playlist.name}
           </p>
 
           {/* Mobile-only stats and Status Badge */}
           <div className="md:hidden space-y-2">
-            <Badge className="text-[10px] px-1.5 py-0">
-              Videos: {playlist.videos}
-            </Badge>
+              <span className="text-sm text-neutral-300">
+                Videos: {playlist.totalVideos}
+              </span>
             <div className="flex items-center gap-4 text-white">
               <div className="flex items-center gap-2 text-xs">
                 <Eye className="h-4 w-4" />
                 <span className="text-xs font-semibold">
-                  {formatViews(playlist.views)}
+                  {formatViews(playlist.totalViews)}
                 </span>
               </div>
               <div className="flex items-center gap-2 text-xs">
                 <ThumbsUp className="h-4 w-4" />
-                <span className="text-xs font-semibold">{playlist.likes}</span>
+                <span className="text-xs font-semibold">{playlist.totalLikes}</span>
               </div>
             </div>
             {/* <span className="text-[11px] text-neutral-400">
@@ -54,17 +53,19 @@ export default function StudioPlaylistRow({
 
       {/* STATUS (Desktop Only) */}
       <div className="hidden md:block">
-        <Badge>{playlist.videos}</Badge>
+        <span className="text-sm text-neutral-300">
+          {playlist.totalVideos}
+        </span>
       </div>
 
       {/* VIEWS (Desktop Only) */}
       <span className="hidden md:block text-sm text-neutral-300">
-        {formatViews(playlist.views)}
+        {formatViews(playlist.totalViews)}
       </span>
 
       {/* LIKES (Desktop Only) */}
       <span className="hidden md:block text-sm text-neutral-300">
-        {playlist.likes}
+        {playlist.totalLikes}
       </span>
 
       {/* DATE (Desktop Only) */}

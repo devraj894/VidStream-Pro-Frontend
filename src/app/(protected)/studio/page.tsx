@@ -8,7 +8,6 @@ import VideoForm from '@/components/studio/forms/VideoForm'
 import StudioLayout from '@/components/studio/StudioLayout'
 import StudioTabs from '@/components/studio/StudioTabs'
 import { useAuth } from '@/context/AuthContext'
-import { studioPlaylists } from '@/data/studio'
 import { deleteVideo } from '@/services/videos'
 import { deleteTweet } from '@/services/tweets'
 import { ModalType } from '@/types/modal'
@@ -17,6 +16,7 @@ import { useState } from 'react'
 export default function StudioPage() {
   const [refreshVideos, setRefreshVideos] = useState(0)
   const [refreshTweets, setRefreshTweets] = useState(0)
+  const [refreshPlaylists, setRefreshPlaylists] = useState(0)
   
   const [modal, setModal] = useState<ModalType | null>(null)
 
@@ -83,7 +83,7 @@ export default function StudioPage() {
           break
   
         case 'delete-playlist':
-          console.log('delete playlist id:', modal.data.id)
+          console.log('delete playlist id:', modal.data._id)
           break
   
         case 'delete-tweet':
@@ -106,10 +106,10 @@ export default function StudioPage() {
     <StudioLayout user={user}>
       <StudioTabs
         user={user}
-        playlists={studioPlaylists}
         setModal={setModal}
         refreshVideos={refreshVideos}
         refreshTweets={refreshTweets}
+        refreshPlaylists={refreshPlaylists}
       />
       <FormModal
         open={isVideoModal || isPlaylistModal || isTweetModal}

@@ -1,7 +1,6 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { Button } from '../ui/button'
 import StudioVideosTab from './tabs/StudioVideosTab'
-import { studioPlaylistTypes } from '@/types/studio'
 import StudioPlaylistsTab from './tabs/StudioPlaylistsTab'
 import StudioTweetsTab from './tabs/StudioTweetsTab'
 import { useState } from 'react'
@@ -10,18 +9,18 @@ import { User } from '@/types/auth.types'
 
 interface StudioTabsProps {
   user: User | null
-  playlists: studioPlaylistTypes[]
   setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
   refreshVideos: number
   refreshTweets: number
+  refreshPlaylists: number
 }
 
 export default function StudioTabs({
   user,
-  playlists,
   setModal,
   refreshVideos,
-  refreshTweets
+  refreshTweets,
+  refreshPlaylists
 }: StudioTabsProps) {
   const [activeTab, setActiveTab] = useState('videos')
 
@@ -63,7 +62,11 @@ export default function StudioTabs({
       </TabsContent>
 
       <TabsContent value="playlists">
-        <StudioPlaylistsTab setModal={setModal} playlists={playlists} />
+        <StudioPlaylistsTab
+          userId={user?._id} 
+          setModal={setModal}  
+          refreshPlaylists={refreshPlaylists}
+        />
       </TabsContent>
 
       <TabsContent value="tweets">
