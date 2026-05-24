@@ -1,11 +1,11 @@
 import { formatTimeAgo } from '@/lib/utils'
 import { Pencil, ThumbsUp, Trash } from 'lucide-react'
-import { tweetTypes } from '@/types/tweet'
 import { ModalType } from '@/types/modal'
+import { Tweet } from '@/types/tweets.types'
 
 interface StudioTweetRowProps {
   setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
-  tweet: tweetTypes
+  tweet: Tweet
 }
 
 export default function StudioTweetRow({
@@ -41,14 +41,14 @@ export default function StudioTweetRow({
       <div className="flex justify-between text-xs text-neutral-400 mt-1 md:hidden">
         <div className="flex items-center gap-2">
           <ThumbsUp className="h-4 w-4" />
-          <span>{tweet.likes}</span>
+          <span>{tweet.likesCount}</span>
         </div>
         <span>{formatTimeAgo(tweet.createdAt)}</span>
       </div>
 
       {/*  DESKTOP ONLY */}
       <span className="hidden md:block text-sm text-neutral-300">
-        {tweet.likes}
+        {tweet.likesCount}
       </span>
 
       <span className="hidden md:block text-sm text-neutral-400">

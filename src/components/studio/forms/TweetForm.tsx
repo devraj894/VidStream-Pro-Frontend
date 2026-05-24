@@ -1,10 +1,11 @@
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { tweetTypes } from '@/types/tweet'
+import { Tweet } from '@/types/tweets.types'
 import { useEffect, useState } from 'react'
 
 interface TweetFormProps {
-  data?: tweetTypes
+  data?: Tweet
 }
 
 export default function TweetForm({ data }: TweetFormProps) {

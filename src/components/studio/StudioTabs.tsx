@@ -4,7 +4,6 @@ import StudioVideosTab from './tabs/StudioVideosTab'
 import { studioPlaylistTypes } from '@/types/studio'
 import StudioPlaylistsTab from './tabs/StudioPlaylistsTab'
 import StudioTweetsTab from './tabs/StudioTweetsTab'
-import { tweetTypes } from '@/types/tweet'
 import { useState } from 'react'
 import { ModalType } from '@/types/modal'
 import { User } from '@/types/auth.types'
@@ -12,17 +11,17 @@ import { User } from '@/types/auth.types'
 interface StudioTabsProps {
   user: User | null
   playlists: studioPlaylistTypes[]
-  tweets: tweetTypes[]
   setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
   refreshVideos: number
+  refreshTweets: number
 }
 
 export default function StudioTabs({
   user,
   playlists,
-  tweets,
   setModal,
-  refreshVideos
+  refreshVideos,
+  refreshTweets
 }: StudioTabsProps) {
   const [activeTab, setActiveTab] = useState('videos')
 
@@ -68,7 +67,11 @@ export default function StudioTabs({
       </TabsContent>
 
       <TabsContent value="tweets">
-        <StudioTweetsTab setModal={setModal} tweets={tweets} />
+        <StudioTweetsTab 
+          userId={user?._id}
+          setModal={setModal} 
+          refreshTweets={refreshTweets}
+        />
       </TabsContent>
     </Tabs>
   )

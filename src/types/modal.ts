@@ -1,5 +1,5 @@
 import { studioPlaylistTypes } from "./studio";
-import { tweetTypes } from "./tweet";
+import { Tweet } from "./tweets.types";
 import { StudioVideo } from "./videos.types";
 
 export type ModalType =
@@ -19,5 +19,5 @@ export type ModalType =
 
   // TWEET
   | { type: 'upload-tweet' }
-  | { type: 'edit-tweet'; data: tweetTypes }
-  | { type: 'delete-tweet'; data: tweetTypes }
+  | { type: 'edit-tweet'; data: Tweet }
+  | { type: 'delete-tweet'; data: Tweet }
