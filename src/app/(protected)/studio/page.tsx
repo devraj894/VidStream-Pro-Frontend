@@ -129,6 +129,10 @@ export default function StudioPage() {
         {isPlaylistModal && (
           <PlaylistForm
             data={modalType === 'edit-playlist' ? modal?.data : undefined}
+            onSuccess={() => {
+              setModal(null)
+              setRefreshPlaylists((prev) => prev + 1)
+            }}
           />
         )}
 

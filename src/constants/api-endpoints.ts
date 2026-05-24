@@ -26,7 +26,8 @@ export const API_ENDPOINTS = {
     },
     PLAYLISTS: {
         GET_USER_PLAYLISTS: (userId: string) => `/playlist/user/${userId}`,
-        GET_PLAYLIST: (playlistId: string) => `/playlist/${playlistId}`
+        GET_PLAYLIST: (playlistId: string) => `/playlist/${playlistId}`,
+        CREATE_PLAYLIST: '/playlist',
     },
     TWEETS: {
         GET_USER_TWEETS: (userId: string) => `/tweets/user/${userId}`,
