@@ -92,7 +92,7 @@ export default function StudioPlaylistRow({
             <Trash size={18} className="text-red-500" />
           </button>
           <Link
-            href={'/studio/playlists/1'}
+            href={`/studio/playlists/${playlist._id}`}
             className="rounded-md hover:bg-red-500/10 transition text-neutral-500 hover:text-green-500"
           >
             <Play size={18} className="text-green-500" />

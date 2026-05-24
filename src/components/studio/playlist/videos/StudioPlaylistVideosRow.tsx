@@ -1,11 +1,11 @@
 import { formatTimeAgo, formatViews } from '@/lib/utils'
 import { Eye, Trash } from 'lucide-react'
-import { homeVideoType } from '@/types/videos'
 import { ModalType } from '@/types/modal'
+import { Video } from '@/types/videos.types'
 
 interface StudioPlaylistVideosRowProps {
   setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
-  video: homeVideoType
+  video: Video
   playlistId: string
 }
 
@@ -62,7 +62,7 @@ export default function StudioPlaylistVideosRow({
               type: 'remove-video-from-playlist',
               data: {
                 playlistId: playlistId,
-                videoId: video.id,
+                videoId: video._id,
               },
             })
           }

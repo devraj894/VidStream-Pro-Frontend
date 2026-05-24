@@ -1,11 +1,11 @@
 import { Dot, Play, Shuffle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { playlistDetailsTypes } from '@/types/playlist'
 import { ModalType } from '@/types/modal'
+import { PlaylistDetails } from '@/types/playlist.types'
 
 interface StudioPlaylistVideoHeaderProps {
   setModal: React.Dispatch<React.SetStateAction<ModalType | null>>
-  playlistDetails: playlistDetailsTypes
+  playlistDetails: PlaylistDetails
 }
 
 export default function StudioPlaylistVideoHeader({
@@ -15,11 +15,19 @@ export default function StudioPlaylistVideoHeader({
   return (
     <div className="relative">
       {/* Cover */}
-      <div className="h-[280px] w-full overflow-hidden">
-        <img
-          src={playlistDetails.videos[0].thumbnail.url}
-          className="w-full h-full object-cover"
-        />
+      <div className="h-[280px] w-full overflow-hidden relative">
+        {playlistDetails.videos.length > 0 ? (
+          <img
+            src={playlistDetails.videos[0].thumbnail.url}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full bg-neutral-900 flex items-center justify-center">
+            <p className="text-neutral-300 text-lg font-medium">
+              Empty Playlist
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Overlay */}
@@ -46,7 +54,7 @@ export default function StudioPlaylistVideoHeader({
           onClick={() =>
             setModal({
               type: 'add-video-to-playlist',
-              data: { playlistId: playlistDetails.id },
+              data: { playlistId: playlistDetails._id },
             })
           }
           className="bg-blue-600 hover:bg-blue-700"
