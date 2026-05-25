@@ -34,3 +34,39 @@ export async function GET(
         return serverApiHandler(err)
     }
 }
+
+export async function PATCH(
+  request: NextRequest,
+  context: {params: Promise<{ playlistId: string }>}
+) {
+  try {
+    const accessToken = request.cookies.get('accessToken')?.value
+
+    if (!accessToken) {
+      return NextResponse.json(
+        { message: 'Unauthorized' },
+        { status: 401 }
+      )
+    }
+
+    const { playlistId } = await context.params
+
+    const body = await request.json()
+
+    const { data } = await backendApi.patch(
+      API_ENDPOINTS.PLAYLISTS.UPDATE_PLAYLIST(playlistId),
+      body,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }
+    )
+
+    return NextResponse.json(data)
+
+  } catch (error) {
+    console.log("PATCH PLAYLIST ERROR:", error)
+    return serverApiHandler(error)
+  }
+}

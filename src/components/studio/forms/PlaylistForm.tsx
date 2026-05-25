@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { createPlaylist } from '@/services/playlists'
+import { createPlaylist, updatePlaylist } from '@/services/playlists'
 import { Playlist } from '@/types/playlist.types'
 import { useEffect, useState } from 'react'
 
@@ -33,16 +33,20 @@ export default function PlaylistForm({ data, onSuccess }: PlaylistFormProps) {
       setLoading(true)
       setError('')
 
-      await createPlaylist({ name: title, description: description })
+      if(isEdit && data._id) {
+        await updatePlaylist({ playlistId: data._id, name: title, description: description })
+      } else {
+        await createPlaylist({ name: title, description: description })
+      }
 
       onSuccess?.()
 
     } catch(err: any) {
-      setError('Failed to create playlist')
       setError(
         err?.response?.data?.message ||
         (isEdit ? 'Update failed' : 'Creation failed')
       )
+      console.log("Failed to submit playlist form", err)
 
     } finally {
       setLoading(false)

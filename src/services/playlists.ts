@@ -64,3 +64,16 @@ export const removeVideoFromPlaylist = async ({
 
   return response.data
 }
+
+export const updatePlaylist = async ({
+  playlistId,
+  name,
+  description
+}: {
+  playlistId: string
+  name: string
+  description: string
+}) => {
+  const response = await api.patch(`/api/playlists/playlist/${playlistId}`,{ name, description })
+  return response.data
+}
