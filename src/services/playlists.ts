@@ -77,3 +77,8 @@ export const updatePlaylist = async ({
   const response = await api.patch(`/api/playlists/playlist/${playlistId}`,{ name, description })
   return response.data
 }
+
+export const deletePlaylist = async (playlistId: string) => {
+  const response = await api.delete(`/api/playlists/playlist/${playlistId}`)
+  return response.data
+}

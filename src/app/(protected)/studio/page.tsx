@@ -12,6 +12,7 @@ import { deleteVideo } from '@/services/videos'
 import { deleteTweet } from '@/services/tweets'
 import { ModalType } from '@/types/modal'
 import { useState } from 'react'
+import { deletePlaylist } from '@/services/playlists'
 
 export default function StudioPage() {
   const [refreshVideos, setRefreshVideos] = useState(0)
@@ -83,7 +84,8 @@ export default function StudioPage() {
           break
   
         case 'delete-playlist':
-          console.log('delete playlist id:', modal.data._id)
+          await deletePlaylist(modal.data._id)
+          setRefreshPlaylists((prev) => prev + 1)
           break
   
         case 'delete-tweet':

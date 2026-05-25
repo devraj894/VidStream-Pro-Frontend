@@ -31,6 +31,7 @@ export const API_ENDPOINTS = {
         ADD_VIDEO_TO_PLAYLIST: (videoId: string, playlistId: string) => `/playlist/add/${videoId}/${playlistId}`,
         REMOVE_VIDEO_FROM_PLAYLIST: (videoId: string, playlistId: string) => `/playlist/remove/${videoId}/${playlistId}`,
         UPDATE_PLAYLIST: (playlistId: string) => `/playlist/${playlistId}`,
+        DELETE_PLAYLIST: (playlistId: string) => `/playlist/${playlistId}`,
     },
     TWEETS: {
         GET_USER_TWEETS: (userId: string) => `/tweets/user/${userId}`,
