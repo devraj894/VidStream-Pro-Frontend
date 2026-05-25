@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
 
-export default function CoverUpload() {
+export default function CoverUpload({cover}: {cover?: string}) {
   const [preview, setPreview] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
 
@@ -33,16 +33,25 @@ export default function CoverUpload() {
     <div className="space-y-4 flex flex-col items-center md:items-start">
       <p className="text-sm font-medium">Cover Image</p>
 
-      {preview ? (
+      {preview || cover ? (
         <div className="flex flex-col gap-3 w-full">
           <img
-            src={preview}
+            src={preview || cover}
             className="w-full h-32 rounded-lg object-cover border"
           />
 
-          <Button variant="outline" size="sm" onClick={() => setPreview(null)}>
-            Remove
-          </Button>
+          {preview && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setPreview(null)
+                setFile(null)
+              }}
+            >
+              Remove
+            </Button>
+          )}
         </div>
       ) : (
         <div className="w-full h-32 rounded-lg bg-muted flex items-center justify-center text-xs">

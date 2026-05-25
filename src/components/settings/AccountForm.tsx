@@ -3,20 +3,20 @@
 import { useState, useEffect } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { User } from '@/types/auth.types'
 
-export default function AccountForm() {
+export default function AccountForm({ user }: { user: User }) {
   const [form, setForm] = useState({
     fullName: '',
     email: '',
   })
 
   useEffect(() => {
-    // TODO: fetch user data
     setForm({
-      fullName: 'Devraj',
-      email: 'devraj@email.com',
+      fullName: user.fullName,
+      email: user.email,
     })
-  }, [])
+  }, [user])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value })

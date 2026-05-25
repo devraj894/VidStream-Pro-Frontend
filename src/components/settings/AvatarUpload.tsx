@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 
-export default function AvatarUpload() {
+export default function AvatarUpload({avatar}: {avatar?: string}) {
   const [preview, setPreview] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
 
@@ -33,16 +33,25 @@ export default function AvatarUpload() {
     <div className="space-y-4 flex flex-col items-center md:items-start">
       <p className="text-sm font-medium">Avatar</p>
 
-      {preview ? (
+      {preview || avatar ? (
         <div className="flex flex-col items-center gap-3">
           <img
-            src={preview}
+            src={preview || avatar}
             className="w-32 h-32 rounded-full object-cover border"
           />
 
-          <Button variant="outline" size="sm" onClick={() => setPreview(null)}>
-            Remove
-          </Button>
+          {preview && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                setPreview(null)
+                setFile(null)
+              }}
+            >
+              Remove
+            </Button>
+          )}
         </div>
       ) : (
         <div className="w-32 h-32 rounded-full bg-muted flex items-center justify-center text-xs">

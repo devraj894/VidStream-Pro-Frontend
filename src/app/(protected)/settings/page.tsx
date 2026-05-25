@@ -5,8 +5,14 @@ import AvatarUpload from '@/components/settings/AvatarUpload'
 import CoverUpload from '@/components/settings/CoverUpload'
 import PasswordForm from '@/components/settings/PasswordForm'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Spinner } from '@/components/ui/spinner'
+import { useAuth } from '@/context/AuthContext'
 
 export default function SettingsPage() {
+  const { user, isLoading } = useAuth()
+
+  if(isLoading) return <Spinner />
+
   return (
     <div className="px-8 space-y-12 pt-20">
       {/* Account Info */}
@@ -15,7 +21,7 @@ export default function SettingsPage() {
           <CardTitle>Account Info</CardTitle>
         </CardHeader>
         <CardContent>
-          <AccountForm />
+          {user && <AccountForm user={user} />}
         </CardContent>
       </Card>
 
@@ -25,8 +31,8 @@ export default function SettingsPage() {
           <CardTitle>Profile Images</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-8 md:grid-cols-2">
-          <AvatarUpload />
-          <CoverUpload />
+          <AvatarUpload avatar={user?.avatar.url} />
+          <CoverUpload cover={user?.coverImage?.url}/>
         </CardContent>
       </Card>
 
