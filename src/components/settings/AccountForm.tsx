@@ -4,12 +4,15 @@ import { useState, useEffect } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { User } from '@/types/auth.types'
+import { updateAccount } from '@/services/users'
 
-export default function AccountForm({ user }: { user: User }) {
+export default function AccountForm({ user, checkAuth }: { user: User; checkAuth: () => Promise<void> }) {
   const [form, setForm] = useState({
     fullName: '',
     email: '',
   })
+
+  const [isSaving, setIsSaving] = useState(false)
 
   useEffect(() => {
     setForm({
@@ -24,10 +27,17 @@ export default function AccountForm({ user }: { user: User }) {
 
   const handleSubmit = async () => {
     try {
-      // call updateAccountDetails API
-      console.log(form)
+      setIsSaving(true)
+      
+      await updateAccount({ fullName: form.fullName, email: form.email })
+
+      await checkAuth();
+
     } catch (err) {
-      console.error(err)
+      console.error("Failed to update account: ", err)
+
+    } finally {
+      setIsSaving(false)
     }
   }
 
@@ -46,7 +56,9 @@ export default function AccountForm({ user }: { user: User }) {
         placeholder="Email"
       />
 
-      <Button onClick={handleSubmit}>Save Changes</Button>
+      <Button onClick={handleSubmit} disabled={isSaving}>
+        {isSaving ? "Saving..." : "Save Changes"}
+      </Button>
     </div>
   )
 }

@@ -52,5 +52,8 @@ export const API_ENDPOINTS = {
     DASHBOARD: {
         CHANNEL_STATS: '/dashboard/stats',
         VIDEOS: '/dashboard/videos'
+    },
+    USERS: {
+        UPDATE_ACCOUNT: '/users/update-account'
     }
 }   

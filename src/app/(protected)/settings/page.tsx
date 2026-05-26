@@ -9,7 +9,7 @@ import { Spinner } from '@/components/ui/spinner'
 import { useAuth } from '@/context/AuthContext'
 
 export default function SettingsPage() {
-  const { user, isLoading } = useAuth()
+  const { user, isLoading, checkAuth } = useAuth()
 
   if(isLoading) return <Spinner />
 
@@ -21,7 +21,7 @@ export default function SettingsPage() {
           <CardTitle>Account Info</CardTitle>
         </CardHeader>
         <CardContent>
-          {user && <AccountForm user={user} />}
+          {user && <AccountForm user={user} checkAuth={checkAuth} />}
         </CardContent>
       </Card>
 
