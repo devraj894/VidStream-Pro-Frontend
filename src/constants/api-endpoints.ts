@@ -57,5 +57,6 @@ export const API_ENDPOINTS = {
         UPDATE_ACCOUNT: '/users/update-account',
         UPDATE_AVATAR: '/users/avatar',
         UPDATE_COVER: '/users/cover-image',
+        CHANGE_PASSWORD: '/users/change-password'
     }
 }   
