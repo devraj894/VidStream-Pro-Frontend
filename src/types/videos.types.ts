@@ -14,9 +14,12 @@ export interface Video {
 }
 
 export interface VideoDetails extends Video {
-    likes: number
+    likesCount: number
+    isLiked: boolean
+    isOwner: boolean
     owner: UserBasicInfo & {
-        subscribers: number
+        subscribersCount: number
+        isSubscribed: boolean
     }
 }
 

@@ -1,7 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { useAuth } from '@/context/AuthContext'
 import { formatTimeAgo } from '@/lib/utils'
 import { VideoDetails } from '@/types/videos.types'
 import { ThumbsUp, Share2, Download } from 'lucide-react'
@@ -12,9 +11,6 @@ interface VideoMetaProps {
 }
 
 export default function VideoMeta({ videoDetails }: VideoMetaProps) {
-  const { user } = useAuth();
-  const isOwner = user?._id === videoDetails.owner._id;
-
   return (
     <div className="space-y-4">
       {/* Title */}
@@ -38,17 +34,19 @@ export default function VideoMeta({ videoDetails }: VideoMetaProps) {
               {videoDetails.owner.username}
             </p>
             <p className="text-sm text-muted-foreground text-white">
-              {videoDetails.owner.subscribers} subscribers
+              {videoDetails.owner.subscribersCount} subscribers
             </p>
           </div>
 
           <Button variant="secondary" className="ml-4 rounded-full">
-            {isOwner ? (
+            {videoDetails.isOwner ? (
               <Link href={`/studio`}>
                 Manage Channel
               </Link>
             ) : (
-              'Subscribe'
+              <Button variant="secondary" className="rounded-full">
+                {videoDetails.owner.isSubscribed ? "Subscribed" : "Subscribe"}
+              </Button>
             )}
           </Button>
         </div>
@@ -57,7 +55,7 @@ export default function VideoMeta({ videoDetails }: VideoMetaProps) {
         <div className="flex gap-2 shrink-0">
           <Button variant="secondary" size="sm" className="gap-2">
             <ThumbsUp className="h-4 w-4" />
-            {videoDetails.likes}
+            {videoDetails.likesCount}
           </Button>
           <Button variant="secondary" size="sm" className="gap-2">
             <Share2 className="h-4 w-4" />
