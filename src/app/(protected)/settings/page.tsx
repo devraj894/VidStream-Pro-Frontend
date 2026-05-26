@@ -31,8 +31,8 @@ export default function SettingsPage() {
           <CardTitle>Profile Images</CardTitle>
         </CardHeader>
         <CardContent className="grid gap-8 md:grid-cols-2">
-          <AvatarUpload avatar={user?.avatar.url} />
-          <CoverUpload cover={user?.coverImage?.url}/>
+          <AvatarUpload avatar={user?.avatar.url} checkAuth={checkAuth} />
+          <CoverUpload cover={user?.coverImage?.url} checkAuth={checkAuth} />
         </CardContent>
       </Card>
 

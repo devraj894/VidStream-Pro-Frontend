@@ -2,10 +2,13 @@
 
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { updateAvatar } from '@/services/users';
 
-export default function AvatarUpload({avatar}: {avatar?: string}) {
+export default function AvatarUpload({avatar, checkAuth}: {avatar?: string; checkAuth: () => void}) {
   const [preview, setPreview] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
+
+  const [isUploading, setIsUploading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0]
@@ -22,10 +25,19 @@ export default function AvatarUpload({avatar}: {avatar?: string}) {
     if (!file) return
 
     try {
-      // API call (FormData use karna)
-      console.log(file)
+      setIsUploading(true)
+      const formData = new FormData()
+      formData.append("avatar", file)
+      await updateAvatar(formData)
+      checkAuth()
+      
     } catch (err) {
-      console.error(err)
+      console.error("Failed to upload avatar: ", err)
+
+    } finally {
+      setIsUploading(false)
+      setFile(null)
+      setPreview(null)
     }
   }
 
@@ -69,8 +81,8 @@ export default function AvatarUpload({avatar}: {avatar?: string}) {
         />
       </label>
 
-      <Button size="sm" onClick={handleUpload} disabled={!file}>
-        Upload Avatar
+      <Button size="sm" onClick={handleUpload} disabled={!file || isUploading}>
+        {isUploading ? "Uploading..." : "Upload"}
       </Button>
     </div>
   )

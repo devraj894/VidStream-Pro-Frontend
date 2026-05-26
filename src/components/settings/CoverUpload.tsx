@@ -1,11 +1,14 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { updateCoverImage } from '@/services/users';
 import { useState } from 'react'
 
-export default function CoverUpload({cover}: {cover?: string}) {
+export default function CoverUpload({cover, checkAuth}: {cover?: string; checkAuth: () => void}) {
   const [preview, setPreview] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
+  
+  const [isUploading, setIsUploading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0]
@@ -22,10 +25,17 @@ export default function CoverUpload({cover}: {cover?: string}) {
     if (!file) return
 
     try {
-      // API call (FormData use karna)
-      console.log(file)
+      setIsUploading(true)
+      const formData = new FormData()
+      formData.append("coverImage", file)
+      await updateCoverImage(formData)
+      checkAuth()
+
     } catch (err) {
       console.error(err)
+
+    } finally {
+      setIsUploading(false)
     }
   }
 
@@ -69,8 +79,8 @@ export default function CoverUpload({cover}: {cover?: string}) {
         />
       </label>
 
-      <Button size="sm" onClick={handleUpload} disabled={!file}>
-        Upload Cover
+      <Button size="sm" onClick={handleUpload} disabled={!file || isUploading}>
+        {isUploading ? "Uploading..." : "Upload Cover"}
       </Button>
     </div>
   )

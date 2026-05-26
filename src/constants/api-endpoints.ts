@@ -54,6 +54,8 @@ export const API_ENDPOINTS = {
         VIDEOS: '/dashboard/videos'
     },
     USERS: {
-        UPDATE_ACCOUNT: '/users/update-account'
+        UPDATE_ACCOUNT: '/users/update-account',
+        UPDATE_AVATAR: '/users/avatar',
+        UPDATE_COVER: '/users/cover-image',
     }
 }   
