@@ -20,7 +20,7 @@ export default function TopNavbar() {
 
   const router = useRouter();
 
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, logout, isLoggingOut } = useAuth();
   console.log('User in TopNavbar:', user);
 
   useEffect(() => {
@@ -102,7 +102,9 @@ export default function TopNavbar() {
                 </DropdownMenuItem>
                 {/* <DropdownMenuItem>Playlists</DropdownMenuItem>
                 <DropdownMenuItem>Subscriptions</DropdownMenuItem> */}
-                <DropdownMenuItem>Logout</DropdownMenuItem>
+                <DropdownMenuItem onClick={logout} disabled={isLoggingOut}>
+                  {isLoggingOut ? "Logging out..." : "Logout"}
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           )}

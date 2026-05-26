@@ -3,6 +3,7 @@ export const API_ENDPOINTS = {
         REGISTER: '/users/register',
         LOGIN: '/users/login',
         CURRENT_USER: '/users/current-user',
+        LOGOUT: '/users/logout'
     },
     VIDEOS: {
         FEED: '/feed',

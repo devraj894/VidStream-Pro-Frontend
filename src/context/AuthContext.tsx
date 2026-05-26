@@ -1,14 +1,19 @@
 'use client'
 
-import { fetchCurrentUser } from "@/services/auth"
+import { fetchCurrentUser, logoutUser } from "@/services/auth"
 import { AuthContextType, User } from "@/types/auth.types"
 import { createContext, useContext, useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 
 const AuthContext = createContext<AuthContextType | null>(null)
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null>(null)
     const [loading, setLoading] = useState(true)
+
+    const [isLoggingOut, setIsLoggingOut] = useState(false)
+
+    const router = useRouter();
 
     const checkAuth = async () => {
         try {
@@ -24,6 +29,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }
 
+    const logout = async () => {
+        try {
+            setIsLoggingOut(true)
+            await logoutUser()
+            setUser(null)
+            router.push("/login")
+
+        } catch (error) {
+            console.error("Logout failed:", error)
+
+        } finally {
+            setIsLoggingOut(false)
+        }
+    }
+
     useEffect(() => {
         checkAuth()
     }, [])
@@ -34,7 +54,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
               user,
               isLoading: loading,
               isAuthenticated: !!user,
-              checkAuth
+              checkAuth,
+              logout,
+              isLoggingOut
             }}>
             {children}
         </AuthContext.Provider>
