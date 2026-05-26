@@ -42,6 +42,7 @@ export const API_ENDPOINTS = {
     },
     LIKES: {
         TOGGLE_VIDEO_LIKE: (videoId: string) => `/likes/toggle/v/${videoId}`,
+        TOGGLE_COMMENT_LIKE: (commentId: string) => `/likes/toggle/c/${commentId}`,
         TOGGLE_TWEET_LIKE: (tweetId: string) => `/likes/toggle/t/${tweetId}`,
         GET_LIKED_VIDEOS: '/likes/videos'
     },

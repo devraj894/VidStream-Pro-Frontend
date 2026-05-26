@@ -11,5 +11,7 @@ export interface Comment {
     content: string
     likes: number
     ownerInfo: commentOwner
+    likesCount: number
+    isLiked: boolean
     createdAt: string
 }

@@ -18,6 +18,7 @@ import { Comment as CommentType } from '@/types/comments.types'
 import { useAuth } from '@/context/AuthContext'
 import { useState } from 'react'
 import { deleteComment, updateComment } from '@/services/comments'
+import { toggleCommentLike } from '@/services/likes'
 
 interface CommentProps {
   comment: CommentType
@@ -36,6 +37,11 @@ export default function Comment({
 
   const [updatingComment, setUpdatingComment] = useState(false)
   const [deletingComment, setDeletingComment] = useState(false)
+
+  const [likesCount, setLikesCount] = useState(comment.likesCount)
+  const [isLiked, setIsLiked] = useState(comment.isLiked)
+
+  const [loadingToggleLike, setLoadingToggleLike] = useState(false)
 
   const isOwner = user?._id === comment.ownerInfo._id
 
@@ -72,6 +78,37 @@ export default function Comment({
 
     } finally {
       setDeletingComment(false)
+    }
+  }
+
+  const handleToggleLike = async () => {
+    try {
+      setLoadingToggleLike(true)
+
+      if (isLiked) {
+        setLikesCount((prev) => prev - 1)
+      } else {
+        setLikesCount((prev) => prev + 1)
+      }
+
+      setIsLiked((prev) => !prev)
+
+      await toggleCommentLike(comment._id)
+
+    } catch (err) {
+      console.log("Error toggling comment like", err)
+
+      // rollback
+      if (isLiked) {
+        setLikesCount((prev) => prev + 1)
+      } else {
+        setLikesCount((prev) => prev - 1)
+      }
+
+      setIsLiked((prev) => !prev)
+
+    } finally {
+      setLoadingToggleLike(false)
     }
   }
 
@@ -188,12 +225,18 @@ export default function Comment({
         {!isEditing && (
           <div className="flex gap-2 mt-2 text-xs text-muted-foreground">
             <Button
+              onClick={handleToggleLike}
+              disabled={loadingToggleLike}
               variant="ghost"
               size="sm"
               className="gap-2"
             >
-              <ThumbsUp className="h-4 w-4" />
-              {comment.likes || 0}
+              <ThumbsUp
+                className={`h-4 w-4 ${
+                  isLiked ? "fill-current text-white" : ""
+                }`}
+              />
+              {likesCount}
             </Button>
 
             <button>

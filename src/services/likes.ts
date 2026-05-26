@@ -5,6 +5,11 @@ export const toggleVideoLike = async (videoId: string) => {
     return response.data
 }
 
+export const toggleCommentLike = async (commentId: string) => {
+    const response = await api.post(`/api/likes/toggle/c/${commentId}`)
+    return response.data
+}
+
 export const toggleTweetLike = async (tweetId: string) => {
     const response = await api.post(`/api/likes/toggle/t/${tweetId}`)
     return response.data
