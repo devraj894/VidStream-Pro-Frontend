@@ -6,7 +6,7 @@ export interface Channel {
   email: string
   fullName: string
   avatar: Media
-  coverImage: Media
+  coverImage?: Media
   subscribersCount: number
   channelsSubscribedToCount: number
   isSubscribed: boolean
