@@ -74,7 +74,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <Card className="w-[500px] bg-[#111111]/40 backdrop-blur-xl border border-red-900/40 shadow-2xl rounded-2xl p-2">
+    <Card className="w-[500px] bg-[#111111]/40 backdrop-blur-xl border border-blue-900/25 shadow-2xl rounded-2xl p-2">
       <CardHeader>
         <CardTitle className="text-3xl font-semibold text-white text-center">
           Create Your Account
@@ -95,7 +95,7 @@ export default function RegisterPage() {
               <Label className="text-neutral-300">Full Name</Label>
               <Input
                 name='fullName'
-                className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
+                className="bg-[#1c1c1c] border-neutral-800 focus:border-blue-600 focus:ring-blue-600"
                 placeholder="Enter your name"
               />
             </div>
@@ -104,7 +104,7 @@ export default function RegisterPage() {
               <Label className="text-neutral-300">Username</Label>
               <Input
                 name='username'
-                className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
+                className="bg-[#1c1c1c] border-neutral-800 focus:border-blue-600 focus:ring-blue-600"
                 placeholder="Enter your username"
               />
             </div>
@@ -116,7 +116,7 @@ export default function RegisterPage() {
               <Label className="text-neutral-300">Email</Label>
               <Input
                 name='email'
-                className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
+                className="bg-[#1c1c1c] border-neutral-800 focus:border-blue-600 focus:ring-blue-600"
                 type="email"
                 placeholder="Enter your email"
               />
@@ -126,7 +126,7 @@ export default function RegisterPage() {
               <Label className="text-neutral-300">Password</Label>
               <Input
                 name='password'
-                className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
+                className="bg-[#1c1c1c] border-neutral-800 focus:border-blue-600 focus:ring-blue-600"
                 type="password"
                 placeholder="Enter password"
               />
@@ -138,7 +138,7 @@ export default function RegisterPage() {
             <Label className="text-neutral-300">Confirm Password</Label>
             <Input
               name='confirmPassword'
-              className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
+              className="bg-[#1c1c1c] border-neutral-800 focus:border-blue-600 focus:ring-blue-600"
               type="password"
               placeholder="Confirm password"
             />
@@ -160,7 +160,7 @@ export default function RegisterPage() {
                 {avatarFile && (
                   <X
                     onClick={removeAvatar}
-                    className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 hover:cursor-pointer text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+                    className="absolute -top-2 -right-2 bg-blue-600 hover:bg-blue-700 hover:cursor-pointer text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
                   />
                 )}
               </div>
@@ -180,7 +180,7 @@ export default function RegisterPage() {
                 {coverFile && (
                   <X
                     onClick={removeCover}
-                    className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 hover:cursor-pointer text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
+                    className="absolute -top-2 -right-2 bg-blue-600 hover:bg-blue-700 hover:cursor-pointer text-white rounded-full w-5 h-5 flex items-center justify-center text-xs"
                   />
                 )}
               </div>
@@ -190,7 +190,7 @@ export default function RegisterPage() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full mt-4 bg-red-600 hover:bg-red-700 text-white font-semibold"
+            className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold"
           >
             {isLoading ? 'Creating Account...' : 'Create Account'}
           </Button>
@@ -199,7 +199,7 @@ export default function RegisterPage() {
             Already have an account?{' '}
             <Link
               href="/login"
-              className="text-red-500 hover:text-red-400 transition"
+              className="text-blue-500 hover:text-blue-400 transition"
             >
               Log in
             </Link>

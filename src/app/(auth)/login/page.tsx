@@ -47,7 +47,7 @@ export default function LoginPage() {
   }
 
   return (
-    <Card className="w-[500px] bg-[#111111]/40 backdrop-blur-xl border border-red-900/40 shadow-2xl rounded-2xl p-2">
+    <Card className="w-[500px] bg-[#111111]/40 backdrop-blur-xl border border-blue-900/25 shadow-2xl rounded-2xl p-2">
       <CardHeader>
         <CardTitle className="text-3xl font-semibold text-white text-center">
           Welcome Back
@@ -68,7 +68,7 @@ export default function LoginPage() {
               value={formData.identifier}
               onChange={(e) => setFormData({ ...formData, identifier: e.target.value })}
               disabled={isLoading}
-              className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
+              className="bg-[#1c1c1c] border-neutral-800 focus:border-blue-600 focus:ring-blue-600"
               placeholder="Enter your username or email"
             />
           </div>
@@ -88,7 +88,7 @@ export default function LoginPage() {
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value})}
               disabled={isLoading}
-              className="bg-[#1c1c1c] border-neutral-800 focus:border-red-600 focus:ring-red-600"
+              className="bg-[#1c1c1c] border-neutral-800 focus:border-blue-600 focus:ring-blue-600"
               type="password"
               placeholder="Enter password"
             />
@@ -97,7 +97,7 @@ export default function LoginPage() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full mt-4 bg-red-600 hover:bg-red-700 text-white font-semibold"
+            className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold"
           >
             {isLoading ? 'Logging in...' : 'Login'}
           </Button>
@@ -106,7 +106,7 @@ export default function LoginPage() {
             Don't have an account?{' '}
             <Link
               href="/register"
-              className="text-red-500 hover:text-red-400 transition"
+              className="text-blue-500 hover:text-blue-400 transition"
             >
               Sign up
             </Link>

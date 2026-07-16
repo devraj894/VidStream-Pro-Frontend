@@ -8,7 +8,7 @@ export default function AuthLayout({
       className="min-h-screen flex items-center justify-center bg-cover bg-center"
       style={{
         backgroundImage:
-          "linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('/bg2.jpg')",
+          "linear-gradient(rgba(0,0,0,0.60), rgba(0,0,0,0.60)), url('/bg.png')",
       }}
     >
       {children}
