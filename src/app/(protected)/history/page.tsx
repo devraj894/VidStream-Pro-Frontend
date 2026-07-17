@@ -50,15 +50,17 @@ export default function historyPage() {
           </div>
         ) : (
           <div>
-            {videos.map((video) => (
-              <VideoCard
-                key={video._id}
-                video={video}
-                variant="compact"
-                removable
-                onRemove={handleRemove}
-              />
-            ))}
+            <div className="space-y-4">
+              {videos.map((video) => (
+                <VideoCard
+                  key={video._id}
+                  video={video}
+                  variant="compact"
+                  removable
+                  onRemove={handleRemove}
+                />
+              ))}
+            </div>
           </div>
         )}
       </div>
