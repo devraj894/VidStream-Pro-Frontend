@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Dot, Play } from 'lucide-react'
 import { formatDuration, formatViews } from '@/lib/utils'
 import { Video } from '@/types/videos.types'
+import Link from 'next/link'
 
 export default function FeaturedSection({
   featuredVideo,
@@ -26,9 +27,11 @@ export default function FeaturedSection({
 
         <p className="text-neutral-300 max-w-xl">{featuredVideo.description}</p>
 
-        <Button className="w-fit bg-red-600 hover:bg-red-700">
-          <Play className="mr-2" />
-          Watch Now
+        <Button className="w-fit bg-blue-600 hover:bg-blue-700">
+          <Link href={`/video/${featuredVideo._id}`} className="flex items-center">
+            <Play className="mr-2" />
+            Watch Now
+          </Link>
         </Button>
       </div>
     </div>
